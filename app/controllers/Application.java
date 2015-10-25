@@ -1,31 +1,31 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.db.jpa.*;
-import views.html.*;
-import models.Person;
-import play.data.Form;
-import java.util.List;
+import com.ssachtleben.play.plugin.auth.Auth;
+import dao.UserDAO;
+import models.User;
+import org.apache.commons.lang3.math.NumberUtils;
+import play.mvc.Http;
+import play.mvc.Result;
+import views.html.index;
 
-import static play.libs.Json.*;
+public class Application extends BaseController {
+   public static final String USER_ROLE = "user";
+   public static final String ADMIN_ROLE = "admin";
 
-public class Application extends Controller {
 
-    public Result index() {
-        return ok(index.render());
-    }
 
-    @Transactional
-    public Result addPerson() {
-        Person person = Form.form(Person.class).bindFromRequest().get();
-        JPA.em().persist(person);
-        return redirect(routes.Application.index());
-    }
+   public Result index() {
+      return ok(index.render());
+   }
 
-    @Transactional(readOnly = true)
-    public Result getPersons() {
-        List<Person> persons = (List<Person>) JPA.em().createQuery("select p from Person p").getResultList();
-        return ok(toJson(persons));
-    }
+   public static User getLocalUser(final Http.Session session) {
+      final String userId = Auth.getLoggedIn(session());
+      UserDAO userDAO = new UserDAO();
+      final User user = NumberUtils.isNumber(userId) ? userDAO.getById(Long.parseLong(userId)) : null;
+      return user;
+   }
+
+   public static User getLocalUser() {
+      return getLocalUser(session());
+   }
 }

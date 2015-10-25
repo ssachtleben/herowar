@@ -1,13 +1,21 @@
+// Custom repository
+resolvers += Resolver.url("ssachtleben sbt repository (snapshots)", url("http://ssachtleben.github.io/sbt-plugins/repository/snapshots/"))(Resolver.ivyStylePatterns)
+
 // The Play plugin
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.4.3")
 
 // Web plugins
 addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.0")
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.6")
-addSbtPlugin("com.typesafe.sbt" % "sbt-jshint" % "1.0.3")
-addSbtPlugin("com.typesafe.sbt" % "sbt-rjs" % "1.0.7")
+addSbtPlugin("com.typesafe.sbt" % "sbt-uglify" % "1.0.3")
+addSbtPlugin("com.typesafe.sbt" % "sbt-gzip" % "1.0.0")
 addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.0")
-addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.1.0")
+
+// Custom plugins
+addSbtPlugin("com.ssachtleben" % "sbt-assets-filter" % "1.0.0")
+addSbtPlugin("com.ssachtleben" % "sbt-assets-handlebars" % "1.0.0")
+addSbtPlugin("com.ssachtleben" % "sbt-assets-define" % "1.0.1")
+addSbtPlugin("com.ssachtleben" % "sbt-assets-concat" % "1.0.0")
 
 // Play enhancer - this automatically generates getters/setters for public fields
 // and rewrites accessors of these fields to use the getters/setters. Remove this
