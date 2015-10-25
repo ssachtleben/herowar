@@ -1,3 +1,89 @@
-# Getting started with Play (Java)
+HeroWar Webapplication 0.1-ALPHA - Framework/Engine
+==========================================================
 
-This project demonstrate how to create a simple CRUD application with Play. A screencast to the project exist on [playframework.com](http://playframework.com)
+
+Important:
+In sources its not legal to have non utf-8 characters.
+To scan for, type the following in source folder after clean:
+find . "" -exec grep -I -H --color='auto' -P -n "[\x80-\xFF]" {} \; 
+
+
+** TODOS:
+
+*** New
+
+- Replace GlobalSettings with Play 2.4 functionality
+
+*** Old
+
+Section: building and transforming resources
+
+Section: Editor
+
+1. Implement textures, geometries and image loading cases in preloader
+
+Section: Site
+
+1. Style gritter message (remove image background and use css3)
+2. Add Confirm Email to signup
+3. Fix Email regex pattern in js since two double points break the signup
+4. Save newsletter boolean during signup
+
+
+Section: How to build project
+
+Intial project import
+
+1) Go to the application folder
+2) Run play, the SBT prompt should show up
+3) Type compile to pre-compile the app
+4) Then type eclipse to generate the eclipse project files
+5) Open eclipse
+6) Select File -> Import… -> Existing projects into Workspace
+7) Pick your application folder and click Finish.
+
+Fix compilation issues
+
+1) Right click on the project, select Properties then Java Build Path
+2) In the Libraries tab, click Add Class Folder…
+3) Check target/scala-2.9.1/classes and target/scala-2.9.1/classes_managed
+4) Back in Java Build Path click Add external JARs…
+5) Select play\repository\local\org.scala-lang\scala-library\2.9.1\jars\scala-library.jar
+
+Updated dependencies
+
+1) Go to the application folder
+2) Run play, the SBT prompt should show up
+3) Then type eclipse to generate the eclipse project files
+
+
+
+Section: Json API
+
+The json api is located under /api and allows the to get informations from database or put new records.
+
+These api errors could occur:
+
+Code  | Short Message                                   | Long Message
+80000 | Form validation failed                  |   The form validation failed for some reason, more detailed information will be send in body object.
+80010 | Username/Password is incorrect  | This error can be caused by an incorrect username or password.
+
+
+
+Section: page/pagedesign
+
+Section: Database
+All entities shouldnt us List's, on table generation with Hibernate important indices are missing (List's allows multiple references of same object!)
+The third party lib "deadbolt" uses interfaces with list, this must be changed too
+
+
+Section: Three.js webgl-client engine
+
+
+Section: Map-Editor
+
+
+Section: Network (websocket)
+
+
+Section: Server game engine
