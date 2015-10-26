@@ -59,13 +59,15 @@ Concat.srcDirs := Seq(
   (resourceDirectory in Assets).value)
 
 Concat.groups := Seq(
-  "javascripts/app.js" -> group(
+  "javascripts/site.js" -> group(
     (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "javascripts" / "app" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "template" / "app" ** "*.js" +++
-      (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "start" ** "*.js"
+      (resourceManaged in define in Assets).value / "javascripts" / "site" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "templates" / "site" ** "*.js"
   ),
   "javascripts/libs.min.js" -> group(
     (resourceDirectory in Assets).value / "javascripts" / "libs" ** "*.js"
   )
 )
+
+
+fork in run := true
