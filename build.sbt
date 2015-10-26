@@ -37,6 +37,8 @@ pipelineStages in Assets := Seq(define,filter,concat,digest,gzip)
 
 includeFilter in filter := "*.coffee" || "*.less" || ".tmpl"
 
+includeFilter in (Assets, LessKeys.less) := "admin.less" | "editor.less" | "game.less" | "site.less"
+
 includeFilter in uglify := "*app.js"
 
 LessKeys.sourceMap := false
