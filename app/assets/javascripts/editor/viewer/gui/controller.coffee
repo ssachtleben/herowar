@@ -18,7 +18,7 @@ GUIController =
 	reset: ->
 		if __root__
 			__root__.root.destroy()
-			delete __root__
+			__root__ = undefined
 		__root__ = new RootGUI()
 		__root__.add new ModelsGUI()
 
@@ -28,7 +28,7 @@ GUIController =
 			Model = require "viewer/gui/#{mod}"
 			current = new Model obj
 			__root__.add current if current.isAllowed()
-		return;
+		return
 
 	_bindEvents: ->
 		@viewer = db.get 'viewer'

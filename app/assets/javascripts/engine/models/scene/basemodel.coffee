@@ -56,7 +56,11 @@ class BaseModel
 			@isDisposed = true
 			scenegraph = require 'scenegraph'
 			scenegraph.removeDynObject @id
-			if _.isArray @root objectUtils.dispose obj for obj in @root	else objectUtils.dispose @root
+			if _.isArray @root
+				for obj in @root
+					objectUtils.dispose obj
+			else
+				objectUtils.dispose @root
 		return
 
 	enableGlow: ->

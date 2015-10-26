@@ -1,5 +1,9 @@
 logs
 target
+.sbtserver
+.sbtserver.lock
+play-fork-run.sbt
+sbt-ui.sbt
 /.idea
 /.idea_modules
 /.classpath
