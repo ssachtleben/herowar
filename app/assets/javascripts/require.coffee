@@ -7,7 +7,7 @@
 		# Variable declaration
 		modules={}
 		loaded={}
-		
+
 		###
 				Define a module with name and callback.
 

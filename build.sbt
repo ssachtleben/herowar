@@ -39,8 +39,6 @@ includeFilter in (Assets, LessKeys.less) := "admin.less" | "editor.less" | "game
 
 includeFilter in uglify := "*app.js"
 
-excludeFilter in define := "*require.js"
-
 LessKeys.sourceMap := false
 
 UglifyKeys.sourceMap := false
