@@ -61,32 +61,41 @@ Concat.srcDirs := Seq(
   (resourceDirectory in Assets).value)
 
 Concat.groups := Seq(
-  "javascripts/admin.js" -> group(
+  "javascripts/as.js" -> group(
     (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "admin" ** "*.js" +++
       (resourceManaged in define in Assets).value / "templates" / "admin" ** "*.js"
   ),
-  "javascripts/editor.js" -> group(
+  "javascripts/es.js" -> group(
     (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "editor" ** "*.js" +++
       (resourceManaged in define in Assets).value / "templates" / "editor" ** "*.js"
   ),
-  "javascripts/game.js" -> group(
+  "javascripts/gs.js" -> group(
     (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "game" ** "*.js" +++
       (resourceManaged in define in Assets).value / "templates" / "game" ** "*.js"
   ),
-  "javascripts/site.js" -> group(
+  "javascripts/ss.js" -> group(
     (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "site" ** "*.js" +++
       (resourceManaged in define in Assets).value / "templates" / "site" ** "*.js"
   ),
-  "javascripts/libs.min.js" -> group(
-    (resourceDirectory in Assets).value / "javascripts" / "libs" ** "*.js"
+  "javascripts/al.min.js" -> group(
+    (resourceDirectory in Assets).value / "javascripts" / "libs" / "admin" ** "*.js"
+  ),
+  "javascripts/el.min.js" -> group(
+    (resourceDirectory in Assets).value / "javascripts" / "libs" / "editor" ** "*.js"
+  ),
+  "javascripts/gl.min.js" -> group(
+    (resourceDirectory in Assets).value / "javascripts" / "libs" / "game" ** "*.js"
+  ),
+  "javascripts/sl.min.js" -> group(
+    (resourceDirectory in Assets).value / "javascripts" / "libs" / "site" ** "*.js"
   )
 )
 
