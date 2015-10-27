@@ -61,8 +61,27 @@ Concat.srcDirs := Seq(
   (resourceDirectory in Assets).value)
 
 Concat.groups := Seq(
+  "javascripts/admin.js" -> group(
+    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "javascripts" / "admin" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "templates" / "admin" ** "*.js"
+  ),
+  "javascripts/editor.js" -> group(
+    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "javascripts" / "editor" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "templates" / "editor" ** "*.js"
+  ),
+  "javascripts/game.js" -> group(
+    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "javascripts" / "game" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "templates" / "game" ** "*.js"
+  ),
   "javascripts/site.js" -> group(
     (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+      (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "site" ** "*.js" +++
       (resourceManaged in define in Assets).value / "templates" / "site" ** "*.js"
   ),
