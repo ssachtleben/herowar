@@ -61,29 +61,30 @@ Concat.srcDirs := Seq(
   (resourceDirectory in Assets).value)
 
 Concat.groups := Seq(
-  "javascripts/as.js" -> group(
-    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "javascripts" / "admin" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "templates" / "admin" ** "*.js"
-  ),
-  "javascripts/es.js" -> group(
-    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "javascripts" / "editor" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "templates" / "editor" ** "*.js"
-  ),
-  "javascripts/gs.js" -> group(
-    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "javascripts" / "game" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "templates" / "game" ** "*.js"
-  ),
+//  "javascripts/as.js" -> group(
+//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "javascripts" / "admin" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "templates" / "admin" ** "*.js"
+//  ),
+//  "javascripts/es.js" -> group(
+//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "javascripts" / "editor" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "templates" / "editor" ** "*.js"
+//  ),
+//  "javascripts/gs.js" -> group(
+//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "javascripts" / "game" ** "*.js" +++
+//      (resourceManaged in define in Assets).value / "templates" / "game" ** "*.js"
+//  ),
   "javascripts/ss.js" -> group(
-    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
       (resourceManaged in define in Assets).value / "javascripts" / "site" ** "*.js" +++
-      (resourceManaged in define in Assets).value / "templates" / "site" ** "*.js"
+      (resourceManaged in define in Assets).value / "templates" / "site" ** "*.js" +++
+      (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "start.js"
   ),
   "javascripts/al.min.js" -> group(
     (resourceDirectory in Assets).value / "javascripts" / "libs" / "admin" ** "*.js"

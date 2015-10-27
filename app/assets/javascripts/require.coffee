@@ -53,8 +53,3 @@
 				if typeof content is 'function' then content() else true
 				
 ).call this
-
-###
-		Initialize our application on document ready.
-###
-$ -> (require 'application').start()
