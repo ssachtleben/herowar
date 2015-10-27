@@ -24,8 +24,6 @@ resolvers += Resolver.url("ssachtleben repository (snapshots)", url("http://ssac
 
 resolvers += "Apache Development Snapshot Repository" at "https://repository.apache.org/content/repositories/snapshots/"
 
-
-
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
@@ -40,6 +38,8 @@ includeFilter in filter := "*.coffee" || "*.less" || ".tmpl"
 includeFilter in (Assets, LessKeys.less) := "admin.less" | "editor.less" | "game.less" | "site.less"
 
 includeFilter in uglify := "*app.js"
+
+excludeFilter in define := "*require.js"
 
 LessKeys.sourceMap := false
 
@@ -62,22 +62,25 @@ Concat.srcDirs := Seq(
 
 Concat.groups := Seq(
 //  "javascripts/as.js" -> group(
-//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require.js" +++
 //      (resourceManaged in define in Assets).value / "javascripts" / "shared" ** "*.js" +++
 //      (resourceManaged in define in Assets).value / "javascripts" / "admin" ** "*.js" +++
-//      (resourceManaged in define in Assets).value / "templates" / "admin" ** "*.js"
+//      (resourceManaged in define in Assets).value / "templates" / "admin" ** "*.js" +++
+//      (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "start.js"
 //  ),
 //  "javascripts/es.js" -> group(
-//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require.js" +++
 //      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
 //      (resourceManaged in define in Assets).value / "javascripts" / "editor" ** "*.js" +++
-//      (resourceManaged in define in Assets).value / "templates" / "editor" ** "*.js"
+//      (resourceManaged in define in Assets).value / "templates" / "editor" ** "*.js" +++
+//      (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "start.js"
 //  ),
 //  "javascripts/gs.js" -> group(
-//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require" ** "*.js" +++
+//    (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require.js" +++
 //      (resourceManaged in define in Assets).value / "javascripts" / "engine" ** "*.js" +++
 //      (resourceManaged in define in Assets).value / "javascripts" / "game" ** "*.js" +++
-//      (resourceManaged in define in Assets).value / "templates" / "game" ** "*.js"
+//      (resourceManaged in define in Assets).value / "templates" / "game" ** "*.js" +++
+//      (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "start.js"
 //  ),
   "javascripts/ss.js" -> group(
     (resourceManaged in CoffeeScriptKeys.coffeescript in Assets).value / "javascripts" / "require.js" +++
@@ -99,6 +102,5 @@ Concat.groups := Seq(
     (resourceDirectory in Assets).value / "javascripts" / "libs" / "site" ** "*.js"
   )
 )
-
 
 fork in run := true
