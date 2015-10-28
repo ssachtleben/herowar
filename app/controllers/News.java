@@ -2,6 +2,7 @@ package controllers;
 
 import play.data.Form;
 import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 import static play.libs.Json.toJson;
@@ -12,6 +13,7 @@ public class News extends BaseAPI<Long, models.News> {
         super(Long.class, models.News.class);
     }
 
+    @Transactional
     public Result list() {
         return listAll();
     }
