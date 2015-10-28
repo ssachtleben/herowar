@@ -18,7 +18,6 @@ public class LinkedAccountDAO extends BaseDAO<Long, LinkedService> {
       super(Long.class, LinkedService.class);
    }
 
-
    public LinkedService find(final String key, final String userId) {
       CriteriaBuilder builder = this.getCriteriaBuilder();
       CriteriaQuery<LinkedService> q = this.getCriteria();
@@ -55,4 +54,5 @@ public class LinkedAccountDAO extends BaseDAO<Long, LinkedService> {
       JPA.em().persist(linkedService);
       return linkedService;
    }
+
 }

@@ -12,6 +12,7 @@ find . "" -exec grep -I -H --color='auto' -P -n "[\x80-\xFF]" {} \;
 
 *** New
 
+- Remove comment out of match result in me api show method
 - Replace GlobalSettings with Play 2.4 functionality
 
 *** Old

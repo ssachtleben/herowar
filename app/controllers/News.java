@@ -8,7 +8,7 @@ import static play.libs.Json.toJson;
 
 public class News extends BaseAPI<Long, models.News> {
 
-    private News() {
+    public News() {
         super(Long.class, models.News.class);
     }
 

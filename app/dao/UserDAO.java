@@ -12,20 +12,23 @@ import play.db.jpa.JPA;
 import java.util.Collections;
 import java.util.Date;
 
-
 /**
+ * Handles all database queries for the {@link User} entity.
+ *
  * @author Alexander Wilhelmer
+ * @author Sebastian Sachtleben
  */
 public class UserDAO extends BaseDAO<Long, User> {
+
    @Inject
    private SecurityRoleDAO securityRoleDAO;
+
    @Inject
    private LinkedAccountDAO linkedAccountDAO;
 
    public UserDAO() {
       super(Long.class, User.class);
    }
-
 
    public User findByEmail(String email) {
       return getSingleByPropertyValue("email", email);
@@ -74,7 +77,6 @@ public class UserDAO extends BaseDAO<Long, User> {
    public void delete(User user) {
       JPA.em().remove(user);
    }
-
 
    public User findByUsername(final String username) {
       return getSingleByPropertyValue("username", username);
