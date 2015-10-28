@@ -34,27 +34,27 @@ find . "" -exec grep -I -H --color='auto' -P -n "[\x80-\xFF]" {} \;
 
 **Intial project import**
 
-1) Go to the application folder
-2) Run play, the SBT prompt should show up
-3) Type compile to pre-compile the app
-4) Then type eclipse to generate the eclipse project files
-5) Open eclipse
-6) Select File -> Import… -> Existing projects into Workspace
-7) Pick your application folder and click Finish.
+1. Go to the application folder
+2. Run play, the SBT prompt should show up
+3. Type compile to pre-compile the app
+4. Then type eclipse to generate the eclipse project files
+5. Open eclipse
+6. Select File -> Import… -> Existing projects into Workspace
+7. Pick your application folder and click Finish.
 
 **Fix compilation issues**
 
-1) Right click on the project, select Properties then Java Build Path
-2) In the Libraries tab, click Add Class Folder…
-3) Check target/scala-2.9.1/classes and target/scala-2.9.1/classes_managed
-4) Back in Java Build Path click Add external JARs…
-5) Select play\repository\local\org.scala-lang\scala-library\2.9.1\jars\scala-library.jar
+1. Right click on the project, select Properties then Java Build Path
+2. In the Libraries tab, click Add Class Folder…
+3. Check target/scala-2.9.1/classes and target/scala-2.9.1/classes_managed
+4. Back in Java Build Path click Add external JARs…
+5. Select play\repository\local\org.scala-lang\scala-library\2.9.1\jars\scala-library.jar
 
 **Updated dependencies**
 
-1) Go to the application folder
-2) Run play, the SBT prompt should show up
-3) Then type eclipse to generate the eclipse project files
+1. Go to the application folder
+2. Run play, the SBT prompt should show up
+3. Then type eclipse to generate the eclipse project files
 
 
 #### Section: Json API
@@ -64,8 +64,11 @@ The json api is located under /api and allows the to get informations from datab
 These api errors could occur:
 
 **80000 - Form validation failed**
+
 The form validation failed for some reason, more detailed information will be send in body object.
+
 **80010 - Username/Password is incorrect**
+
 This error can be caused by an incorrect username or password.
 
 
