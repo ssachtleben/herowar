@@ -8,6 +8,7 @@ import play.mvc.Result;
 
 
 public class Signin extends BaseController {
+
    @SuppressWarnings("rawtypes")
    public Result url(final String provider) {
       final BaseOAuthProvider p = (BaseOAuthProvider) Providers.get(provider);
@@ -41,6 +42,5 @@ public class Signin extends BaseController {
       log().warn("Login via " + provider + " failed");
       return redirect(routes.Application.index());
    }
-
 
 }

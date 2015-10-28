@@ -2,13 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+########## SITE ###########
+
 GET     /                           controllers.Application.index()
+GET     /signup                     controllers.Application.index()
+# Next two routes will be created by facebook return, seems its not changable ...
 GET     /#_=_                       controllers.Application.index()
 GET     /_=_                        controllers.Application.index()
 
-
-#Signin routes
 GET     /login                      controllers.Signin.login()
 GET     /login/:provider		      controllers.Signin.auth(provider: String)
 POST    /login/:provider		      controllers.Signin.auth(provider: String)
@@ -23,12 +24,20 @@ GET     /logout                     controllers.Signin.logout()
 ########## API ###########
 
 GET     /api/me                     controllers.Me.show()
+POST    /api/checkUsername/:name    controllers.Me.checkUsername(name: String)
+POST    /api/checkEmail/:email      controllers.Me.checkEmail(email: String)
 
 GET     /api/news/all               controllers.News.list()
 GET     /api/news/:id               controllers.News.show(id: Long)
 PUT     /api/news/:id               controllers.News.update(id: Long)
 DELETE  /api/news/:id               controllers.News.delete(id: Long)
 POST    /api/news                   controllers.News.add()
+
+GET     /api/user/all               controllers.Users.list()
+GET     /api/user/:id               controllers.Users.show(id: Long)
+PUT     /api/user/:id               controllers.Users.update(id: Long)
+DELETE  /api/user/:id               controllers.Users.delete(id: Long)
+POST    /api/user                   controllers.Users.add()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

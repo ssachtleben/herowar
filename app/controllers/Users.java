@@ -9,14 +9,23 @@ import java.util.UUID;
 import static play.libs.Json.toJson;
 
 /**
+ * Handles all api routes for the {@link models.User} entity.
+ *
  * @author Alexander Wilhelmer
+ * @author Sebastian Sachtleben
  */
 public class Users extends BaseAPI<Long, Users> {
 
-   private Users() {
+   /**
+    * Default constructor to allow injections.
+    */
+   public Users() {
       super(Long.class, Users.class);
    }
 
+   /**
+    * Creates a new session id if not exists and saves in the session scope.
+    */
    public void updateSessionId() {
       if (!session().containsKey("sid")) {
          final String sessionId = UUID.randomUUID().toString();
@@ -24,15 +33,28 @@ public class Users extends BaseAPI<Long, Users> {
       }
    }
 
+   /**
+    * Creates a new session id if not exists, saves in the session scope and returns the id.
+    *
+    * @return The session id
+    */
    public String getSessionId() {
+      updateSessionId();
       return session("sid");
    }
 
+   /**
+    * Update the {@link models.User} entity from the data from the request.
+    * TODO: permissions check ?!?
+    *
+    * @param id
+    *             The id of the user (is taken from the request?!?)
+    * @return The user as json object.
+    */
    @Transactional
-   public Result update(Long id) {
+   public Result update(final Long id) {
       Users user = this.merge(Form.form(Users.class).bindFromRequest().get());
       return ok(toJson(user));
    }
-
 
 }
