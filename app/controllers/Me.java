@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dao.EmailDAO;
 import dao.UserDAO;
 import models.User;
 import play.Logger;
@@ -21,6 +22,9 @@ import static play.libs.Json.toJson;
 public class Me extends Controller {
 
     private static final Logger.ALogger log = Logger.of(Me.class);
+
+    @Inject
+    EmailDAO emailDAO;
 
     @Inject
     UserDAO userDAO;
@@ -66,7 +70,7 @@ public class Me extends Controller {
      */
     @Transactional
     public Result checkEmail(String email) {
-        return ok(toJson(userDAO.findByEmail(email) != null));
+        return ok(toJson(emailDAO.findByAddress(email) != null));
     }
 
 }

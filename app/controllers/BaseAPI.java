@@ -105,6 +105,17 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
       return ok(toJson(obj));
    }
 
+   /**
+    * Checks if the entity with the given id exists.
+    * TODO: refactor this to proper check with count...
+    *
+    * @param id
+    *             The id to check.
+    * @return exists boolean
+    */
+   public boolean exists(K id) {
+      return find(id) != null;
+   }
 
    protected List<T> get() {
       CriteriaQuery<T> query = getCriteria();
