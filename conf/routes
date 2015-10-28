@@ -10,17 +10,25 @@ GET     /_=_                        controllers.Application.index()
 
 #Signin routes
 GET     /login                      controllers.Signin.login()
-GET     /login/:provider		    controllers.Signin.auth(provider: String)
-POST    /login/:provider		    controllers.Signin.auth(provider: String)
-GET     /login/:provider/auth		controllers.Signin.auth(provider: String)
-POST    /login/:provider/auth	    controllers.Signin.auth(provider: String)
+GET     /login/:provider		      controllers.Signin.auth(provider: String)
+POST    /login/:provider		      controllers.Signin.auth(provider: String)
+GET     /login/:provider/auth		   controllers.Signin.auth(provider: String)
+POST    /login/:provider/auth	      controllers.Signin.auth(provider: String)
 GET     /login/:provider/url        controllers.Signin.url(provider: String)
 GET     /login/:provider/success    controllers.Signin.success(provider: String)
 GET     /login/:provider/error      controllers.Signin.error(provider: String)
 GET     /logout                     controllers.Signin.logout()
 
 
-#API routes TODO
+########## API ###########
+
+GET     /api/me                     controllers.Me.show()
+
+GET     /api/news/all               controllers.News.list()
+GET     /api/news/:id               controllers.News.show(id: Long)
+PUT     /api/news/:id               controllers.News.update(id: Long)
+DELETE  /api/news/:id               controllers.News.delete(id: Long)
+POST    /api/news                   controllers.News.add()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

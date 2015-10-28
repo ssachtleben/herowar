@@ -9,10 +9,9 @@ import play.mvc.Result;
 import views.html.index;
 
 public class Application extends BaseController {
+
    public static final String USER_ROLE = "user";
    public static final String ADMIN_ROLE = "admin";
-
-
 
    public Result index() {
       return ok(index.render());
@@ -28,4 +27,5 @@ public class Application extends BaseController {
    public static User getLocalUser() {
       return getLocalUser(session());
    }
+
 }
