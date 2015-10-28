@@ -12,9 +12,9 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 
-public class LinkedAccountDAO extends BaseDAO<Long, LinkedService> {
+public class LinkedServiceDAO extends BaseDAO<Long, LinkedService> {
 
-   public LinkedAccountDAO() {
+   public LinkedServiceDAO() {
       super(Long.class, LinkedService.class);
    }
 

@@ -23,7 +23,7 @@ public class UserDAO extends BaseDAO<Long, User> {
    private SecurityRoleDAO securityRoleDAO;
 
    @Inject
-   private LinkedAccountDAO linkedAccountDAO;
+   private LinkedServiceDAO linkedAccountDAO;
 
    public UserDAO() {
       super(Long.class, User.class);
@@ -78,7 +78,7 @@ public class UserDAO extends BaseDAO<Long, User> {
       user.setEmailValidated(false);
       user.setUsername(username);
       JPA.em().persist(user);
-      // user.setLinkedServices(Collections.singletonList(linkedAccountDAO.create(Application.USER_ROLE, identity, user)));
+      user.setLinkedServices(Collections.singleton(linkedAccountDAO.create(identity.provider(), identity.id(), user)));
       Logger.info("Saved new user " + user.getUsername());
       return user;
    }

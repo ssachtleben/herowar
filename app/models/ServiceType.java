@@ -5,6 +5,6 @@ package models;
 */
 public enum ServiceType {
 
-   FACEBOOK, SOUNDCLOUD;
+   FACEBOOK, SOUNDCLOUD, EMAIL;
 
 }
