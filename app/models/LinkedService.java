@@ -19,6 +19,7 @@ public class LinkedService extends BaseModel implements Serializable {
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
 
+   @Enumerated(value = EnumType.STRING)
    private ServiceType type;
 
    private String identifier;
