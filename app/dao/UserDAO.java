@@ -1,11 +1,10 @@
 package dao;
 
 import com.google.inject.Inject;
-import com.ssachtleben.play.plugin.auth.models.Identity;
+import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
 import controllers.Application;
 import models.Email;
 import models.User;
-import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import play.db.jpa.JPA;
 
@@ -49,27 +48,37 @@ public class UserDAO extends BaseDAO<Long, User> {
       return countSingleByPropertyValue("username", username) > 0;
    }
 
-   public User create(final Identity identity, final String emailAddress, final String username, final String password, String avatar) {
+   public User create(final PasswordEmailAuthUser identity, final String username, final String firstName, final String lastName) {
+      return create(identity, username, firstName, lastName, null);
+   }
+
+   public User create(final PasswordEmailAuthUser identity, final String username, final String firstName, final String lastName, String userRole) {
       final User user = new User();
-      user.setRoles(Collections.singletonList(securityRoleDAO.findByRoleName(Application.USER_ROLE)));
+      if (userRole == null)
+         userRole = Application.USER_ROLE;
+      user.setRoles(Collections.singleton(securityRoleDAO.findByRoleName(userRole)));
       user.setActive(true);
       user.setLastLogin(new Date());
-      if (StringUtils.isNotBlank(avatar)) {
-         user.setAvatar(avatar);
+      user.setFirstName(firstName);
+      user.setLastName(lastName);
+      user.setPassword(identity.hashedPassword());
+      if (!identity.data().isNull()) {
+         if (identity.data().get("avatar") != null)
+            user.setAvatar(identity.data().get("avatar").textValue());
       }
 
       final Email email = new Email();
-      email.setAddress(emailAddress);
+      email.setAddress(identity.email());
       email.setMain(true);
       email.setConfirmed(true);
       email.setUser(user);
+
       user.getEmails().add(email);
 
-      //user.setEmail(email);
       user.setEmailValidated(false);
       user.setUsername(username);
       JPA.em().persist(user);
-      //user.setLinkedServices(Collections.singletonList(linkedAccountDAO.create(Application.USER_ROLE, identity, user)));
+      // user.setLinkedServices(Collections.singletonList(linkedAccountDAO.create(Application.USER_ROLE, identity, user)));
       Logger.info("Saved new user " + user.getUsername());
       return user;
    }

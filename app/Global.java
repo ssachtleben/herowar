@@ -1,3 +1,4 @@
+import jobs.BaseImporter;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -14,27 +15,29 @@ import java.lang.reflect.Method;
  * @author Alexander Wilhelmer
  */
 public class Global extends GlobalSettings {
-   private static final Logger.ALogger log = Logger.of(Global.class);
+    private static final Logger.ALogger log = Logger.of(Global.class);
 
-   public Action<?> onRequest(Request request, Method actionMethod) {
-      System.out.println("before each request..." + request.toString());
-      return super.onRequest(request, actionMethod);
-   }
+    public Action<?> onRequest(Request request, Method actionMethod) {
+        System.out.println("before each request..." + request.toString());
+        return super.onRequest(request, actionMethod);
+    }
 
-   @Override
-   public void onStart(Application app) {
-      JPA.withTransaction(new F.Callback0() {
-         @Override
-         public void invoke() throws Throwable {
-            log.info("First JPA call");
-         }
-      });
-      log.info("Herowar stated");
-   }
+    @Override
+    public void onStart(Application app) {
+        JPA.withTransaction(new F.Callback0() {
+            @Override
+            public void invoke() throws Throwable {
+                log.info("First JPA call");
+            }
+        });
+        BaseImporter importer = new BaseImporter();
+        importer.run();
+        log.info("Herowar stated");
+    }
 
-   @Override
-   public void onStop(Application app) {
-      log.info("Herowar shutdown...");
+    @Override
+    public void onStop(Application app) {
+        log.info("Herowar shutdown...");
 
-   }
+    }
 }

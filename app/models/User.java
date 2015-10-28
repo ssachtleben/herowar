@@ -5,12 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
- * @author Sebastian Sachtleben
+ * @author Alexander Wilhelmer
  */
 @Entity
 @Table(name = "users")
@@ -27,6 +25,8 @@ public class User extends BaseModel implements Serializable {
    private String lastName;
    @NotNull
    private String firstName;
+   @NotNull
+   private String password;
 
    private boolean newsletter = false;
 
@@ -45,19 +45,20 @@ public class User extends BaseModel implements Serializable {
    @JsonIgnore
    private Date lastLogin = null;
 
-   @OneToMany(mappedBy = "user")
-   private List<Email> emails;
+
+   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+   private Set<Email> emails;
 
    @OneToMany(mappedBy = "user")
-   private List<LinkedService> linkedServices;
+   private Set<LinkedService> linkedServices;
 
    @ManyToMany(cascade = CascadeType.ALL)
    @JsonIgnore
-   private List<UserPermission> permissions;
-   @ManyToMany(cascade = CascadeType.ALL)
+   private Set<UserPermission> permissions;
 
+   @ManyToMany(cascade = CascadeType.ALL)
    @JsonIgnore
-   private List<SecurityRole> roles;
+   private Set<SecurityRole> roles;
 
    public Long getId() {
       return id;
@@ -147,42 +148,53 @@ public class User extends BaseModel implements Serializable {
       this.lastLogin = lastLogin;
    }
 
-   public List<Email> getEmails() {
+   public Set<Email> getEmails() {
+      if (emails == null)
+         emails = new HashSet<Email>();
       return emails;
    }
 
-   public void setEmails(List<Email> emails) {
+   public void setEmails(Set<Email> emails) {
       this.emails = emails;
    }
 
-   public List<LinkedService> getLinkedServices() {
+   public Set<LinkedService> getLinkedServices() {
       return linkedServices;
    }
 
-   public void setLinkedServices(List<LinkedService> linkedServices) {
+   public void setLinkedServices(Set<LinkedService> linkedServices) {
       this.linkedServices = linkedServices;
    }
 
 
-   public List<SecurityRole> getRoles() {
+   public Set<SecurityRole> getRoles() {
+      if (roles == null)
+         roles = new HashSet<SecurityRole>();
       return roles;
    }
 
-   public void setRoles(List<SecurityRole> roles) {
+   public void setRoles(Set<SecurityRole> roles) {
       this.roles = roles;
    }
 
-   public List<UserPermission> getPermissions() {
+   public Set<UserPermission> getPermissions() {
       if (permissions == null)
-         permissions = new ArrayList<UserPermission>();
+         permissions = new HashSet<UserPermission>();
       return permissions;
    }
 
-   public void setPermissions(List<UserPermission> permissions) {
+   public void setPermissions(Set<UserPermission> permissions) {
       //TODO
       this.permissions = permissions;
    }
 
+   public String getPassword() {
+      return password;
+   }
+
+   public void setPassword(String password) {
+      this.password = password;
+   }
 
    @Override
    public String toString() {

@@ -13,6 +13,8 @@ public class Application extends BaseController {
    public static final String USER_ROLE = "user";
    public static final String ADMIN_ROLE = "admin";
 
+   public static String[] roles = {USER_ROLE, ADMIN_ROLE};
+
    public Result index() {
       return ok(index.render());
    }
