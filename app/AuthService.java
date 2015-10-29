@@ -54,7 +54,7 @@ public class AuthService extends Controller {
     }
 
     public static Object handleLogin(final Identity identity, final String emailAddress, final String username, final String avatar) {
-        log.debug(String.format("handleLogin [identity=%s, email=%s, username=%s, avatar=%s]", identity, emailAddress, username, avatar));
+        log.info(String.format("handleLogin [identity=%s, email=%s, username=%s, avatar=%s]", identity, emailAddress, username, avatar));
         User user = Application.getLocalUser();
         final LinkedServiceDAO linkedServiceDAO = Play.application().injector().instanceOf(LinkedServiceDAO.class);
         LinkedService linkedService = linkedServiceDAO.find(identity.provider(), identity.id());
