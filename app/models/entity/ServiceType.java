@@ -1,4 +1,4 @@
-package models;
+package models.entity;
 
 /*
 * @author Sebastian Sachtleben

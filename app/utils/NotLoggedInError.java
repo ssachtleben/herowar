@@ -1,4 +1,6 @@
-package models;
+package utils;
+
+import models.ApiError;
 
 public class NotLoggedInError extends ApiError {
 

@@ -1,4 +1,4 @@
-package models;
+package models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints.Required;

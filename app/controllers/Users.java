@@ -1,5 +1,6 @@
 package controllers;
 
+import models.entity.User;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
@@ -9,7 +10,7 @@ import java.util.UUID;
 import static play.libs.Json.toJson;
 
 /**
- * Handles all api routes for the {@link models.User} entity.
+ * Handles all api routes for the {@link User} entity.
  *
  * @author Alexander Wilhelmer
  * @author Sebastian Sachtleben
@@ -44,7 +45,7 @@ public class Users extends BaseAPI<Long, Users> {
    }
 
    /**
-    * Update the {@link models.User} entity from the data from the request.
+    * Update the {@link User} entity from the data from the request.
     * TODO: permissions check ?!?
     *
     * @param id

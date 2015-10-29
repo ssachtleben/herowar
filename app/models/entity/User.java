@@ -1,6 +1,7 @@
-package models;
+package models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import models.UserPermission;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

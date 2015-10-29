@@ -3,7 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.EmailDAO;
 import dao.UserDAO;
-import models.User;
+import models.entity.User;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;

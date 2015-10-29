@@ -2,7 +2,7 @@ package controllers;
 
 import com.ssachtleben.play.plugin.auth.Auth;
 import dao.UserDAO;
-import models.User;
+import models.entity.User;
 import org.apache.commons.lang3.math.NumberUtils;
 import play.mvc.Http;
 import play.mvc.Result;

@@ -1,4 +1,4 @@
-package models;
+package models.entity.game;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
+import models.entity.BaseModel;
 import org.hibernate.annotations.Type;
 
 /**

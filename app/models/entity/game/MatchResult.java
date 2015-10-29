@@ -1,4 +1,4 @@
-package models;
+package models.entity.game;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

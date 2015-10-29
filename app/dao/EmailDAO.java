@@ -1,6 +1,6 @@
 package dao;
 
-import models.Email;
+import models.entity.Email;
 
 /**
  * Handles all database queries for the {@link Email} entity.

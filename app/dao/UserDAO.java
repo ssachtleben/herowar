@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
 import controllers.Application;
-import models.Email;
-import models.User;
+import models.entity.Email;
+import models.entity.User;
 import play.Logger;
 import play.db.jpa.JPA;
 

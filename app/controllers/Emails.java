@@ -1,6 +1,6 @@
 package controllers;
 
-import models.Email;
+import models.entity.Email;
 
 /**
  * @author Alexander Wilhelmer
@@ -8,7 +8,7 @@ import models.Email;
 public class Emails extends BaseAPI<Long, Email> {
 
    public Emails() {
-      super(Long.class, models.Email.class);
+      super(Long.class, Email.class);
    }
 
 }

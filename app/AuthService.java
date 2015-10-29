@@ -1,5 +1,5 @@
-import models.LinkedService;
-import models.User;
+import models.entity.LinkedService;
+import models.entity.User;
 
 import org.apache.commons.lang3.StringUtils;
 

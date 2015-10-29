@@ -1,9 +1,8 @@
 package dao;
 
-import models.LinkedService;
-import models.ServiceType;
-import models.User;
-import org.apache.commons.lang3.StringUtils;
+import models.entity.LinkedService;
+import models.entity.ServiceType;
+import models.entity.User;
 import play.db.jpa.JPA;
 
 import javax.persistence.NoResultException;
