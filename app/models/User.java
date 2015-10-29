@@ -21,10 +21,11 @@ public class User extends BaseModel implements Serializable {
 
    @NotNull
    private String username;
-   @NotNull
+
    private String lastName;
-   @NotNull
+
    private String firstName;
+
    @NotNull
    private String password;
 

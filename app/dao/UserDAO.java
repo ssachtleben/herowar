@@ -1,5 +1,6 @@
 package dao;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
 import controllers.Application;
@@ -46,6 +47,10 @@ public class UserDAO extends BaseDAO<Long, User> {
 
    public boolean existsUsername(String username) {
       return countSingleByPropertyValue("username", username) > 0;
+   }
+
+   public User create(final String username, final String email, final String avatar) {
+      return create(new PasswordEmailAuthUser(email, null, new ObjectMapper().createObjectNode()), username, null, null);
    }
 
    public User create(final PasswordEmailAuthUser identity, final String username, final String firstName, final String lastName) {

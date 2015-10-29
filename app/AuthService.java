@@ -47,8 +47,12 @@ public class AuthService extends Controller {
         if (userId != null) {
             final LinkedServiceDAO linkedServiceDAO = Play.application().injector().instanceOf(LinkedServiceDAO.class);
             final LinkedService linkedService = linkedServiceDAO.find(identity.provider(), identity.id());
-            linkedService.setLink(data.get("link").asText());
-            linkedService.setName(data.get("first_name").asText() + " " + data.get("last_name").asText());
+            if (data.has("link")) {
+                linkedService.setLink(data.get("link").asText());
+            }
+            if (data.has("first_name") && data.has("last_name")) {
+                linkedService.setName(data.get("first_name").asText() + " " + data.get("last_name").asText());
+            }
         }
         return userId;
     }
@@ -64,7 +68,7 @@ public class AuthService extends Controller {
             if (username != null) {
                 if (user == null) {
                     final UserDAO userDAO = Play.application().injector().instanceOf(UserDAO.class);
-                    //user = userDAO.create(username, emailAddress, avatar);
+                    user = userDAO.create(username, emailAddress, avatar);
                     log.debug(String.format("Created new user: %s", user));
                 }
                 linkedService = linkedServiceDAO.create(identity.provider(), identity.id(), user);
@@ -90,8 +94,8 @@ public class AuthService extends Controller {
      *
      * @param authIdentity
      *            The OAuthAuthUser identity.
-     * @param linkedService
-     *            The current used LinkedService.
+     * @param linkedServiceId
+     *            The current used linkedServiceId.
      */
     private static void updateAccessToken(final OAuthAuthUser authIdentity, final Long linkedServiceId) {
 //        final LinkedService linkedService = Ebean.find(LinkedService.class, linkedServiceId);
