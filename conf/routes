@@ -6,6 +6,7 @@
 
 GET     /                           controllers.Application.index()
 GET     /signup                     controllers.Application.index()
+GET     /play                       controllers.Application.index()
 # Next two routes will be created by facebook return, seems its not changable ...
 GET     /#_=_                       controllers.Application.index()
 GET     /_=_                        controllers.Application.index()
@@ -32,6 +33,12 @@ GET     /api/news/:id               controllers.News.show(id: Long)
 PUT     /api/news/:id               controllers.News.update(id: Long)
 DELETE  /api/news/:id               controllers.News.delete(id: Long)
 POST    /api/news                   controllers.News.add()
+
+GET     /api/game/map/all           controllers.Maps.list()
+GET     /api/game/map/:id           controllers.Maps.show(id: Long)
+PUT     /api/game/map/:id           controllers.Maps.update(id: Long)
+DELETE  /api/game/map/:id           controllers.Maps.delete(id: Long)
+POST    /api/game/map               controllers.Maps.add()
 
 GET     /api/user/all               controllers.Users.list()
 GET     /api/user/:id               controllers.Users.show(id: Long)
