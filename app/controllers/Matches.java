@@ -1,6 +1,11 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.Inject;
+import dao.MapDAO;
+import dao.MatchDAO;
+import dao.MatchResultDAO;
+import dao.MeshDAO;
 import json.excludes.MatchExcludeMapDataMixin;
 import json.excludes.MatchResultSimpleMixin;
 import json.excludes.PlayerWithUsernameMixin;
@@ -14,8 +19,11 @@ import play.mvc.Result;
 import utils.NotLoggedInError;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import static play.libs.Json.toJson;
 
 /**
  * The Matches controller handle api requests for the Match model.
@@ -25,19 +33,34 @@ import java.util.List;
 public class Matches extends BaseAPI<Long, Match> {
    private static final Logger.ALogger log = Logger.of(Matches.class);
 
+   @Inject
+   private MatchTokenDAO matchTokenDAO;
+
+   @Inject
+   private MeshDAO meshDAO;
+
+   @Inject
+   private MatchDAO matchDAO;
+
+   @Inject
+   private MapDAO mapDAO;
+
+   @Inject
+   private MatchResultDAO matchResultDAO;
+
+
    public Matches() {
       super(Long.class, Match.class);
    }
 
-   public static final Matches instance = new Matches();
 
    @Transactional
-   public  Result find() {
+   public Result find() {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
-      MatchToken token = MatchTokenDAO.findValid(user.getPlayer());
+      MatchToken token = matchTokenDAO.findValid(user.getPlayer());
       if (token != null) {
          return ok(toJson(token));
       }
@@ -45,15 +68,15 @@ public class Matches extends BaseAPI<Long, Match> {
    }
 
    @Transactional
-   public  Result show(Long id) {
+   public Result show(Long id) {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
-      Match match = MatchDAO.getInstance().getById(id);
+      Match match = matchDAO.getById(id);
       ObjectMapper mapper = new ObjectMapper();
-      mapper.getSerializationConfig().(Player.class, PlayerWithUsernameMixin.class);
-      mapper.getSerializationConfig().addMixInAnnotations(Map.class, MatchExcludeMapDataMixin.class);
+      mapper.addMixIn(Player.class, PlayerWithUsernameMixin.class);
+      mapper.addMixIn(Map.class, MatchExcludeMapDataMixin.class);
       try {
          return ok(mapper.writeValueAsString(match));
       } catch (IOException e) {
@@ -65,18 +88,17 @@ public class Matches extends BaseAPI<Long, Match> {
    /**
     * Create a new match for the given map id and returns the map as json.
     *
-    * @param mapId
-    *          The mapId to set.
+    * @param mapId The mapId to set.
     * @return The match as json.
     */
    @Transactional
-   public static Result create(Long mapId) {
+   public Result create(Long mapId) {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
 
-      Map map = MapDAO.getMapById(mapId);
+      Map map = mapDAO.getMapById(mapId);
       if (map == null) {
          return badRequest();
       }
@@ -87,7 +109,7 @@ public class Matches extends BaseAPI<Long, Match> {
       JPA.em().persist(match);
 
       ObjectMapper mapper = new ObjectMapper();
-      mapper.getSerializationConfig().addMixInAnnotations(Map.class, MatchExcludeMapDataMixin.class);
+      mapper.addMixIn(Map.class, MatchExcludeMapDataMixin.class);
       try {
          return ok(mapper.writeValueAsString(match));
       } catch (IOException e) {
@@ -97,12 +119,12 @@ public class Matches extends BaseAPI<Long, Match> {
    }
 
    @Transactional
-   public static Result start(Long id) {
+   public Result start(Long id) {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
-      Match match = MatchDAO.getInstance().getById(id);
+      Match match = matchDAO.getById(id);
       match.setState(MatchState.PRELOAD);
       return ok(toJson(match));
    }
@@ -110,17 +132,16 @@ public class Matches extends BaseAPI<Long, Match> {
    /**
     * Join a match with given id.
     *
-    * @param id
-    *          The id to set.
+    * @param id The id to set.
     * @return The token as json.
     */
    @Transactional
-   public static Result join(Long id) {
+   public Result join(Long id) {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
-      Match match = MatchDAO.getInstance().getById(id);
+      Match match = matchDAO.getById(id);
       if (match == null || !MatchState.INIT.equals(match.getState())) {
          log.error("User " + user.getUsername() + " tried to join not existing match or a match without INIT state.");
          return badRequest();
@@ -144,12 +165,12 @@ public class Matches extends BaseAPI<Long, Match> {
    }
 
    @Transactional
-   public static Result joinMatch() {
+   public Result joinMatch() {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
-      Match match = MatchDAO.getInstance().getOpenMatch();
+      Match match = matchDAO.getOpenMatch();
       if (match != null) {
          return ok(toJson(match));
       }
@@ -157,12 +178,12 @@ public class Matches extends BaseAPI<Long, Match> {
    }
 
    @Transactional
-   public static Result quit() {
+   public Result quit() {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
-      List<MatchResult> matchResults = MatchResultDAO.findOpen(user.getPlayer());
+      List<MatchResult> matchResults = matchResultDAO.findOpen(user.getPlayer());
       Iterator<MatchResult> iter = matchResults.iterator();
       while (iter.hasNext()) {
          MatchResult result = iter.next();
@@ -190,14 +211,14 @@ public class Matches extends BaseAPI<Long, Match> {
     * @return The game history
     */
    @Transactional
-   public static Result history() {
+   public Result history() {
       User user = Application.getLocalUser();
       if (user == null) {
          return badRequest(toJson(new NotLoggedInError()));
       }
-      List<MatchResult> results = MatchResultDAO.getHistory(user.getPlayer());
+      List<MatchResult> results = matchResultDAO.getHistory(user.getPlayer());
       ObjectMapper mapper = new ObjectMapper();
-      mapper.getSerializationConfig().addMixInAnnotations(MatchResult.class, MatchResultSimpleMixin.class);
+      mapper.addMixIn(MatchResult.class, MatchResultSimpleMixin.class);
       try {
          return ok(mapper.writeValueAsString(results));
       } catch (IOException e) {
