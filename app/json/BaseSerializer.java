@@ -5,11 +5,13 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import models.entity.game.Geometry;
+import models.entity.game.Vector3;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.converters.ArrayConverter;
 import org.apache.commons.beanutils.converters.DoubleConverter;
 import org.apache.commons.beanutils.converters.StringConverter;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.Hibernate;
 import play.Logger;
 

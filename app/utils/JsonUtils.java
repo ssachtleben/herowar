@@ -4,6 +4,7 @@ package utils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JsonNode;
 import json.JsonFieldName;
+import models.entity.game.Vector3;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.hibernate.Hibernate;
@@ -76,7 +77,7 @@ public class JsonUtils {
 
 	@SuppressWarnings("unchecked")
 	public static void parse(Object result, Object parent, JsonNode node, List<Class<?>> classes) {
-		Iterator<String> fieldIt = node.getFieldNames();
+		Iterator<String> fieldIt = node.fieldNames();
 		while (fieldIt.hasNext()) {
 			String field = fieldIt.next();
 			JsonNode fieldNode = node.get(field);
@@ -87,25 +88,26 @@ public class JsonUtils {
 					Object value = null;
 					if (propClass != null) {
 						if (propClass.isAssignableFrom(Double.class)) {
-							value = fieldNode.getDoubleValue();
+
+							value = fieldNode.asDouble();
 						} else if (propClass.isAssignableFrom(String.class)) {
 							if (fieldNode.isArray()) {
 								value = fieldNode.toString();
 							} else {
-								value = fieldNode.getTextValue();
+								value = fieldNode.asText();
 								if (value == null)
 									value = play.libs.Json.stringify(fieldNode);
 							}
 						} else if (propClass.isAssignableFrom(Float.class)) {
-							value = Double.valueOf(fieldNode.getDoubleValue()).floatValue();
+							value = Double.valueOf(fieldNode.asDouble()).floatValue();
 						} else if (propClass.isAssignableFrom(Long.class)) {
-							value = fieldNode.getLongValue();
+							value = fieldNode.asLong();
 						} else if (propClass.isAssignableFrom(Integer.class)) {
-							value = fieldNode.getIntValue();
+							value = fieldNode.asInt();
 						} else if (propClass.isAssignableFrom(Short.class)) {
-							value = Integer.valueOf(fieldNode.getIntValue()).shortValue();
+							value = Integer.valueOf(fieldNode.asInt()).shortValue();
 						} else if (propClass.isAssignableFrom(Boolean.class)) {
-							value = fieldNode.getBooleanValue();
+							value = fieldNode.asBoolean();
 						}
 						// else if (propClass.isAssignableFrom(Date.class)) {
 						// value = new Date(fieldNode.getLongValue());
@@ -113,11 +115,11 @@ public class JsonUtils {
 						else if (propClass.isAssignableFrom(Vector3.class)) {
 							Vector3 vector = new Vector3();
 							if (fieldNode.get("x") != null)
-								vector.setX(fieldNode.get("x").getDoubleValue());
+								vector.setX(fieldNode.get("x").asDouble());
 							if (fieldNode.get("y") != null)
-								vector.setY(fieldNode.get("y").getDoubleValue());
+								vector.setY(fieldNode.get("y").asDouble());
 							if (fieldNode.get("z") != null)
-								vector.setZ(fieldNode.get("z").getDoubleValue());
+								vector.setZ(fieldNode.get("z").asDouble());
 							value = vector;
 						} else if (propClass.isAssignableFrom(List.class) || propClass.isAssignableFrom(Set.class)) {
 							Field javaField = result.getClass().getDeclaredField(field);
@@ -126,7 +128,7 @@ public class JsonUtils {
 							if (classes.contains(genericType)) {
 								Collection<Object> col = (Collection<Object>) PropertyUtils.getProperty(result, field);
 								int currentIndex = 0;
-								Iterator<JsonNode> nodes = fieldNode.getElements();
+								Iterator<JsonNode> nodes = fieldNode.elements();
 								while (nodes.hasNext()) {
 									JsonNode colNode = (JsonNode) nodes.next();
 									Object element = null;
@@ -150,7 +152,7 @@ public class JsonUtils {
 								value = col;
 							}
 						} else if (propClass.isEnum()) {
-							value = fieldNode.getTextValue();
+							value = fieldNode.asText();
 							Class<? extends Enum<?>> enumClass = (Class<? extends Enum<?>>) propClass;
 							Enum<?>[] enums = enumClass.getEnumConstants();
 							for (Enum<?> elem : enums) {
