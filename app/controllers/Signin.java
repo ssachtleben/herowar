@@ -4,6 +4,7 @@ import com.ssachtleben.play.plugin.auth.Auth;
 import com.ssachtleben.play.plugin.auth.Providers;
 import com.ssachtleben.play.plugin.auth.exceptions.AuthenticationException;
 import com.ssachtleben.play.plugin.auth.providers.BaseOAuthProvider;
+import play.db.jpa.Transactional;
 import play.mvc.Result;
 
 
@@ -25,7 +26,9 @@ public class Signin extends BaseController {
       return redirect(routes.Signin.url("facebook"));
    }
 
+   @Transactional
    public Result auth(final String provider) throws AuthenticationException {
+      log().info("Auth for provider: " + provider);
       return Auth.login(ctx(), provider);
    }
 
