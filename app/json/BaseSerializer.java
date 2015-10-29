@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
-import models.entity.game.Geometry;
 import models.entity.game.Vector3;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.converters.ArrayConverter;
@@ -35,12 +34,12 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
    private ArrayConverter arrayDoubleConverter = new ArrayConverter(double[].class, doubleConverter);
    private ArrayConverter arrayStringConverter = new ArrayConverter(String[].class, stringConverter);
 
-   protected void writeAll(JsonGenerator jsonGenerator, Geometry geometry, Class<?>... clazz) throws JsonGenerationException, IOException {
+   protected void writeAll(JsonGenerator jsonGenerator, Object obj, Class<?>... clazz) throws JsonGenerationException, IOException {
       List<Class<?>> classes = Arrays.asList(clazz);
 
-      jgen.writeStartObject();
-      writeObject(jgen, obj, classes);
-      jgen.writeEndObject();
+      jsonGenerator.writeStartObject();
+      writeObject(jsonGenerator, obj, classes);
+      jsonGenerator.writeEndObject();
    }
 
    @SuppressWarnings("unchecked")
