@@ -1,12 +1,14 @@
 package models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import models.UserPermission;
+import models.entity.game.Player;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Alexander Wilhelmer
@@ -60,7 +62,15 @@ public class User extends BaseModel implements Serializable {
 
    @ManyToMany(cascade = CascadeType.ALL)
    @JsonIgnore
+
    private Set<SecurityRole> roles;
+   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   @PrimaryKeyJoinColumn
+   private Player player;
+
+   public User() {
+      this.player = new Player(this);
+   }
 
    public Long getId() {
       return id;
@@ -196,6 +206,14 @@ public class User extends BaseModel implements Serializable {
 
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   public Player getPlayer() {
+      return player;
+   }
+
+   public void setPlayer(Player player) {
+      this.player = player;
    }
 
    @Override

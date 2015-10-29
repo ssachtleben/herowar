@@ -52,7 +52,7 @@ public class Matches extends BaseAPI<Long, Match> {
       }
       Match match = MatchDAO.getInstance().getById(id);
       ObjectMapper mapper = new ObjectMapper();
-      mapper.getSerializationConfig().addMixInAnnotations(Player.class, PlayerWithUsernameMixin.class);
+      mapper.getSerializationConfig().(Player.class, PlayerWithUsernameMixin.class);
       mapper.getSerializationConfig().addMixInAnnotations(Map.class, MatchExcludeMapDataMixin.class);
       try {
          return ok(mapper.writeValueAsString(match));
