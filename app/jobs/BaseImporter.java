@@ -1,5 +1,6 @@
 package jobs;
 
+import jobs.utils.EntityImporter;
 import org.reflections.Reflections;
 import play.Logger;
 
@@ -15,11 +16,13 @@ public class BaseImporter {
 
    public void run() {
       Reflections reflections = new Reflections("jobs");
-      Set<Class<? extends BaseImporter>> classes = reflections.getSubTypesOf(BaseImporter.class);
+      Set<Class<? extends EntityImporter>> classes = reflections.getSubTypesOf(EntityImporter.class);
 
       // TODO implement hyrachie load ...
 
-      for (Class<? extends BaseImporter> clazz : classes) {
+      log.info(String.format("BaseImporter found %s Importer classes", classes.size()));
+
+      for (Class<? extends EntityImporter> clazz : classes) {
          try {
             log.info(String.format("Start Importer Class %s", clazz.getName()));
             clazz.newInstance().run();

@@ -26,11 +26,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.net.URI;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -80,8 +78,8 @@ public abstract class EntityImporter<E extends Serializable> {
    protected abstract void process();
 
 
-   protected void importFromPath(URI uri, boolean recursive) {
-      proccessFiles(Paths.get(uri), null, recursive);
+   protected void importFromPath(Path dir, boolean recursive) {
+      proccessFiles(dir, null, recursive);
    }
 
    private void proccessFiles(Path path, E parent, boolean recursive) {
@@ -91,7 +89,7 @@ public abstract class EntityImporter<E extends Serializable> {
             File file = entry.toFile();
             E entity = createEntry(file, parent);
             updateGeo = false;
-            if (!Files.isDirectory(entry) && recursive) {
+            if (Files.isDirectory(entry) && recursive) {
                proccessFiles(entry, parent, recursive);
                updateGeo = true;
             } else {

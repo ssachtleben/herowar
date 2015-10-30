@@ -4,7 +4,7 @@ import jobs.utils.EntityImporter;
 import models.entity.game.Environment;
 
 import java.io.File;
-import java.net.URI;
+import java.nio.file.Paths;
 
 
 /**
@@ -20,7 +20,7 @@ public class EnvironmentImporter extends EntityImporter<Environment> {
    @Override
    protected void process() {
 
-      this.importFromPath(URI.create("public" + File.separator + "geometries" + File.separator + "environment"), true);
+      this.importFromPath(Paths.get("public" + File.separator + "geometries" + File.separator + "environment"), true);
 
    }
 
