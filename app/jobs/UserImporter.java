@@ -25,6 +25,8 @@ public class UserImporter extends EntityImporter<User> {
    protected void process() {
       initialSecurityRoles();
       createAdminUser();
+      createDummyNews();
+      createLevelRanges();
    }
 
    private void initialSecurityRoles() {

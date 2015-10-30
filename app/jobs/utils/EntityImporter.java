@@ -26,7 +26,14 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.net.URI;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 
@@ -43,6 +50,7 @@ public abstract class EntityImporter<E extends Serializable> {
    private static ObjectMapper mapper = new ObjectMapper();
    private Class<E> clazz;
    private boolean updateGeo;
+   private List<File> files = new ArrayList<>();
 
    /**
     * Creates new {@link EntityImporter} instance.
@@ -71,26 +79,29 @@ public abstract class EntityImporter<E extends Serializable> {
 
    protected abstract void process();
 
-   protected void readDirectory(File folder, E parent, boolean recursive) {
-      try {
-         for (File file : folder.listFiles(new JsFileFilter())) {
+
+   protected void importFromPath(URI uri, boolean recursive) {
+      proccessFiles(Paths.get(uri), null, recursive);
+   }
+
+   private void proccessFiles(Path path, E parent, boolean recursive) {
+
+      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+         for (Path entry : stream) {
+            File file = entry.toFile();
             E entity = createEntry(file, parent);
-            updateGeo = false;
-            if (file.isDirectory() && recursive) {
-               log.info("Found directory: " + file.getAbsolutePath());
-               readDirectory(file, entity, recursive);
-               updateGeo = true;
+            if (!Files.isDirectory(entry) && recursive) {
+               proccessFiles(entry, parent, recursive);
             } else {
-               log.info("Found geometry: " + file.getAbsolutePath());
                updateEntity(file, entity);
             }
             saveEntity(entity, parent);
          }
-
-      } catch (Exception e) {
+      } catch (IOException e) {
          log.error("", e);
       }
    }
+
 
    protected void updateEntity(File file, E model) {
       try {

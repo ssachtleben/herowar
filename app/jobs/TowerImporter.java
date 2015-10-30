@@ -5,6 +5,7 @@ import models.entity.game.Tower;
 import play.db.jpa.JPA;
 
 import java.io.File;
+import java.net.URI;
 
 
 /**
@@ -16,13 +17,9 @@ import java.io.File;
 public class TowerImporter extends EntityImporter<Tower> {
 
 
-   public String getBaseFolder() {
-      return "public" + File.separator + "geometries" + File.separator + "towers";
-   }
-
    @Override
    protected void process() {
-
+      this.importFromPath(URI.create("public" + File.separator + "geometries" + File.separator + "towers"), true);
    }
 
    @Override

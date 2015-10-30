@@ -4,6 +4,7 @@ import jobs.utils.EntityImporter;
 import models.entity.game.Unit;
 
 import java.io.File;
+import java.net.URI;
 
 
 /**
@@ -14,12 +15,8 @@ import java.io.File;
 public class UnitImporter extends EntityImporter<Unit> {
 
 
-   public String getBaseFolder() {
-      return "public" + File.separator + "geometries" + File.separator + "units";
-   }
-
    @Override
    protected void process() {
-
+      this.importFromPath(URI.create("public" + File.separator + "geometries" + File.separator + "units"), true);
    }
 }

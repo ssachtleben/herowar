@@ -4,23 +4,25 @@ import jobs.utils.EntityImporter;
 import models.entity.game.Environment;
 
 import java.io.File;
+import java.net.URI;
 
 
 /**
  * Syncronizes javascript files from "public/geometries/environment" with {@link Environment} models.
+ * <p>
  *
- * TODO I Dont know ...
  * @author Sebastian Sachtleben
  */
 
 public class EnvironmentImporter extends EntityImporter<Environment> {
 
-   public String getBaseFolder() {
-      return "public" + File.separator + "geometries" + File.separator + "environment";
-   }
 
    @Override
    protected void process() {
 
+      this.importFromPath(URI.create("public" + File.separator + "geometries" + File.separator + "environment"), true);
+
    }
+
+
 }
