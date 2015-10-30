@@ -1,9 +1,12 @@
 package jobs;
 
+import jobs.utils.DependsOn;
 import jobs.utils.EntityImporter;
 import org.reflections.Reflections;
 import play.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,17 +21,19 @@ public class BaseImporter {
       Reflections reflections = new Reflections("jobs");
       Set<Class<? extends EntityImporter>> classes = reflections.getSubTypesOf(EntityImporter.class);
 
-      // TODO implement hyrachie load ...
-
       log.info(String.format("BaseImporter found %s Importer classes", classes.size()));
 
-      for (Class<? extends EntityImporter> clazz : classes) {
-         try {
-            log.info(String.format("Start Importer Class %s", clazz.getName()));
-            clazz.newInstance().run();
-         } catch (Exception e) {
-            log.error("JOB ERROR:", e);
-         }
-      }
+      List<Class<? extends EntityImporter>> sortedList = new ArrayList<>(classes);
+
+      //TODO tooo easy sorted!
+      sortedList.stream().sorted((c1, c2) -> new Integer(c1.getAnnotation(DependsOn.class) != null ? 1 : 0)
+              .compareTo(new Integer(c2.getAnnotation(DependsOn.class) != null ? 1 : 0))).forEach(c1 -> {
+                 try {
+                    c1.newInstance().run();
+                 } catch (InstantiationException | IllegalAccessException e) {
+                    log.error("JOB ERROR:", e);
+                 }
+              }
+      );
    }
 }

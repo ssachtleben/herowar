@@ -20,7 +20,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -84,8 +83,9 @@ public abstract class EntityImporter<E extends Serializable> {
 
    private void proccessFiles(Path path, E parent, boolean recursive) {
 
-      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFileFilter())) {
          for (Path entry : stream) {
+
             File file = entry.toFile();
             E entity = createEntry(file, parent);
             updateGeo = false;
@@ -250,21 +250,21 @@ public abstract class EntityImporter<E extends Serializable> {
       return (Class<E>) paramType.getActualTypeArguments()[0];
    }
 
-   protected boolean accept(File file) {
-      return file.getName().toLowerCase().endsWith(".js");
-   }
 
    /**
     * The JsFileFilter filters for js files.
     *
-    * @author Sebastian Sachtleben
+    * @author Alexander Wilhelmer
     */
-   public class JsFileFilter implements FileFilter {
+   public class JsFileFilter implements DirectoryStream.Filter<Path> {
+
 
       @Override
-      public boolean accept(File pathname) {
-         return EntityImporter.this.accept(pathname);
+      public boolean accept(Path entry) throws IOException {
+         if (Files.isDirectory(entry) || entry.getFileName().endsWith(".js")) {
+            return true;
+         }
+         return false;
       }
-
    }
 }

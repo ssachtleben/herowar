@@ -1,6 +1,7 @@
 package jobs;
 
 import dao.MapDAO;
+import jobs.utils.DependsOn;
 import jobs.utils.EntityImporter;
 import models.entity.game.Map;
 import org.hibernate.Session;
@@ -18,12 +19,12 @@ import java.sql.SQLException;
 
 /**
  * Imports example maps.
- * TODO dependency
+ *
  *
  * @author Sebastian Sachtleben
  */
 //@StartJob(async = true, active = true)
-//@DependsOn(values = { ExampleDataImporter.class, EnvironmentImporter.class, TowerImporter.class, UnitImporter.class })
+@DependsOn(values = { UserImporter.class, EnvironmentImporter.class, TowerImporter.class, UnitImporter.class })
 public class ExampleMapImporter extends EntityImporter<Map> {
    private static final Logger.ALogger log = Logger.of(ExampleMapImporter.class);
 
