@@ -90,8 +90,10 @@ public abstract class EntityImporter<E extends Serializable> {
          for (Path entry : stream) {
             File file = entry.toFile();
             E entity = createEntry(file, parent);
+            updateGeo = false;
             if (!Files.isDirectory(entry) && recursive) {
                proccessFiles(entry, parent, recursive);
+               updateGeo = true;
             } else {
                updateEntity(file, entity);
             }
