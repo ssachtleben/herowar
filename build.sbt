@@ -17,13 +17,14 @@ libraryDependencies ++= Seq(
   "com.ssachtleben" %% "play-auth-plugin" % "4.0-SNAPSHOT",
   "com.ssachtleben" %% "play-event-plugin" % "4.0-SNAPSHOT",
   "com.ssachtleben" %% "play-json-plugin" % "4.0-SNAPSHOT",
-  "com.ssachtleben" %% "play-compress-plugin" % "4.0-SNAPSHOT"
+  "com.ssachtleben" %% "play-compress-plugin" % "4.0-SNAPSHOT",
+  "com.ardor3d" % "ardor3d-core" % "0.9",
+  "com.ardor3d" % "ardor3d-core" % "0.9"
 )
 
 resolvers += Resolver.url("ssachtleben repository (snapshots)", url("http://ssachtleben.github.io/play-plugins/repository/snapshots/"))(Resolver.ivyStylePatterns)
 
 resolvers += "Apache Development Snapshot Repository" at "https://repository.apache.org/content/repositories/snapshots/"
-
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
@@ -100,5 +101,7 @@ Concat.groups := Seq(
     (resourceDirectory in Assets).value / "javascripts" / "libs" / "site" ** "*.js"
   )
 )
+
+fork in run := true
 
 fork in run := true
