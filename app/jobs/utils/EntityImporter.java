@@ -25,9 +25,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -78,19 +76,19 @@ public abstract class EntityImporter<E extends Serializable> {
 
 
    protected void importFromPath(Path dir, boolean recursive) {
-      proccessFiles(dir, null, recursive);
+      processFiles(dir, null, recursive);
    }
 
-   private void proccessFiles(Path path, E parent, boolean recursive) {
+   private void processFiles(Path path, E parent, boolean recursive) {
 
-      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFileFilter())) {
+      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, "glob:*.js")) {
          for (Path entry : stream) {
 
             File file = entry.toFile();
             E entity = createEntry(file, parent);
             updateGeo = false;
             if (Files.isDirectory(entry) && recursive) {
-               proccessFiles(entry, parent, recursive);
+               processFiles(entry, parent, recursive);
                updateGeo = true;
             } else {
                updateEntity(file, entity);
@@ -250,21 +248,4 @@ public abstract class EntityImporter<E extends Serializable> {
       return (Class<E>) paramType.getActualTypeArguments()[0];
    }
 
-
-   /**
-    * The JsFileFilter filters for js files.
-    *
-    * @author Alexander Wilhelmer
-    */
-   public class JsFileFilter implements DirectoryStream.Filter<Path> {
-
-
-      @Override
-      public boolean accept(Path entry) throws IOException {
-         if (Files.isDirectory(entry) || entry.getFileName().endsWith(".js")) {
-            return true;
-         }
-         return false;
-      }
-   }
 }
