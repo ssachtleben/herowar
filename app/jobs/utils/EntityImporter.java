@@ -81,8 +81,9 @@ public abstract class EntityImporter<E extends Serializable> {
 
    private void processFiles(Path path, E parent, boolean recursive) {
 
-      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, "glob:*.js")) {
+      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFilter())) {
          for (Path entry : stream) {
+            log.info(String.format("Check File %s", entry.toAbsolutePath().toString()));
 
             File file = entry.toFile();
             E entity = createEntry(file, parent);
@@ -248,4 +249,14 @@ public abstract class EntityImporter<E extends Serializable> {
       return (Class<E>) paramType.getActualTypeArguments()[0];
    }
 
+   private class JsFilter implements DirectoryStream.Filter<Path> {
+      private final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**.js");
+
+      @Override
+      public boolean accept(Path entry) throws IOException {
+         if (Files.isDirectory(entry) || matcher.matches(entry))
+            return true;
+         return false;
+      }
+   }
 }
