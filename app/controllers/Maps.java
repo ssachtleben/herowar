@@ -1,11 +1,10 @@
 package controllers;
 
+import models.entity.game.Map;
 import play.Logger;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
-
-import java.util.Map;
 
 import static play.libs.Json.toJson;
 
