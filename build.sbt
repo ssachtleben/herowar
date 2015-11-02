@@ -9,15 +9,16 @@ scalaVersion := "2.11.6"
 libraryDependencies ++= Seq(
   cache,
   javaJpa,
-  "org.hibernate" % "hibernate-entitymanager" % "4.3.10.Final",
-  "postgresql" % "postgresql" % "9.1-901-1.jdbc4",
+  "org.hibernate" % "hibernate-entitymanager" % "5.0.3.Final",
+  "org.postgresql" % "postgresql" % "9.4-1204-jdbc4",
   "commons-beanutils" % "commons-beanutils" % "1.9.2",
   "commons-io" % "commons-io" % "2.4",
-  "org.apache.httpcomponents" % "httpclient" % "4.4",
+  "org.apache.httpcomponents" % "httpclient" % "4.5.1",
   "com.ssachtleben" %% "play-auth-plugin" % "4.0",
+  "com.ssachtleben" %% "play-compress-plugin" % "4.0",
+  "com.ssachtleben" %% "play-cron-plugin" % "4.0",
   "com.ssachtleben" %% "play-event-plugin" % "4.0",
   "com.ssachtleben" %% "play-json-plugin" % "4.0",
-  "com.ssachtleben" %% "play-compress-plugin" % "4.0",
   "com.ardor3d" % "ardor3d-core" % "0.9"
 )
 
@@ -27,6 +28,9 @@ resolvers += "Apache Development Snapshot Repository" at "https://repository.apa
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
+
+// Allow jpa: https://www.playframework.com/documentation/2.4.x/JavaJPA
+PlayKeys.externalizeResources := false
 
 JsTaskKeys.timeoutPerSource := new scala.concurrent.duration.DurationInt(2).hours
 
@@ -100,9 +104,3 @@ Concat.groups := Seq(
     (resourceDirectory in Assets).value / "javascripts" / "libs" / "site" ** "*.js"
   )
 )
-
-fork in run := true
-
-fork in run := true
-
-fork in run := true

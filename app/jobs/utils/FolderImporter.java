@@ -32,4 +32,8 @@ public abstract class FolderImporter<E extends Serializable> extends EntityImpor
         importFromPath(getFolderPath(), loadRecursive());
     }
 
+    protected void importFromPath(Path dir, boolean recursive) {
+        processFiles(dir, null, recursive);
+    }
+
 }

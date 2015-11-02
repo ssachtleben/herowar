@@ -2,9 +2,9 @@ package jobs.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssachtleben.play.plugin.cron.jobs.SimpleJob;
 import dao.GeometryDAO;
 import dao.MaterialDAO;
-import jobs.BaseImporter;
 import models.entity.game.Geometry;
 import models.entity.game.Material;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -37,10 +37,11 @@ import java.util.Map;
  *
  * @param <E> The entity to import.
  * @author Alexander Wilhelmer
+ * @author Sebastian Sachtleben
  */
-public abstract class EntityImporter<E extends Serializable> {
-   private static final Logger.ALogger log = Logger.of(BaseImporter.class);
+public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
 
+   private static final Logger.ALogger log = Logger.of(EntityImporter.class);
 
    private static ObjectMapper mapper = new ObjectMapper();
    private Class<E> clazz;
@@ -74,16 +75,10 @@ public abstract class EntityImporter<E extends Serializable> {
 
    protected abstract void process();
 
-
-   protected void importFromPath(Path dir, boolean recursive) {
-      processFiles(dir, null, recursive);
-   }
-
-   private void processFiles(Path path, E parent, boolean recursive) {
-
+   protected void processFiles(Path path, E parent, boolean recursive) {
       try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFilter())) {
          for (Path entry : stream) {
-            log.info(String.format("Check File %s", entry.toAbsolutePath().toString()));
+            log.debug(String.format("Check File %s", entry.toAbsolutePath().toString()));
 
             File file = entry.toFile();
             E entity = createEntry(file, parent);
@@ -95,9 +90,10 @@ public abstract class EntityImporter<E extends Serializable> {
                updateEntity(file, entity);
             }
             saveEntity(entity, parent);
+            log.info(String.format("Imported successfully: %s", file.getName()));
          }
       } catch (IOException e) {
-         log.error("", e);
+         log.error(String.format("Import failed: %s", path), e);
       }
    }
 
@@ -124,7 +120,7 @@ public abstract class EntityImporter<E extends Serializable> {
    private void updateByOpts(File file, E model) {
       try {
          File optsFile = new File(file.getAbsolutePath().replace(".js", ".opts"));
-         log.info("Looking for opts file: " + optsFile);
+         log.debug("Looking for opts file: " + optsFile.getAbsolutePath());
          if (!optsFile.exists() || !optsFile.isFile()) {
             return;
          }
@@ -161,7 +157,7 @@ public abstract class EntityImporter<E extends Serializable> {
 
    private Geometry syncGeometry(Geometry geo, Geometry newGeo) {
       if (geo != null && geo.getId() != null) {
-         log.info("Sync geo Id: " + geo.getId());
+         log.debug("Sync geo Id: " + geo.getId());
          newGeo.setId(geo.getId());
          newGeo.setVersion(geo.getVersion());
          if (newGeo.getGeoMaterials().equals(geo.getGeoMaterials())) {

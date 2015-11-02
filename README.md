@@ -10,9 +10,19 @@ find . "" -exec grep -I -H --color='auto' -P -n "[\x80-\xFF]" {} \;
 
 ### New
 
-- Fix database issues on startup (should not delete tables)
 - Remove comment out of match result in me api show method
-- Replace GlobalSettings with Play 2.4 functionality
+- Update depedencies:
+  "org.hibernate" % "hibernate-entitymanager" % "5.0.3.Final",
+  "org.postgresql" % "postgresql" % "9.4-1204-jdbc4",
+  "commons-beanutils" % "commons-beanutils" % "1.9.2",
+  "commons-io" % "commons-io" % "2.4",
+  "org.apache.httpcomponents" % "httpclient" % "4.5.1",
+  "com.ssachtleben" %% "play-auth-plugin" % "4.0",
+  "com.ssachtleben" %% "play-compress-plugin" % "4.0",
+  "com.ssachtleben" %% "play-cron-plugin" % "4.0",
+  "com.ssachtleben" %% "play-event-plugin" % "4.0",
+  "com.ssachtleben" %% "play-json-plugin" % "4.0",
+  "com.ardor3d" % "ardor3d-core" % "0.9"
 
 ### Old
 
@@ -41,6 +51,7 @@ find . "" -exec grep -I -H --color='auto' -P -n "[\x80-\xFF]" {} \;
 5. Open eclipse
 6. Select File -> Import… -> Existing projects into Workspace
 7. Pick your application folder and click Finish.
+8. export SBT_OPTS="-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=2G -Xss2M  -Duser.timezone=GMT"
 
 **Fix compilation issues**
 

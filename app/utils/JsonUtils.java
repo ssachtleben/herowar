@@ -135,18 +135,18 @@ public class JsonUtils {
 									if (col.size() > currentIndex) {
 										element = col.toArray()[currentIndex];
 										parse(element, result, colNode, classes);
-										log.info("Changed collection entry: " + element.toString());
+										log.debug("Changed collection entry: " + element.toString());
 									} else {
 										element = genericType.newInstance();
 										parse(element, result, colNode, classes);
-										log.info("Added collection entry: " + element.toString());
+										log.debug("Added collection entry: " + element.toString());
 									}
 									col.add(element);
 									currentIndex++;
 								}
-								log.info("Index " + currentIndex + " of " + col.size());
+								log.debug("Index " + currentIndex + " of " + col.size());
 								while (col.size() > currentIndex) {
-									log.info("Remove col index " + currentIndex + " of " + col.size());
+									log.debug("Remove col index " + currentIndex + " of " + col.size());
 									col.remove(col.toArray()[currentIndex]);
 								}
 								value = col;
@@ -214,7 +214,7 @@ public class JsonUtils {
 					String newName = mapping.name();
 					if (newName.equals(name)) {
 						// Sdasd
-						log.info("Return new name " + field.getName());
+						log.debug("Return new name " + field.getName());
 						return field.getName();
 					}
 				}

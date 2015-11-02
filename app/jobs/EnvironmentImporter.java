@@ -1,5 +1,6 @@
 package jobs;
 
+import com.ssachtleben.play.plugin.cron.annotations.StartJob;
 import jobs.utils.EntityImporter;
 import jobs.utils.FolderImporter;
 import models.entity.game.Environment;
@@ -15,7 +16,7 @@ import java.nio.file.Paths;
  *
  * @author Sebastian Sachtleben
  */
-
+@StartJob(async=true)
 public class EnvironmentImporter extends FolderImporter<Environment> {
 
    @Override

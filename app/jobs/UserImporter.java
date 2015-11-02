@@ -2,13 +2,13 @@ package jobs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
+import com.ssachtleben.play.plugin.cron.annotations.StartJob;
+import com.ssachtleben.play.plugin.cron.jobs.SimpleJob;
 import controllers.Application;
 import dao.NewsDAO;
 import dao.SecurityRoleDAO;
 import dao.UserDAO;
-import jobs.utils.EntityImporter;
 import models.entity.SecurityRole;
-import models.entity.User;
 import models.entity.game.LevelRange;
 import play.Logger;
 import play.Play;
@@ -16,17 +16,25 @@ import play.db.jpa.JPA;
 
 /**
  * @author Alexander Wilhelmer
+ * @author Sebastian Sachtleben
  */
-public class UserImporter extends EntityImporter<User> {
+@StartJob
+public class UserImporter extends SimpleJob {
 
-   private static final Logger.ALogger log = Logger.of(BaseImporter.class);
+   private static final Logger.ALogger log = Logger.of(UserImporter.class);
 
    @Override
-   protected void process() {
-      initialSecurityRoles();
-      createAdminUser();
-      createDummyNews();
-      createLevelRanges();
+   public void run() {
+      JPA.withTransaction(new play.libs.F.Callback0() {
+         @Override
+         public void invoke() throws Throwable {
+            initialSecurityRoles();
+            createAdminUser();
+            createDummyNews();
+            createLevelRanges();
+            JPA.em().flush();
+         }
+      });
    }
 
    private void initialSecurityRoles() {
@@ -46,23 +54,18 @@ public class UserImporter extends EntityImporter<User> {
    private void createAdminUser() {
       UserDAO userDAO = Play.application().injector().instanceOf(UserDAO.class);
       if (userDAO.findByUsername("admin") != null) {
-         log.info("Admin already exists!");
          return;
       }
       log.info("Creating admin user");
-      User user = userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "", "FirstName", "LastName");
-
-
+      userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "", "FirstName", "LastName");
    }
 
    private void createDummyNews() {
       NewsDAO newsDAO = Play.application().injector().instanceOf(NewsDAO.class);
-
       if (newsDAO.getNewsCount() != 0) {
          return;
       }
       UserDAO userDAO = Play.application().injector().instanceOf(UserDAO.class);
-
       log.info("Creating dummy news");
       newsDAO
               .create(

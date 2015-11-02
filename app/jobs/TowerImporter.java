@@ -1,5 +1,6 @@
 package jobs;
 
+import com.ssachtleben.play.plugin.cron.annotations.StartJob;
 import jobs.utils.FolderImporter;
 import models.entity.game.Tower;
 import play.db.jpa.JPA;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
  *
  * @author Sebastian Sachtleben
  */
-
+@StartJob(async=true)
 public class TowerImporter extends FolderImporter<Tower> {
 
    @Override
