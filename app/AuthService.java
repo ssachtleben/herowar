@@ -40,7 +40,7 @@ public class AuthService extends Controller {
         log.debug("Email: " + email);
         log.debug("Username: " + username);
         log.debug("Avatar: " + avatar);
-        if (StringUtils.isBlank(email) || !"ssachtleben@gmx.de".equals(email)) {
+        if (StringUtils.isBlank(email)) {
             return null;
         }
         final Object userId = handleLogin(identity, email, username, avatar);
