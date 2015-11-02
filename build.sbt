@@ -14,11 +14,10 @@ libraryDependencies ++= Seq(
   "commons-beanutils" % "commons-beanutils" % "1.9.2",
   "commons-io" % "commons-io" % "2.4",
   "org.apache.httpcomponents" % "httpclient" % "4.4",
-  "com.ssachtleben" %% "play-auth-plugin" % "4.0-SNAPSHOT",
-  "com.ssachtleben" %% "play-event-plugin" % "4.0-SNAPSHOT",
-  "com.ssachtleben" %% "play-json-plugin" % "4.0-SNAPSHOT",
-  "com.ssachtleben" %% "play-compress-plugin" % "4.0-SNAPSHOT",
-  "com.ardor3d" % "ardor3d-core" % "0.9",
+  "com.ssachtleben" %% "play-auth-plugin" % "4.0",
+  "com.ssachtleben" %% "play-event-plugin" % "4.0",
+  "com.ssachtleben" %% "play-json-plugin" % "4.0",
+  "com.ssachtleben" %% "play-compress-plugin" % "4.0",
   "com.ardor3d" % "ardor3d-core" % "0.9"
 )
 
@@ -32,7 +31,7 @@ routesGenerator := InjectedRoutesGenerator
 JsTaskKeys.timeoutPerSource := new scala.concurrent.duration.DurationInt(2).hours
 
 // live pipeline with uglify ... pipelineStages in Assets := Seq(define,filter,concat,uglify,digest,gzip)
-pipelineStages in Assets := Seq(define,filter,concat,digest,gzip)
+pipelineStages in Assets := Seq(define,filter,concat,digest)
 
 includeFilter in filter := "*.coffee" || "*.less" || ".tmpl"
 

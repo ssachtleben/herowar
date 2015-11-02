@@ -18,12 +18,13 @@ public class Global extends GlobalSettings {
     private static final Logger.ALogger log = Logger.of(Global.class);
 
     public Action<?> onRequest(Request request, Method actionMethod) {
-        System.out.println("before each request..." + request.toString());
+        log.info("Before each request..." + request.toString());
         return super.onRequest(request, actionMethod);
     }
 
     @Override
     public void onStart(Application app) {
+        log.info("Executing startup tasks");
         JPA.withTransaction(new F.Callback0() {
             @Override
             public void invoke() throws Throwable {

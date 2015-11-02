@@ -1,10 +1,11 @@
 package jobs;
 
-import jobs.utils.EntityImporter;
+import jobs.utils.FolderImporter;
 import models.entity.game.Tower;
 import play.db.jpa.JPA;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
@@ -14,12 +15,11 @@ import java.nio.file.Paths;
  * @author Sebastian Sachtleben
  */
 
-public class TowerImporter extends EntityImporter<Tower> {
-
+public class TowerImporter extends FolderImporter<Tower> {
 
    @Override
-   protected void process() {
-      this.importFromPath(Paths.get("public" + File.separator + "geometries" + File.separator + "towers"), true);
+   public Path getFolderPath() {
+      return Paths.get("public" + File.separator + "geometries" + File.separator + "towers");
    }
 
    @Override
