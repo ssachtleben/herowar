@@ -20,12 +20,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.nio.file.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -75,26 +76,49 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
 
    protected abstract void process();
 
-   protected void processFiles(Path path, E parent, boolean recursive) {
-      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFilter())) {
-         for (Path entry : stream) {
-            log.debug(String.format("Check File %s", entry.toAbsolutePath().toString()));
 
-            File file = entry.toFile();
+   protected void processFiles(Path path, E parent, boolean recursive) {
+      try {
+         for (File file : path.toFile().listFiles(new JsFileFilter())) {
             E entity = createEntry(file, parent);
             updateGeo = false;
-            if (Files.isDirectory(entry) && recursive) {
-               processFiles(entry, parent, recursive);
+            if (file.isDirectory() && recursive) {
+               log.info("Found directory: " + file.getAbsolutePath());
+               processFiles(file.toPath(), entity, recursive);
                updateGeo = true;
             } else {
+               log.info("Found geometry: " + file.getAbsolutePath());
                updateEntity(file, entity);
             }
             saveEntity(entity, parent);
-            log.info(String.format("Imported successfully: %s", file.getName()));
          }
-      } catch (IOException e) {
-         log.error(String.format("Import failed: %s", path), e);
+
+      } catch (Exception e) {
+         log.error("", e);
       }
+
+
+//      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFilter())) {
+//         for (Path entry : stream) {
+//            log.debug(String.format("Check File %s", entry.toAbsolutePath().toString()));
+//
+//            File file = entry.toFile();
+//            E entity = createEntry(file, parent);
+//            updateGeo = false;
+//            if (Files.isDirectory(entry) && recursive) {
+//               log.info("Found directory: " + file.getAbsolutePath());
+//               processFiles(entry, entity, recursive);
+//               updateGeo = true;
+//            } else {
+//               log.info("Found geometry: " + file.getAbsolutePath());
+//               updateEntity(file, entity);
+//            }
+//            saveEntity(entity, parent);
+//            log.info(String.format("Imported successfully: %s", file.getName()));
+//         }
+//      } catch (IOException e) {
+//         log.error(String.format("Import failed: %s", path), e);
+//      }
    }
 
 
@@ -245,14 +269,11 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
       return (Class<E>) paramType.getActualTypeArguments()[0];
    }
 
-   private class JsFilter implements DirectoryStream.Filter<Path> {
-      private final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**.js");
+   public class JsFileFilter implements FileFilter {
 
       @Override
-      public boolean accept(Path entry) throws IOException {
-         if (Files.isDirectory(entry) || matcher.matches(entry))
-            return true;
-         return false;
+      public boolean accept(File pathname) {
+         return pathname.isDirectory() || pathname.getName().endsWith(".js");
       }
    }
 }

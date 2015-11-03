@@ -63,4 +63,23 @@ public class Texture implements Serializable {
       this.materials = materials;
    }
 
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+
+      Texture texture = (Texture) o;
+
+      if (id != null ? !id.equals(texture.id) : texture.id != null) return false;
+      return !(map != null ? !map.equals(texture.map) : texture.map != null);
+
+   }
+
+   @Override
+   public int hashCode() {
+      int result = id != null ? id.hashCode() : 0;
+      result = 31 * result + (map != null ? map.hashCode() : 0);
+      return result;
+   }
 }
