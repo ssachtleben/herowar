@@ -165,7 +165,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
                Collection<E> children = (Collection<E>) PropertyUtils.getProperty(parent, "children");
                Object id = PropertyUtils.getProperty(entity, "id");
                if (id != null && JPA.em().contains(entity)) {
-                  entity = JPA.em().merge(entity);
+               //   entity = JPA.em().merge(entity);
                } else if (JPA.em().contains(parent)) {
                   JPA.em().persist(entity);
                }
