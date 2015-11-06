@@ -27,7 +27,8 @@ class SmallLogin extends BaseView
 	connectFacebook: (event) ->
 		event?.preventDefault()
 		console.log 'Connect with facebook'
-		window.open '/login/facebook', 'Connect', 'width=655,height=380,left=100,top=200,toolbar=no,scrollbars=no,menubar=no'
+		window.location = '/login/facebook'
+		#window.open '/login/facebook', 'Connect', 'width=655,height=380,left=100,top=200,toolbar=no,scrollbars=no,menubar=no'
 		return
 		
 	connectTwitter: (event) ->
