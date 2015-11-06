@@ -23,6 +23,7 @@ GET     /logout                     controllers.Signin.logout()
 ########## GAME ###########
 
 GET     /game                       controllers.Game.index()
+GET     /game/data                  controllers.Game.data()
 
 ########## EDITOR ###########
 
