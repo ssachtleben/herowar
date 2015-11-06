@@ -6,12 +6,18 @@ import java.io.InputStreamReader;
  * @author Alexander Wilhelmer
  */
 public class Starter {
-   private final static String CMDSTRING = "./activator.bat";
+   private final static String CMDSTRING = "./activator";
+   private static String OS = System.getProperty("os.name").toLowerCase();
 
    public static void main(String[] args) {
 
       try {
-         Process p = Runtime.getRuntime().exec(new String[] { CMDSTRING ,"run" });
+         System.out.println(String.format("OS is: %s",OS));
+         String cmd = CMDSTRING;
+         if (isWindows()) {
+            cmd += ".bat";
+         }
+         Process p = Runtime.getRuntime().exec(new String[] { cmd, "run" });
          BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
          String line;
@@ -23,5 +29,8 @@ public class Starter {
          e.printStackTrace();
       }
 
+   }
+   public static boolean isWindows() {
+      return (OS.indexOf("win") >= 0);
    }
 }

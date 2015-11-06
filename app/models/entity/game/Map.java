@@ -67,7 +67,7 @@ public class Map extends BaseModel implements Serializable {
 		this.lives = 20;
 		this.goldStart = 2000;
 		this.goldPerTick = 5;
-		this.allMaterials = new HashSet<Material>();
+		this.allMaterials = new HashSet<>();
 		this.terrain = new Terrain();
 		this.getTerrain().setGeometry(new Geometry());
 		this.getTerrain().getGeometry().setTerrain(this.getTerrain());
