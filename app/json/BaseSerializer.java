@@ -11,7 +11,6 @@ import org.apache.commons.beanutils.converters.DoubleConverter;
 import org.apache.commons.beanutils.converters.StringConverter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.hibernate.Hibernate;
 import play.Logger;
 
 import java.io.IOException;
@@ -47,10 +46,6 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
       // PropertyDescriptor[] properties =
       // PropertyUtils.getPropertyDescriptors(obj);
       Class<?> clazz = obj.getClass();
-
-      if (Hibernate.getClass(obj) != null) {
-         clazz = Hibernate.getClass(obj);
-      }
       Field[] fields = getAllFields(clazz);
 
       for (Field field : fields) {
