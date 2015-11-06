@@ -21,7 +21,7 @@ public class RequestHandler extends DefaultHttpRequestHandler implements HttpReq
         return new Action.Simple() {
             @Override
             public F.Promise<Result> call(Http.Context ctx) throws Throwable {
-                log.info(String.format("Request %s", request.toString()));
+                log.info(request.toString());
                 return delegate.call(ctx);
             }
         };

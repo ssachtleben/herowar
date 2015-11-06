@@ -15,13 +15,13 @@ import static play.libs.Json.toJson;
  * @author Alexander Wilhelmer
  * @author Sebastian Sachtleben
  */
-public class Users extends BaseAPI<Long, Users> {
+public class Users extends BaseAPI<Long, User> {
 
    /**
     * Default constructor to allow injections.
     */
    public Users() {
-      super(Long.class, Users.class);
+      super(Long.class, User.class);
    }
 
    /**
@@ -54,7 +54,7 @@ public class Users extends BaseAPI<Long, Users> {
     */
    @Transactional
    public Result update(final Long id) {
-      Users user = this.merge(Form.form(Users.class).bindFromRequest().get());
+      final User user = this.merge(Form.form(User.class).bindFromRequest().get());
       return ok(toJson(user));
    }
 
