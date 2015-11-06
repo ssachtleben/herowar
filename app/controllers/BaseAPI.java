@@ -99,6 +99,7 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
     *
     * @return The json serialized object.
     */
+   @Transactional
    public Result add() {
       T obj = Form.form(entityClass).bindFromRequest().get();
       getEntityManager().persist(obj);
