@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
  * @author Alexander Wilhelmer
  */
 public class Starter {
-   private final static String CMDSTRING = "D:\\projects\\intellij\\herowar\\activator.bat";
+   private final static String CMDSTRING = "./activator.bat";
 
    public static void main(String[] args) {
 
