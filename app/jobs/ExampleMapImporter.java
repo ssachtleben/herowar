@@ -37,6 +37,7 @@ public class ExampleMapImporter extends EntityImporter<Map> {
       if (map == null) {
          createMapFromSQL("pathToExil.sql");
       }
+
       map = mapDAO.getMapById(101L);
       if (map == null) {
          createMapFromSQL("tutorial.sql");
