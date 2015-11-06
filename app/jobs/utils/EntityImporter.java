@@ -127,7 +127,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
          if (PropertyUtils.isReadable(model, "geometry")) {
             Geometry geo = (Geometry) PropertyUtils.getProperty(model, "geometry");
             if (geo == null || geo.getUdate() == null || geo.getUdate().getTime() < file.lastModified()) {
-               LOG.info(String.format("%s", "Starting syncing Geometry ..."));
+               LOG.debug(String.format("%s", "Starting syncing Geometry ..."));
                Geometry newGeo = parseGeometryFile(file);
                newGeo = syncGeometry(geo, newGeo);
                PropertyUtils.setProperty(model, "geometry", newGeo);
@@ -182,7 +182,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
 
    private Geometry syncGeometry(Geometry geo, Geometry newGeo) {
       if (geo != null && geo.getId() != null) {
-         LOG.info("MESH TEST: Sync geo Id: " + geo.getId());
+         LOG.debug("Sync geo Id: " + geo.getId());
          newGeo.setId(geo.getId());
          newGeo.setVersion(geo.getVersion());
          if (newGeo.getGeoMaterials().equals(geo.getGeoMaterials())) {
@@ -250,7 +250,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
       try {
          Geometry geo = mapper.readValue(file, Geometry.class);
          int sortIndex = 0;
-         LOG.info(String.format("Geometry have %s mesh elements ... ", geo.getMeshes().size()));
+         LOG.debug(String.format("Geometry have %s mesh elements ... ", geo.getMeshes().size()));
          for (Material mat : geo.getMaterials()) {
             mat.setName(mat.getDbgName());
             mat.setSortIndex(sortIndex++);
