@@ -4,12 +4,12 @@
 
 ########## SITE ###########
 
-GET     /                           controllers.Application.index()
-GET     /signup                     controllers.Application.index()
-GET     /play                       controllers.Application.index()
+GET     /                           controllers.Application.site()
+GET     /signup                     controllers.Application.site()
+GET     /play                       controllers.Application.site()
 # Next two routes will be created by facebook return, seems its not changable ...
-GET     /#_=_                       controllers.Application.index()
-GET     /_=_                        controllers.Application.index()
+GET     /#_=_                       controllers.Application.site()
+GET     /_=_                        controllers.Application.site()
 
 GET     /login                      controllers.Signin.login()
 GET     /login/:provider		      controllers.Signin.url(provider: String)

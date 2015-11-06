@@ -6,7 +6,10 @@ import models.entity.User;
 import org.apache.commons.lang3.math.NumberUtils;
 import play.mvc.Http;
 import play.mvc.Result;
-import views.html.index;
+import views.html.admin;
+import views.html.editor;
+import views.html.game;
+import views.html.site;
 
 public class Application extends BaseController {
 
@@ -15,8 +18,20 @@ public class Application extends BaseController {
 
    public static String[] roles = {USER_ROLE, ADMIN_ROLE};
 
-   public Result index() {
-      return ok(index.render());
+   public Result admin() {
+      return ok(admin.render());
+   }
+
+   public Result editor() {
+      return ok(editor.render());
+   }
+
+   public Result game() {
+      return ok(game.render());
+   }
+
+   public Result site() {
+      return ok(site.render());
    }
 
    public static User getLocalUser(final Http.Session session) {
