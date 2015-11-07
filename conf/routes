@@ -78,11 +78,23 @@ GET     /api/game/match/quit        controllers.Matches.quit()
 GET     /api/game/match/history     controllers.Matches.history()
 GET     /api/game/match/:id         controllers.Matches.show(id: Long)
 
+GET     /api/game/geometry/all        controllers.Geometries.list()
+GET     /api/game/geometry/env/:id    controllers.Geometries.showByEnv(id: Long)
+GET     /api/game/geometry/unit/:id   controllers.Geometries.showByUnit(id: Long)
+GET     /api/game/geometry/tower/:id  controllers.Geometries.showByTower(id: Long)
+GET     /api/game/geometry/:id        controllers.Geometries.show(id: Long)
+PUT     /api/game/geometry/:id        controllers.Geometries.update(id: Long)
+DELETE  /api/game/geometry/:id        controllers.Geometries.delete(id: Long)
+POST    /api/game/geometry            controllers.Geometries.add()
+
 GET     /api/game/map/all           controllers.Maps.list()
 GET     /api/game/map/:id           controllers.Maps.show(id: Long)
 PUT     /api/game/map/:id           controllers.Maps.update(id: Long)
 DELETE  /api/game/map/:id           controllers.Maps.delete(id: Long)
 POST    /api/game/map               controllers.Maps.add()
+
+GET     /api/game/settings          controllers.Settings.show()
+PUT     /api/game/settings			   controllers.Settings.update()
 
 GET     /api/user/all               controllers.Users.list()
 GET     /api/user/:id               controllers.Users.show(id: Long)
