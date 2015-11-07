@@ -172,8 +172,10 @@ materialHelper =
 						u.value.wrapS = u.value.wrapT = THREE.RepeatWrapping
 						u.value.needsUpdate = true
 				when 'vertexShader'
+					value = value.split('\\n').join('\n') if value? and _.isString(value) and value.indexOf('\n')
 					params.vertexShader = value
 				when 'fragmentShader'
+					value = value.split('\\n').join('\n') if value? and _.isString(value) and value.indexOf('\n')
 					params.fragmentShader = value
 				when 'id', 'materialId', 'name', 'nocolor'
 					#ignore
