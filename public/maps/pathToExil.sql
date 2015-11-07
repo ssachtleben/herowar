@@ -92,7 +92,7 @@ INSERT INTO terrain (id, height, smoothness, width, wireframe, zScale, geometry_
 	(102, 500, 0.1, 500, true, 0, 113);
 
 INSERT INTO map (id, cdate, udate, version, description, goldPerTick, goldStart, lives, name, prepareTime, skybox, teamSize, terrain_id, allMaterials_id) VALUES 
-	(102,now(), now(), 3, '', 0, 600, 20, 'Path of Evil', 500, null, 1, 102, null);
+	(102,now(), now(), 3, '', 0, 1000, 20, 'Path of Evil', 500, null, 1, 102, null);
 
 INSERT INTO map_towers (Map_id, towers_id) 
 	(select 102, t.id from tower t where t.name = 'Laser Tower');
