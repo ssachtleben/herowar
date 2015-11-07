@@ -1,8 +1,8 @@
 app = require 'application'
 
-class Object3D extends Backbone.Model
+class Object3D extends Backbone.Model 
 
-  url: ->
-    "/api/object/#{@id}"
-
+	url: ->
+		"/api/object/#{@id}"
+	
 return Object3D

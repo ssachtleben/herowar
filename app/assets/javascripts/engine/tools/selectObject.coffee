@@ -4,20 +4,20 @@ db = require 'database'
 
 class SelectObject extends BaseTool
 
-  constructor: (@intersectHelper) ->
-    @input = db.get 'input'
-    @tool = db.get 'ui/tool'
-    super()
+	constructor: (@intersectHelper) ->
+		@input = db.get 'input'
+		@tool = db.get 'ui/tool'
+		super()
+	
+	onMouseUp: (event) ->
+		@_searchForObject() unless event.which isnt 1 and @input.get 'mouse_moved'	
+		return
 
-  onMouseUp: (event) ->
-    @_searchForObject() unless event.which isnt 1 and @input.get 'mouse_moved'
-    return
+	_searchForObject: ->
+		return @_handleSearchResult @intersectHelper.mouseIntersects scenegraph.scene().children
 
-  _searchForObject: ->
-    return @_handleSearchResult @intersectHelper.mouseIntersects scenegraph.scene().children
-
-  _handleSearchResult: (resultList) ->
-    return @onResultFound result.object for result in resultList when @isResultValid result.object
-    return @onNoResultFound()
-
+	_handleSearchResult: (resultList) ->
+		return @onResultFound result.object for result in resultList when @isResultValid result.object
+		return @onNoResultFound() 
+		
 return SelectObject

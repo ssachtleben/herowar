@@ -1,5 +1,6 @@
 package json.excludes;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.entity.game.Geometry;
 

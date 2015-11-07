@@ -16,18 +16,7 @@ public class Application extends BaseController {
    public static final String USER_ROLE = "user";
    public static final String ADMIN_ROLE = "admin";
 
-   public static String[] roles = { USER_ROLE, ADMIN_ROLE };
-
-   public static User getLocalUser(final Http.Session session) {
-      final String userId = Auth.getLoggedIn(session());
-      UserDAO userDAO = new UserDAO();
-      final User user = NumberUtils.isNumber(userId) ? userDAO.getById(Long.parseLong(userId)) : null;
-      return user;
-   }
-
-   public static User getLocalUser() {
-      return getLocalUser(session());
-   }
+   public static String[] roles = {USER_ROLE, ADMIN_ROLE};
 
    public Result admin() {
       return ok(admin.render());
@@ -43,6 +32,17 @@ public class Application extends BaseController {
 
    public Result site() {
       return ok(site.render());
+   }
+
+   public static User getLocalUser(final Http.Session session) {
+      final String userId = Auth.getLoggedIn(session());
+      UserDAO userDAO = new UserDAO();
+      final User user = NumberUtils.isNumber(userId) ? userDAO.getById(Long.parseLong(userId)) : null;
+      return user;
+   }
+
+   public static User getLocalUser() {
+      return getLocalUser(session());
    }
 
 }

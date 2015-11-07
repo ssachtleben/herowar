@@ -48,9 +48,11 @@ public class Matches extends BaseAPI<Long, Match> {
    @Inject
    private MatchResultDAO matchResultDAO;
 
+
    public Matches() {
       super(Long.class, Match.class);
    }
+
 
    @Transactional
    public Result find() {
@@ -77,8 +79,7 @@ public class Matches extends BaseAPI<Long, Match> {
       mapper.addMixIn(Map.class, MatchExcludeMapDataMixin.class);
       try {
          return ok(mapper.writeValueAsString(match));
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
          log.error("Failed parse match to json:", e);
       }
       return badRequest();
@@ -111,8 +112,7 @@ public class Matches extends BaseAPI<Long, Match> {
       mapper.addMixIn(Map.class, MatchExcludeMapDataMixin.class);
       try {
          return ok(mapper.writeValueAsString(match));
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
          log.error("Failed parse match to json:", e);
       }
       return badRequest();
@@ -221,8 +221,7 @@ public class Matches extends BaseAPI<Long, Match> {
       mapper.addMixIn(MatchResult.class, MatchResultSimpleMixin.class);
       try {
          return ok(mapper.writeValueAsString(results));
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
          log.error("Failed to create history json:", e);
       }
       return badRequest();

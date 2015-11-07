@@ -12,10 +12,12 @@ public class MatchDAO extends BaseDAO<Long, Match> {
       super(Long.class, Match.class);
    }
 
+
    @SuppressWarnings("unchecked")
    public Match getOpenMatch() {
-      List<Match> matches = JPA.em().createQuery("SELECT m FROM " + Match.class.getSimpleName() + " m WHERE m.state = :state ORDER BY m.cdate DESC")
-            .setParameter("state", MatchState.INIT).setMaxResults(1).getResultList();
+      List<Match> matches = JPA.em()
+              .createQuery("SELECT m FROM " + Match.class.getSimpleName() + " m WHERE m.state = :state ORDER BY m.cdate DESC")
+              .setParameter("state", MatchState.INIT).setMaxResults(1).getResultList();
       if (matches.size() > 0) {
          return matches.get(0);
       }

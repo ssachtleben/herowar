@@ -3,10 +3,10 @@ templates = require 'templates'
 
 class MenuBarView extends BaseView
 
-  id: 'menubar'
-
-  tagName: 'ul'
-
-  template: templates.get 'menubar.tmpl'
-
+	id: 'menubar'
+	
+	tagName: 'ul'
+		
+	template: templates.get 'menubar.tmpl'
+	
 return MenuBarView

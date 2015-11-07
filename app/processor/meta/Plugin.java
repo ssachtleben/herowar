@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * The Plugin annotation indicates a plugin for game processor.
- *
+ * 
  * @author Sebastian Sachtleben
  */
 @Target(ElementType.TYPE)

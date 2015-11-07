@@ -49,17 +49,13 @@ public class Object3D implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o)
-         return true;
-      if (o == null || getClass() != o.getClass())
-         return false;
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
 
       Object3D object3D = (Object3D) o;
 
-      if (id != null ? !id.equals(object3D.id) : object3D.id != null)
-         return false;
-      if (name != null ? !name.equals(object3D.name) : object3D.name != null)
-         return false;
+      if (id != null ? !id.equals(object3D.id) : object3D.id != null) return false;
+      if (name != null ? !name.equals(object3D.name) : object3D.name != null) return false;
       return !(description != null ? !description.equals(object3D.description) : object3D.description != null);
 
    }

@@ -2,6 +2,6 @@ BaseView = require 'views/baseView'
 
 class AuthenticationView extends BaseView
 
-  id: 'authentication'
-
+	id: 'authentication'
+	
 return AuthenticationView

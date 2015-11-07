@@ -1,5 +1,5 @@
 class Settings extends Backbone.Model
 
-  url: '/api/game/settings'
+	url: '/api/game/settings'
 
 return Settings

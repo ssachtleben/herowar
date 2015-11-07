@@ -1,5 +1,6 @@
 package dao;
 
+
 import controllers.Application;
 import models.entity.News;
 import models.entity.User;
@@ -10,6 +11,7 @@ public class NewsDAO extends BaseDAO<Long, News> {
    public NewsDAO() {
       super(Long.class, News.class);
    }
+
 
    public void merge(News news, News news2) {
       news.setHeadline(news2.getHeadline());

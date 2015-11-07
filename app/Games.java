@@ -30,19 +30,19 @@ public class Games extends Cache<Long, GameProcessor> {
    private static Games instance = new Games();
 
    /**
-    * Private constructor to prevent class others from creating {@link Games} instance.
-    */
-   private Games() {
-      // empty
-   }
-
-   /**
     * Returns {@link Games} instance.
     *
     * @return The {@link Games} instance.
     */
    private static Games getInstance() {
       return instance;
+   }
+
+   /**
+    * Private constructor to prevent class others from creating {@link Games} instance.
+    */
+   private Games() {
+      // empty
    }
 
    /**

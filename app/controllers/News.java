@@ -8,14 +8,14 @@ import static play.libs.Json.toJson;
 
 public class News extends BaseAPI<Long, models.entity.News> {
 
-   public News() {
-      super(Long.class, models.entity.News.class);
-   }
+    public News() {
+        super(Long.class, models.entity.News.class);
+    }
 
-   public Result update(final Long id) {
-      // models.entity.News news = instance.findUnique(id);
-      models.entity.News news = JPA.em().merge(Form.form(models.entity.News.class).bindFromRequest().get());
-      return ok(toJson(news));
-   }
+    public Result update(final Long id) {
+        // models.entity.News news = instance.findUnique(id);
+        models.entity.News news = JPA.em().merge(Form.form(models.entity.News.class).bindFromRequest().get());
+        return ok(toJson(news));
+    }
 
 }

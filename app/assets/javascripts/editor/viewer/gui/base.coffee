@@ -1,23 +1,23 @@
 class BaseGUI
+	
+	removable: true
+	
+	constructor: (@name, @parent) ->
+		_.extend @, Backbone.Events
+		@model = {}
+		@children = {}
+		@bindEvents()
 
-  removable: true
+	bindEvents: ->
 
-  constructor: (@name, @parent) ->
-    _.extend @, Backbone.Events
-    @model = {}
-    @children = {}
-    @bindEvents()
+	add: (element) ->
+		if @root and element.name and not _.has @children, element.name
+			element.parent = @root
+			element.root = element.create()
+			@children[element.name] = element
+		return
 
-  bindEvents: ->
-
-  add: (element) ->
-    if @root and element.name and not _.has @children, element.name
-      element.parent = @root
-      element.root = element.create()
-      @children[element.name] = element
-    return
-
-  isAllowed: ->
-    return true
+	isAllowed: ->
+		return true
 
 return BaseGUI

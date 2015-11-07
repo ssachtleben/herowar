@@ -48,7 +48,8 @@ public class Users extends BaseAPI<Long, User> {
     * Update the {@link User} entity from the data from the request.
     * TODO: permissions check ?!?
     *
-    * @param id The id of the user (is taken from the request?!?)
+    * @param id
+    *             The id of the user (is taken from the request?!?)
     * @return The user as json object.
     */
    @Transactional

@@ -9,18 +9,18 @@ db = require 'database'
 ###
 class UserTableEntry extends TableEntryView
 
-  entityType: 'user'
-
-  deleteField: 'username'
-
-  deleteEntry: (event) ->
-    event?.preventDefault()
-    me = db.get 'ui/me'
-    if me.id == @model.id
-      $.gritter.add
-        title: 'Error',
-        text: 'You can\'t delete yourself...'
-    else
-      super event
+	entityType: 'user'
+		
+	deleteField: 'username'
+		
+	deleteEntry: (event) ->
+		event?.preventDefault()
+		me = db.get 'ui/me'
+		if me.id == @model.id
+			$.gritter.add
+				title: 'Error',
+				text: 'You can\'t delete yourself...'
+		else
+			super event
 
 return UserTableEntry

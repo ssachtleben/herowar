@@ -17,6 +17,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseModel implements Serializable {
 
+
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
@@ -47,6 +48,7 @@ public class User extends BaseModel implements Serializable {
 
    @JsonIgnore
    private Date lastLogin = null;
+
 
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private Set<Email> emails;
@@ -176,6 +178,7 @@ public class User extends BaseModel implements Serializable {
       this.linkedServices = linkedServices;
    }
 
+
    public Set<SecurityRole> getRoles() {
       if (roles == null)
          roles = new HashSet<SecurityRole>();
@@ -217,5 +220,6 @@ public class User extends BaseModel implements Serializable {
    public String toString() {
       return "User [id=" + id + ", username=" + username + "]";
    }
+
 
 }

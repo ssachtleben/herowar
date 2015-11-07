@@ -3,13 +3,13 @@ db = require 'database'
 
 class APIMatchJoin extends Backbone.Model
 
-  url: ->
-    return "/api/game/match/join"
+	url: ->
+		return "/api/game/match/join"
 
-  parse: (resp) ->
-    matchMaker = db.get 'api/matchMaker'
-    matchMaker.clear()
-    matchMaker.set resp
-    return resp
+	parse: (resp) ->
+		matchMaker = db.get 'api/matchMaker'
+		matchMaker.clear()
+		matchMaker.set resp
+		return resp
 
 return APIMatchJoin

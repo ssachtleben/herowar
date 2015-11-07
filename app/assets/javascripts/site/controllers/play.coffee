@@ -2,10 +2,10 @@ FetchCollectionController = require 'controllers/fetchCollectionController'
 
 class PlayController extends FetchCollectionController
 
-  views:
-    'views/header': ''
-    'views/play': ''
+	views:
+		'views/header'	: ''
+		'views/play'		: ''
 
-  collection: 'api/maps'
+	collection: 'api/maps'
 
 return PlayController

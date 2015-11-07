@@ -8,9 +8,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "texture")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Texture implements Serializable {
    private static final long serialVersionUID = 4686002174493439419L;
 
@@ -62,17 +63,15 @@ public class Texture implements Serializable {
       this.materials = materials;
    }
 
+
    @Override
    public boolean equals(Object o) {
-      if (this == o)
-         return true;
-      if (o == null || getClass() != o.getClass())
-         return false;
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
 
       Texture texture = (Texture) o;
 
-      if (id != null ? !id.equals(texture.id) : texture.id != null)
-         return false;
+      if (id != null ? !id.equals(texture.id) : texture.id != null) return false;
       return !(map != null ? !map.equals(texture.map) : texture.map != null);
 
    }

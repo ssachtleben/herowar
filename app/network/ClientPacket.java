@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface ClientPacket {
 
-   int type();
+	int type();
 
-   boolean active() default true;
+	boolean active() default true;
 
 }

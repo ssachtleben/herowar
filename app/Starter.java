@@ -12,7 +12,7 @@ public class Starter {
    public static void main(String[] args) {
 
       try {
-         System.out.println(String.format("OS is: %s", OS));
+         System.out.println(String.format("OS is: %s",OS));
          String cmd = CMDSTRING;
          if (isWindows()) {
             cmd += ".bat";
@@ -25,12 +25,11 @@ public class Starter {
             System.out.println(line);
          }
       }
-      catch (IOException e) {
+      catch ( IOException e) {
          e.printStackTrace();
       }
 
    }
-
    public static boolean isWindows() {
       return (OS.indexOf("win") >= 0);
    }

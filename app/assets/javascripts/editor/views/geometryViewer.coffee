@@ -3,8 +3,8 @@ templates = require 'templates'
 
 class GeometryViewer extends BaseView
 
-  id: 'geometryViewer'
-
-  template: templates.get 'geometryViewer.tmpl'
-
+	id: 'geometryViewer'
+	
+	template: templates.get 'geometryViewer.tmpl'
+	
 return GeometryViewer

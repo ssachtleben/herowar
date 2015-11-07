@@ -22,6 +22,7 @@ public class TokenActionDAO extends BaseDAO<Long, TokenAction> {
       super(Long.class, TokenAction.class);
    }
 
+
    public TokenAction create(final TokenAction.Type type, final String token, final User targetUser) {
       final Date created = new Date();
       final TokenAction ua = new TokenAction();
@@ -41,8 +42,7 @@ public class TokenActionDAO extends BaseDAO<Long, TokenAction> {
       q.where(builder.and(builder.equal(root.get("token"), token), builder.equal(root.get("type"), type)));
       try {
          return JPA.em().createQuery(q).getSingleResult();
-      }
-      catch (NoResultException e) {
+      } catch (NoResultException e) {
          return null;
       }
    }

@@ -94,17 +94,13 @@ public class PlayerSettings implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o)
-         return true;
-      if (o == null || getClass() != o.getClass())
-         return false;
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
 
       PlayerSettings that = (PlayerSettings) o;
 
-      if (id != null ? !id.equals(that.id) : that.id != null)
-         return false;
-      if (displayFPS != null ? !displayFPS.equals(that.displayFPS) : that.displayFPS != null)
-         return false;
+      if (id != null ? !id.equals(that.id) : that.id != null) return false;
+      if (displayFPS != null ? !displayFPS.equals(that.displayFPS) : that.displayFPS != null) return false;
       if (shadowsQuality != null ? !shadowsQuality.equals(that.shadowsQuality) : that.shadowsQuality != null)
          return false;
       if (textureQuality != null ? !textureQuality.equals(that.textureQuality) : that.textureQuality != null)

@@ -10,22 +10,32 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class TokenAction implements Serializable {
 
+   public enum Type {
+      EMAIL_VERIFICATION, PASSWORD_RESET
+   }
+
    /**
     * Verification time frame (until the user clicks on the link in the email) in seconds Defaults to one week
     */
    public final static long VERIFICATION_TIME = 7 * 24 * 3600;
+
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+
    @Column(unique = true)
    private String token;
+
    @ManyToOne(cascade = CascadeType.PERSIST)
    private User targetUser;
+
    @Enumerated(EnumType.STRING)
    private Type type;
+
    @Temporal(TemporalType.TIMESTAMP)
    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
    private Date created;
+
    @Temporal(TemporalType.TIMESTAMP)
    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
    private Date expires;
@@ -35,11 +45,11 @@ public class TokenAction implements Serializable {
       return this.expires.after(new Date());
    }
 
+   // GETTER & SETTER //
+
    public Long getId() {
       return id;
    }
-
-   // GETTER & SETTER //
 
    public void setId(Long id) {
       this.id = id;
@@ -83,9 +93,5 @@ public class TokenAction implements Serializable {
 
    public void setExpires(Date expires) {
       this.expires = expires;
-   }
-
-   public enum Type {
-      EMAIL_VERIFICATION, PASSWORD_RESET
    }
 }

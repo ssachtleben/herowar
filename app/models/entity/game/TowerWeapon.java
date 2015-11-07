@@ -62,15 +62,12 @@ public class TowerWeapon implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o)
-         return true;
-      if (o == null || getClass() != o.getClass())
-         return false;
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
 
       TowerWeapon that = (TowerWeapon) o;
 
-      if (id != null ? !id.equals(that.id) : that.id != null)
-         return false;
+      if (id != null ? !id.equals(that.id) : that.id != null) return false;
       return !(position != null ? !position.equals(that.position) : that.position != null);
 
    }

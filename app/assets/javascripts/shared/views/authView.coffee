@@ -9,28 +9,28 @@ db = require 'database'
     @author Sebastian Sachtleben
 ###
 class AuthView extends BaseView
-
-  authTemplate: templates.get 'auth.tmpl'
-
-  redirectTo: ''
-
-  initialize: (options) ->
-    @me = db.get 'ui/me'
-    @realTemplate = @template
-    @bindMeEvents()
-    super()
-
-  bindMeEvents: ->
-    @listenTo @me, 'change:isGuest change:isUser change:isFetched', @render if @me
-
-  render: ->
-    if @me.get('isFetched') && @me.get('isGuest')
-      app.navigate @redirectTo, true
-    else
-      if @me.get 'isUser'
-        @template = @realTemplate
-      else
-        @template = @authTemplate
-      super()
-
+	
+	authTemplate: templates.get 'auth.tmpl'
+	
+	redirectTo: ''
+	
+	initialize: (options) ->
+		@me = db.get 'ui/me'
+		@realTemplate = @template
+		@bindMeEvents()
+		super()
+	
+	bindMeEvents: ->
+		@listenTo @me, 'change:isGuest change:isUser change:isFetched', @render if @me
+		
+	render: ->
+		if @me.get('isFetched') && @me.get('isGuest')
+			app.navigate @redirectTo, true
+		else
+			if @me.get 'isUser'
+				@template = @realTemplate
+			else 
+				@template = @authTemplate
+			super()
+	
 return AuthView

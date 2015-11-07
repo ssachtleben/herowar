@@ -3,19 +3,19 @@ app = require 'application'
 
 class NewsTable extends TableView
 
-  entity: 'api/newss'
+	entity: 'api/newss'
+	
+	tableEntity: 'db/newss'
+	
+	fields:
+		'#'						: 'id'
+		'Headline'		: 'headline'
+		'Text'				: 'text'
 
-  tableEntity: 'db/newss'
+	entryView: 'views/news/tableEntry'
 
-  fields:
-    '#': 'id'
-    'Headline': 'headline'
-    'Text': 'text'
-
-  entryView: 'views/news/tableEntry'
-
-  createEntry: (event) ->
-    event?.preventDefault()
-    app.navigate "admin/news/new", true
+	createEntry: (event) ->
+		event?.preventDefault()
+		app.navigate "admin/news/new", true 
 
 return NewsTable

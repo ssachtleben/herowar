@@ -3,15 +3,15 @@ db = require 'database'
 
 app =
 
-  views: {}
+	views: {}
+    
+	state: db.get 'ui/appState'
 
-  state: db.get 'ui/appState'
+	start: ->
+		app.router = new Router()
+		Backbone.history.start pushState: true
 
-  start: ->
-    app.router = new Router()
-    Backbone.history.start pushState: true
-
-  navigate: (path, options) ->
-    @router.navigate path, options
-
+	navigate: (path, options) ->
+		@router.navigate path, options        
+        
 return app

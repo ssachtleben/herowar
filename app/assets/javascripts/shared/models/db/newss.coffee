@@ -4,9 +4,9 @@ app = require 'application'
 
 class Newss extends BaseCollection
 
-  url: ->
-    "/api/news/#{@id}"
+	url: ->
+		"/api/news/#{@id}"
 
-  model: NewsModel
+	model: NewsModel
 
 return Newss

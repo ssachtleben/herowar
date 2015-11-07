@@ -4,8 +4,8 @@ events = require 'events'
 
 class StatsGoldView extends BaseStatsView
 
-  statsName: 'gold'
+	statsName: 'gold'
 
-  template: templates.get 'stats/gold.tmpl'
+	template: templates.get 'stats/gold.tmpl'
 
 return StatsGoldView

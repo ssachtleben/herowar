@@ -4,15 +4,15 @@ templates = require 'templates'
 
 class ScenebarView extends BaseView
 
-  id: 'scenebar'
+	id: 'scenebar'
+	
+	template: templates.get 'scenebar.tmpl'
 
-  template: templates.get 'scenebar.tmpl'
+	events:
+		'shown a[data-toggle="tab"]' : 'toggleTab'
 
-  events:
-    'shown a[data-toggle="tab"]': 'toggleTab'
-
-  toggleTab: (event) =>
-    id = $(event.target).attr('href').split('#')[1]
-    EditorEventbus.dispatch 'toggleTab', id
+	toggleTab: (event) =>
+		id = $(event.target).attr('href').split('#')[1]
+		EditorEventbus.dispatch 'toggleTab',id	
 
 return ScenebarView

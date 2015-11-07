@@ -21,15 +21,15 @@ public class MatchResult implements Serializable {
    private Long score = 0L;
    private Long kills = 0L;
 
-   @ManyToOne(cascade = { CascadeType.REFRESH }, optional = false)
+   @ManyToOne(cascade = {CascadeType.REFRESH}, optional = false)
    @JoinColumn(name = "player_id")
    private Player player;
 
-   @OneToOne(cascade = { CascadeType.REFRESH }, mappedBy = "result")
+   @OneToOne(cascade = {CascadeType.REFRESH}, mappedBy = "result")
    @JsonIgnore
    private MatchToken token;
 
-   @ManyToOne(cascade = { CascadeType.REFRESH }, optional = false)
+   @ManyToOne(cascade = {CascadeType.REFRESH}, optional = false)
    @JoinColumn(name = "match_id")
    @JsonIgnore
    private Match match;
@@ -89,17 +89,13 @@ public class MatchResult implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o)
-         return true;
-      if (o == null || getClass() != o.getClass())
-         return false;
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
 
       MatchResult that = (MatchResult) o;
 
-      if (id != null ? !id.equals(that.id) : that.id != null)
-         return false;
-      if (score != null ? !score.equals(that.score) : that.score != null)
-         return false;
+      if (id != null ? !id.equals(that.id) : that.id != null) return false;
+      if (score != null ? !score.equals(that.score) : that.score != null) return false;
       return !(kills != null ? !kills.equals(that.kills) : that.kills != null);
 
    }

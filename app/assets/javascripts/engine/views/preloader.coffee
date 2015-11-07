@@ -2,6 +2,6 @@ BaseView = require 'views/baseView'
 
 class PreloaderView extends BaseView
 
-  id: 'preloader'
-
+	id: 'preloader'
+	
 return PreloaderView

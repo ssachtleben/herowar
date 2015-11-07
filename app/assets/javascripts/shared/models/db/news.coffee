@@ -1,8 +1,8 @@
 app = require 'application'
 
-class News extends Backbone.Model
+class News extends Backbone.Model 
 
-  url: ->
-    "/api/news/#{@id}"
-
+	url: ->
+		"/api/news/#{@id}"
+	
 return News

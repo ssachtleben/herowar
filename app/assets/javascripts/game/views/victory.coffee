@@ -3,14 +3,14 @@ templates = require 'templates'
 
 class VictoryView extends BaseView
 
-  id: 'victory'
+	id: 'victory'
+		
+	template: templates.get 'victory.tmpl'
 
-  template: templates.get 'victory.tmpl'
+	events:
+		'click .next' : 'next'
 
-  events:
-    'click .next': 'next'
-
-  next: (event) ->
-    event.preventDefault()
+	next: (event) ->
+		event.preventDefault()
 
 return VictoryView

@@ -4,25 +4,25 @@ templates = require 'templates'
 
 class PathingWaypoints extends BaseView
 
-  entity: 'db/waypoints'
+	entity: 'db/waypoints'
+		
+	template: templates.get 'util/list.tmpl'
 
-  template: templates.get 'util/list.tmpl'
+	initialize: (options) ->
+		@currentPathId = -1
+		super options
 
-  initialize: (options) ->
-    @currentPathId = -1
-    super options
+	bindEvents: ->
+		@listenTo @model, 'add remove change reset', @render
+		EditorEventbus.selectPathUI.add @selectPathId
 
-  bindEvents: ->
-    @listenTo @model, 'add remove change reset', @render
-    EditorEventbus.selectPathUI.add @selectPathId
+	getTemplateData: ->
+		json = []
+		json.push value.toJSON() for value in @model.where path: @currentPathId
+		json
 
-  getTemplateData: ->
-    json = []
-    json.push value.toJSON() for value in @model.where path: @currentPathId
-    json
-
-  selectPathId: (value) =>
-    @currentPathId = value
-    @render()
+	selectPathId: (value) =>
+		@currentPathId = value
+		@render()
 
 return PathingWaypoints

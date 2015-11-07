@@ -6,54 +6,54 @@ db = require 'database'
 
 class ModalFileMapOpen extends BaseModalView
 
-  id: 'modalFileMapOpen'
+	id: 'modalFileMapOpen'
+	
+	className: 'modal hide fade'
+	
+	entity: 'maps'
+		
+	template: templates.get 'modal/fileMapOpen.tmpl'
 
-  className: 'modal hide fade'
+	events:
+		'click .modal-body div'	: 'chooseMap'
+		'click .btn-primary' 		: 'mapOpen'
 
-  entity: 'maps'
+	bindEvents: ->
+		@listenTo @model, 'add remove change reset', @render if @model
 
-  template: templates.get 'modal/fileMapOpen.tmpl'
+	initialize: (options) ->
+		@mapId = -1
+		@addPopover()
+		super options
+		@model.fetch()
 
-  events:
-    'click .modal-body div': 'chooseMap'
-    'click .btn-primary': 'mapOpen'
+	addPopover: ->
+		$('.btn-primary').popover
+			placement : 'left'
+			trigger		: 'hover'
+			title 		: 'Error'
+			content		: 'Please choose a map above.'		
 
-  bindEvents: ->
-    @listenTo @model, 'add remove change reset', @render if @model
+	destroyPopover: ->
+		$('.btn-primary').popover 'destroy'
 
-  initialize: (options) ->
-    @mapId = -1
-    @addPopover()
-    super options
-    @model.fetch()
+	chooseMap: (event) ->
+		unless event then return
+		$currentTarget = $ event.currentTarget
+		mapId = $currentTarget.data 'mapid'
+		unless mapId then return
+		@mapId = mapId
+		@destroyPopover()
+		$('.modal-body div').removeClass 'active'
+		$currentTarget.addClass 'active'
 
-  addPopover: ->
-    $('.btn-primary').popover
-      placement: 'left'
-      trigger: 'hover'
-      title: 'Error'
-      content: 'Please choose a map above.'
-
-  destroyPopover: ->
-    $('.btn-primary').popover 'destroy'
-
-  chooseMap: (event) ->
-    unless event then return
-    $currentTarget = $ event.currentTarget
-    mapId = $currentTarget.data 'mapid'
-    unless mapId then return
-    @mapId = mapId
-    @destroyPopover()
-    $('.modal-body div').removeClass 'active'
-    $currentTarget.addClass 'active'
-
-  mapOpen: (event) ->
-    unless event then return
-    $currentTarget = $ event.currentTarget
-    if @mapId is -1
-      $currentTarget.popover 'show'
-    else
-      log.debug "Choose map #{@mapId}"
-      window.location = "/editor?map=#{@mapId}"
+	mapOpen: (event) ->
+		unless event then return
+		$currentTarget = $ event.currentTarget
+		if @mapId is -1
+			$currentTarget.popover 'show'
+		else
+			log.debug "Choose map #{@mapId}"
+			window.location = "/editor?map=#{@mapId}"
 
 return ModalFileMapOpen

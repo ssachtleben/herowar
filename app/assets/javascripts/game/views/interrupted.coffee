@@ -3,15 +3,15 @@ templates = require 'templates'
 
 class InterruptedView extends BaseView
 
-  id: 'interrupted'
+	id: 'interrupted'
+		
+	template: templates.get 'interrupted.tmpl'
 
-  template: templates.get 'interrupted.tmpl'
+	events:
+		'click a' : 'next'
 
-  events:
-    'click a': 'next'
-
-  next: (event) ->
-    event.preventDefault()
-    Backbone.history.loadUrl 'game'
+	next: (event) ->
+		event.preventDefault()
+		Backbone.history.loadUrl 'game'
 
 return InterruptedView

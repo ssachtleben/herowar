@@ -3,8 +3,8 @@ templates = require 'templates'
 
 class GeneralSettingsView extends BaseView
 
-  template: templates.get 'settings/general.tmpl'
+	template: templates.get 'settings/general.tmpl'
 
-  entity: 'db/settings'
+	entity: 'db/settings'
 
 return GeneralSettingsView

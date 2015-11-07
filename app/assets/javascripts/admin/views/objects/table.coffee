@@ -3,19 +3,19 @@ app = require 'application'
 
 class ObjectTable extends TableView
 
-  entity: 'api/objects'
+	entity: 'api/objects'
+	
+	tableEntity: 'db/objects'
+	
+	fields:
+		'#'						: 'id'
+		'Name' 				: 'name'
+		'Description'	: 'description'
 
-  tableEntity: 'db/objects'
+	entryView: 'views/objects/tableEntry'
 
-  fields:
-    '#': 'id'
-    'Name': 'name'
-    'Description': 'description'
-
-  entryView: 'views/objects/tableEntry'
-
-  createEntry: (event) ->
-    event?.preventDefault()
-    app.navigate "admin/object/new", true
+	createEntry: (event) ->
+		event?.preventDefault()
+		app.navigate "admin/object/new", true 
 
 return ObjectTable

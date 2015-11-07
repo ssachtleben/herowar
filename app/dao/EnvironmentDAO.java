@@ -12,11 +12,13 @@ import java.util.List;
  */
 public class EnvironmentDAO extends TreeDAO<Long, Environment> {
 
-   private String treeSQL;
-
    public EnvironmentDAO() {
       super(Long.class, Environment.class);
    }
+
+
+   private String treeSQL;
+
 
    public long getEnvironmentCount() {
       return this.getBaseCount();

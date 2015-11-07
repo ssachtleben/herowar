@@ -40,8 +40,10 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
    /**
     * Default constructor.
     *
-    * @param idClass     The idClass to set.
-    * @param entityClass The entityClass to set.
+    * @param idClass
+    *                The idClass to set.
+    * @param entityClass
+    *                The entityClass to set.
     */
    public BaseAPI(Class<K> idClass, Class<T> entityClass) {
       super();
@@ -62,15 +64,15 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
    /**
     * Retuns a unique entity with the given id of the given entity.
     *
-    * @param id The id of the entity.
+    * @param id
+    *             The id of the entity.
     * @return The entity object.
     */
    @Transactional
    public Result show(K id) {
       try {
          return ok(toJson(getEntityManager().find(entityClass, id)));
-      }
-      catch (NoResultException | NullPointerException e) {
+      } catch (NoResultException | NullPointerException e) {
          return badRequest("No Result");
       }
    }
@@ -78,15 +80,15 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
    /**
     * Deletes an entity with the given id.
     *
-    * @param id The id of the entity to delete.
+    * @param id
+    *             The id of the entity to delete.
     * @return An empty json response.
     */
    public Result delete(K id) {
       try {
          T obj = getEntityManager().find(entityClass, id);
          getEntityManager().remove(obj);
-      }
-      catch (NoResultException e) {
+      } catch (NoResultException e) {
          return badRequest("No Result");
       }
       return ok("{}");
@@ -108,7 +110,8 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
     * Checks if the entity with the given id exists.
     * TODO: refactor this to proper check with count...
     *
-    * @param id The id to check.
+    * @param id
+    *             The id to check.
     * @return exists boolean
     */
    public boolean exists(K id) {
@@ -140,8 +143,7 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
    public T findUnique(K id) {
       try {
          return getEntityManager().find(entityClass, id);
-      }
-      catch (NoResultException e) {
+      } catch (NoResultException e) {
          return null;
       }
    }
@@ -166,8 +168,8 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
       return updateProperties(obj, data);
    }
 
-   private Object updateProperties(Object obj, Map<String, Object> data)
-         throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+   private Object updateProperties(Object obj, Map<String, Object> data) throws IllegalAccessException, InvocationTargetException,
+           NoSuchMethodException {
       final Iterator<Map.Entry<String, Object>> iter = data.entrySet().iterator();
       while (iter.hasNext()) {
          final Map.Entry<String, Object> entry = iter.next();

@@ -9,11 +9,11 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.FIELD)
 public @interface StringArray {
 
-   ArrayType type();
-
-   int dimensions() default 1;
-
    enum ArrayType {
       INTEGER, DOUBLE, STRING, OBJECT, SHADER
    }
+
+   ArrayType type();
+
+   int dimensions() default 1;
 }

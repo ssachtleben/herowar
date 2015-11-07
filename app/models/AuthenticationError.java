@@ -1,5 +1,6 @@
 package models;
 
+
 public class AuthenticationError extends ApiError {
 
    public AuthenticationError() {

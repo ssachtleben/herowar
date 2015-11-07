@@ -7,6 +7,6 @@ AuthView = require 'views/authView'
 ###
 class AdminAuthView extends AuthView
 
-  redirectTo: 'admin/login'
+	redirectTo: 'admin/login'
 
 return AdminAuthView

@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * Provides important functions to import and update entity objects.
  *
@@ -75,6 +76,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
 
    protected abstract void process();
 
+
    protected void processFiles(Path path, E parent, boolean recursive) {
       try {
          for (File file : path.toFile().listFiles(new JsFileFilter())) {
@@ -91,33 +93,34 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
             saveEntity(entity, parent);
          }
 
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
          LOG.error("", e);
       }
 
-      //      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFilter())) {
-      //         for (Path entry : stream) {
-      //            LOG.debug(String.format("Check File %s", entry.toAbsolutePath().toString()));
-      //
-      //            File file = entry.toFile();
-      //            E entity = createEntry(file, parent);
-      //            updateGeo = false;
-      //            if (Files.isDirectory(entry) && recursive) {
-      //               LOG.info("Found directory: " + file.getAbsolutePath());
-      //               processFiles(entry, entity, recursive);
-      //               updateGeo = true;
-      //            } else {
-      //               LOG.info("Found geometry: " + file.getAbsolutePath());
-      //               updateEntity(file, entity);
-      //            }
-      //            saveEntity(entity, parent);
-      //            LOG.info(String.format("Imported successfully: %s", file.getName()));
-      //         }
-      //      } catch (IOException e) {
-      //         LOG.error(String.format("Import failed: %s", path), e);
-      //      }
+
+//      try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, new JsFilter())) {
+//         for (Path entry : stream) {
+//            LOG.debug(String.format("Check File %s", entry.toAbsolutePath().toString()));
+//
+//            File file = entry.toFile();
+//            E entity = createEntry(file, parent);
+//            updateGeo = false;
+//            if (Files.isDirectory(entry) && recursive) {
+//               LOG.info("Found directory: " + file.getAbsolutePath());
+//               processFiles(entry, entity, recursive);
+//               updateGeo = true;
+//            } else {
+//               LOG.info("Found geometry: " + file.getAbsolutePath());
+//               updateEntity(file, entity);
+//            }
+//            saveEntity(entity, parent);
+//            LOG.info(String.format("Imported successfully: %s", file.getName()));
+//         }
+//      } catch (IOException e) {
+//         LOG.error(String.format("Import failed: %s", path), e);
+//      }
    }
+
 
    protected void updateEntity(File file, E model) {
       try {
@@ -134,8 +137,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
             LOG.warn(String.format("Property geometry not found on class <%s>", model.getClass()));
          }
          updateByOpts(file, model);
-      }
-      catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
          LOG.error(String.format("Failed to update %s with %s", file, model), e);
       }
    }
@@ -150,8 +152,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
          ObjectMapper mapper = new ObjectMapper();
          JsonNode node = mapper.readTree(optsFile);
          JsonUtils.parse(model, node);
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
          LOG.error(String.format("Failed to update via opts file %s with %s", file, model), e);
       }
 
@@ -165,7 +166,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
                Collection<E> children = (Collection<E>) PropertyUtils.getProperty(parent, "children");
                Object id = PropertyUtils.getProperty(entity, "id");
                if (id != null && JPA.em().contains(entity)) {
-                  //   entity = JPA.em().merge(entity);
+               //   entity = JPA.em().merge(entity);
                } else if (JPA.em().contains(parent)) {
                }
                JPA.em().persist(entity);
@@ -174,8 +175,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
          } else if (!updateGeo) {
             LOG.warn(String.format("Property children not found on class <%s>", entity.getClass()));
          }
-      }
-      catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+      } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
          LOG.error(String.format("Failed to save %s from %s", entity, parent), e);
       }
    }
@@ -200,8 +200,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
    protected E createEntry(File file, E parent) {
       try {
          return createEntry(WordUtils.capitalize(file.getName().replace(".js", "")), parent);
-      }
-      catch (Exception e) {
+      } catch (Exception e) {
          LOG.error("", e);
       }
       return null;
@@ -223,8 +222,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
             } else {
                LOG.warn(String.format("Property parent not found on class <%s>", entry.getClass()));
             }
-         }
-         catch (Exception e) {
+         } catch (Exception e) {
             LOG.error("", e);
          }
       }
@@ -242,8 +240,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
       q.where(builder.equal(root.get("name"), name));
       try {
          result = JPA.em().createQuery(q).getSingleResult();
-      }
-      catch (NoResultException e) {
+      } catch (NoResultException e) {
          // nothing
       }
       return result;
@@ -261,8 +258,7 @@ public abstract class EntityImporter<E extends Serializable> extends SimpleJob {
          Map<Integer, Material> matMap = Play.application().injector().instanceOf(MaterialDAO.class).mapAndSave(geo.getMaterials());
          Play.application().injector().instanceOf(GeometryDAO.class).createGeoMaterials(geo, matMap);
          return geo;
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
          LOG.error("Failed to parse geometry file:", e);
       }
       return null;

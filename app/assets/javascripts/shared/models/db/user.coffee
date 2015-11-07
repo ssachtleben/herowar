@@ -1,8 +1,8 @@
 app = require 'application'
 
-class Account extends Backbone.Model
+class Account extends Backbone.Model 
 
-  url: ->
-    "/api/user/#{@id}"
-
+	url: ->
+		"/api/user/#{@id}"
+	
 return Account

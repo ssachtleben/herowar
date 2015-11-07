@@ -13,15 +13,18 @@ public class MatchTokenDAO extends BaseDAO<String, MatchToken> {
       super(String.class, MatchToken.class);
    }
 
+
    public MatchToken getTokenById(String token) {
       return this.findUnique(token);
    }
 
    @SuppressWarnings("unchecked")
    public MatchToken findValid(Player player) {
-      List<MatchToken> tokens = JPA.em()
-            .createQuery("SELECT mt FROM " + MatchToken.class.getSimpleName() + " mt JOIN mt.player p WHERE p.id = :playerId AND mt.invalid = FALSE")
-            .setParameter("playerId", player.getId()).getResultList();
+      List<MatchToken> tokens = JPA
+              .em()
+              .createQuery(
+                      "SELECT mt FROM " + MatchToken.class.getSimpleName() + " mt JOIN mt.player p WHERE p.id = :playerId AND mt.invalid = FALSE")
+              .setParameter("playerId", player.getId()).getResultList();
       if (tokens.size() > 0) {
          return tokens.get(0);
       }

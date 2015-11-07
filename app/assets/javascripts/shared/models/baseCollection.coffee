@@ -5,9 +5,9 @@
 ###
 class BaseCollection extends Backbone.Collection
 
-  fetch: (options) ->
-    options = {} unless options?
-    @id = options.id if options.id
-    super options
+	fetch: (options) ->
+		options = {} unless options?
+		@id = options.id if options.id
+		super options
 
 return BaseCollection

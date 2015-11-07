@@ -4,35 +4,35 @@ db = require 'database'
 
 __run__ = false
 __root__ = null
-__models__ = ['rotation', 'scale', 'animations', 'effects', 'debug']
+__models__ = [ 'rotation', 'scale', 'animations', 'effects', 'debug' ]
 
-GUIController =
+GUIController = 
 
-  start: ->
-    unless __run__
-      @reset()
-      @_bindEvents()
-      __run__ = true
-    return
+	start: ->
+		unless __run__
+			@reset()
+			@_bindEvents()
+			__run__ = true
+		return
 
-  reset: ->
-    if __root__
-      __root__.root.destroy()
-      __root__ = undefined
-    __root__ = new RootGUI()
-    __root__.add new ModelsGUI()
+	reset: ->
+		if __root__
+			__root__.root.destroy()
+			__root__ = undefined
+		__root__ = new RootGUI()
+		__root__.add new ModelsGUI()
 
-  update: (obj) ->
-    @reset()
-    for mod in __models__
-      Model = require "viewer/gui/#{mod}"
-      current = new Model obj
-      __root__.add current if current.isAllowed()
-    return
+	update: (obj) ->
+		@reset()
+		for mod in __models__
+			Model = require "viewer/gui/#{mod}"
+			current = new Model obj
+			__root__.add current if current.isAllowed()
+		return
 
-  _bindEvents: ->
-    @viewer = db.get 'viewer'
-    @viewer.on 'fetched:data', @update, @
-    return
+	_bindEvents: ->
+		@viewer = db.get 'viewer'
+		@viewer.on 'fetched:data', @update, @
+		return
 
 return GUIController

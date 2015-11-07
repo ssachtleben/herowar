@@ -5,8 +5,8 @@ db = require 'database'
 
 class Play extends AuthView
 
-  id: 'play'
-
-  template: templates.get 'play.tmpl'
-
+	id: 'play'
+	
+	template: templates.get 'play.tmpl'
+	
 return Play
