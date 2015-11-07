@@ -5,7 +5,7 @@ import network.InputPacket;
 
 /**
  * Provides basic functionality for client packets.
- * 
+ *
  * @author Sebastian Sachtleben
  */
 @SuppressWarnings("serial")

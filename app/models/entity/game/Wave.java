@@ -46,7 +46,7 @@ public class Wave implements Serializable {
    @JsonIgnore
    private Set<Unit> units = new HashSet<Unit>();
 
-   @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
+   @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REFRESH })
    @JoinColumn(name = "path_id")
    @JsonIgnore
    private Path path;
@@ -183,19 +183,29 @@ public class Wave implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
       Wave wave = (Wave) o;
 
-      if (id != null ? !id.equals(wave.id) : wave.id != null) return false;
-      if (name != null ? !name.equals(wave.name) : wave.name != null) return false;
-      if (prepareTime != null ? !prepareTime.equals(wave.prepareTime) : wave.prepareTime != null) return false;
-      if (waveTime != null ? !waveTime.equals(wave.waveTime) : wave.waveTime != null) return false;
-      if (quantity != null ? !quantity.equals(wave.quantity) : wave.quantity != null) return false;
-      if (sortOder != null ? !sortOder.equals(wave.sortOder) : wave.sortOder != null) return false;
-      if (requestable != null ? !requestable.equals(wave.requestable) : wave.requestable != null) return false;
-      if (autostart != null ? !autostart.equals(wave.autostart) : wave.autostart != null) return false;
+      if (id != null ? !id.equals(wave.id) : wave.id != null)
+         return false;
+      if (name != null ? !name.equals(wave.name) : wave.name != null)
+         return false;
+      if (prepareTime != null ? !prepareTime.equals(wave.prepareTime) : wave.prepareTime != null)
+         return false;
+      if (waveTime != null ? !waveTime.equals(wave.waveTime) : wave.waveTime != null)
+         return false;
+      if (quantity != null ? !quantity.equals(wave.quantity) : wave.quantity != null)
+         return false;
+      if (sortOder != null ? !sortOder.equals(wave.sortOder) : wave.sortOder != null)
+         return false;
+      if (requestable != null ? !requestable.equals(wave.requestable) : wave.requestable != null)
+         return false;
+      if (autostart != null ? !autostart.equals(wave.autostart) : wave.autostart != null)
+         return false;
       return !(pathId != null ? !pathId.equals(wave.pathId) : wave.pathId != null);
 
    }

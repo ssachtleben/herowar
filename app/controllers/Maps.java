@@ -15,18 +15,18 @@ import static play.libs.Json.toJson;
  */
 public class Maps extends BaseAPI<Long, Map> {
 
-    private static final Logger.ALogger log = Logger.of(Maps.class);
+   private static final Logger.ALogger log = Logger.of(Maps.class);
 
-    public Maps() {
-        super(Long.class, Map.class);
-    }
+   public Maps() {
+      super(Long.class, Map.class);
+   }
 
-    @Transactional
-    public Result update(Long id) {
-        Map map = findUnique(id);
-        map = JPA.em().merge(map);
-        return ok(toJson(map));
-    }
+   @Transactional
+   public Result update(Long id) {
+      Map map = findUnique(id);
+      map = JPA.em().merge(map);
+      return ok(toJson(map));
+   }
 
 }
 

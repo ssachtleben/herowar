@@ -27,7 +27,6 @@ public class MapDAO extends BaseDAO<Long, Map> {
       super(Long.class, Map.class);
    }
 
-
    public Map create(String name, String description, int teamSize) {
       final Map map = new Map();
       map.setName(name);

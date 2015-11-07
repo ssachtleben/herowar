@@ -10,7 +10,6 @@ import models.entity.game.Texture;
 
 import java.io.IOException;
 
-
 public class MaterialDeserializer extends BaseDeserializer<Material> {
 
    @Override

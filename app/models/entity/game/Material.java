@@ -1,6 +1,5 @@
 package models.entity.game;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -14,7 +13,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  * The mesh materials for the game models.
  *
@@ -24,7 +22,7 @@ import java.util.Set;
 @Entity
 @Table(name = "material", uniqueConstraints = @UniqueConstraint(columnNames = "dbgname"))
 @JsonDeserialize(using = MaterialDeserializer.class)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @SuppressWarnings("serial")
 public class Material implements Serializable {
 
@@ -113,7 +111,7 @@ public class Material implements Serializable {
    @Transient
    private Long materialId;
 
-   @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+   @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
    private Texture texture;
 
    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "allMaterials")

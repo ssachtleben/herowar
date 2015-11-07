@@ -11,9 +11,8 @@ import java.io.Serializable;
  * @author Sebastian Sachtleben
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"identifier", "type"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "identifier", "type" }))
 public class LinkedService extends BaseModel implements Serializable {
-
 
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +37,6 @@ public class LinkedService extends BaseModel implements Serializable {
    @Column(length = 2000)
    private String data;
 
-
    @JsonIgnore
    @ManyToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -51,7 +49,6 @@ public class LinkedService extends BaseModel implements Serializable {
    public JsonNode data() {
       return Json.parse(data);
    }
-
 
    public Long getId() {
       return id;
@@ -127,8 +124,7 @@ public class LinkedService extends BaseModel implements Serializable {
 
    @Override
    public String toString() {
-      return "LinkedService [id=" + id + ", type=" + type + ", identifier=" + identifier + ", token=" + token + ", expires=" + expires
-              + "]";
+      return "LinkedService [id=" + id + ", type=" + type + ", identifier=" + identifier + ", token=" + token + ", expires=" + expires + "]";
    }
 
 }

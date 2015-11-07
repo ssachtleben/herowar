@@ -20,13 +20,11 @@ import java.util.Set;
  */
 public class Packets {
    private static final Logger.ALogger log = Logger.of(Packets.class);
-
+   private static Packets instance = new Packets();
    private Map<Integer, Class<? extends BasePacket>> types = findTypes2();
 
    private Packets() {
    }
-
-   private static Packets instance = new Packets();
 
    private static Packets instance() {
       return instance;

@@ -78,13 +78,16 @@ public class ExampleMapImporter extends EntityImporter<Map> {
 
          }
          log.info("Imported successfully: " + filename);
-      } catch (Exception ex) {
+      }
+      catch (Exception ex) {
          log.error("Couldn't execute " + filename, ex);
-      } finally {
+      }
+      finally {
          if (bReader != null)
             try {
                bReader.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
 
             }
       }

@@ -8,7 +8,6 @@ import models.entity.game.MatchResult;
 
 import java.io.IOException;
 
-
 public class MatchResultSimpleSerializer extends BaseSerializer<MatchResult> {
 
    @Override

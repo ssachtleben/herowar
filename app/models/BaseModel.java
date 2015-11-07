@@ -17,12 +17,11 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class BaseModel<T extends Serializable> extends Mesh implements Serializable {
    public static final ReadOnlyVector3 up = new Vector3(0, 1, 0);
-
+   protected double movespeed = 30;
+   protected double lastRotationDifference = 0;
    private Long id;
    private Long dbId;
    private T entity;
-   protected double movespeed = 30;
-   protected double lastRotationDifference = 0;
 
    public BaseModel() {
       // empty

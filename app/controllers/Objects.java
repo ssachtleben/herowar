@@ -15,16 +15,16 @@ import static play.libs.Json.toJson;
  */
 public class Objects extends BaseAPI<Long, Object3D> {
 
-    public Objects() {
-        super(Long.class, Object3D.class);
-    }
+   public Objects() {
+      super(Long.class, Object3D.class);
+   }
 
-    @Transactional
-    public Result update(Long id) {
-        // Object3D object = instance.findUnique(id);
-        final Object3D object = JPA.em().merge(Form.form(Object3D.class).bindFromRequest().get());
-        return ok(toJson(object));
-    }
+   @Transactional
+   public Result update(Long id) {
+      // Object3D object = instance.findUnique(id);
+      final Object3D object = JPA.em().merge(Form.form(Object3D.class).bindFromRequest().get());
+      return ok(toJson(object));
+   }
 
 }
 

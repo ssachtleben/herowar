@@ -7,7 +7,6 @@ import models.entity.game.Material;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * Mix-In class entity to json but exclude the map data properties.
  *

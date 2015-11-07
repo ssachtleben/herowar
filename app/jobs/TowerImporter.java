@@ -9,13 +9,12 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
 /**
  * Syncronizes javascript files from "public/geometries/towers" with {@link Tower} models.
  *
  * @author Sebastian Sachtleben
  */
-@StartJob(async=true)
+@StartJob(async = true)
 public class TowerImporter extends FolderImporter<Tower> {
 
    @Override

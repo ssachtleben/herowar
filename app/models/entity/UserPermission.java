@@ -25,6 +25,10 @@ public class UserPermission implements Serializable {
 
    // GETTER & SETTER //
 
+   public void setValue(String value) {
+      this.value = value;
+   }
+
    public Long getId() {
       return id;
    }
@@ -32,10 +36,5 @@ public class UserPermission implements Serializable {
    public void setId(Long id) {
       this.id = id;
    }
-
-   public void setValue(String value) {
-      this.value = value;
-   }
-
 
 }

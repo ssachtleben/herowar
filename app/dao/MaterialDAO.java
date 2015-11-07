@@ -15,7 +15,6 @@ public class MaterialDAO extends BaseDAO<Long, Material> {
       super(Long.class, Material.class);
    }
 
-
    public Material getMaterialbyId(Long id) {
       return this.findUnique(id);
    }

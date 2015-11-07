@@ -5,16 +5,16 @@ package processor.meta;
  */
 public interface IProcessor {
 
-	public void process();
+   public void process();
 
-	public int getUpdateTimer();
+   public int getUpdateTimer();
 
-	public void start();
+   public void start();
 
-	public void stop();
+   public void stop();
 
-	public boolean isRunning();
+   public boolean isRunning();
 
-	public void setRunning(boolean running);
+   public void setRunning(boolean running);
 
 }

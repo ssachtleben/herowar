@@ -1,6 +1,5 @@
 package models;
 
-
 import models.entity.game.Vector3;
 
 public class TowerRestriction {

@@ -29,11 +29,8 @@ public class LinkedServiceDAO extends BaseDAO<Long, LinkedService> {
 
    @SuppressWarnings("unchecked")
    public List<LinkedService> find(final User user) {
-      return JPA
-              .em()
-              .createQuery(
-                      String.format("FROM %s la WHERE la.user = :user", LinkedService.class.getSimpleName()))
-              .setParameter("key", user).setParameter("username", user).getResultList();
+      return JPA.em().createQuery(String.format("FROM %s la WHERE la.user = :user", LinkedService.class.getSimpleName())).setParameter("key", user)
+            .setParameter("username", user).getResultList();
    }
 
    public LinkedService find(final String key, final String userId) {
@@ -43,18 +40,17 @@ public class LinkedServiceDAO extends BaseDAO<Long, LinkedService> {
       q.where(builder.and(builder.equal(root.get("type"), ServiceType.valueOf(key.toUpperCase())), builder.equal(root.get("identifier"), userId)));
       try {
          return JPA.em().createQuery(q).getSingleResult();
-      } catch (NoResultException e) {
+      }
+      catch (NoResultException e) {
          return null;
       }
    }
 
    @SuppressWarnings("unchecked")
    public LinkedService findByUsername(String key, String username) {
-      List<LinkedService> accounts = JPA
-              .em()
-              .createQuery(
-                      String.format("FROM %s la WHERE la.type = :key AND la.user.username = :username", LinkedService.class.getSimpleName()))
-              .setParameter("key", ServiceType.valueOf(key.toUpperCase())).setParameter("username", username).getResultList();
+      List<LinkedService> accounts = JPA.em()
+            .createQuery(String.format("FROM %s la WHERE la.type = :key AND la.user.username = :username", LinkedService.class.getSimpleName()))
+            .setParameter("key", ServiceType.valueOf(key.toUpperCase())).setParameter("username", username).getResultList();
       if (accounts != null && accounts.size() > 0) {
          return accounts.get(0);
       }

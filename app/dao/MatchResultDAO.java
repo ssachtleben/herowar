@@ -13,25 +13,18 @@ public class MatchResultDAO extends BaseDAO<String, MatchResult> {
       super(String.class, MatchResult.class);
    }
 
-
    @SuppressWarnings("unchecked")
    public List<MatchResult> getHistory(Player player) {
-      return JPA
-              .em()
-              .createQuery(
-                      "SELECT mr FROM " + MatchResult.class.getSimpleName()
-                              + " mr join mr.player p join mr.match m WHERE p.id = :playerId AND m.state = :state ORDER BY m.cdate DESC")
-              .setParameter("playerId", player.getId()).setParameter("state", MatchState.FINISH).setMaxResults(10).getResultList();
+      return JPA.em().createQuery("SELECT mr FROM " + MatchResult.class.getSimpleName()
+            + " mr join mr.player p join mr.match m WHERE p.id = :playerId AND m.state = :state ORDER BY m.cdate DESC")
+            .setParameter("playerId", player.getId()).setParameter("state", MatchState.FINISH).setMaxResults(10).getResultList();
    }
 
    @SuppressWarnings("unchecked")
    public List<MatchResult> findOpen(Player player) {
-      return JPA
-              .em()
-              .createQuery(
-                      "SELECT mr FROM " + MatchResult.class.getSimpleName()
-                              + " mr join mr.player p join mr.match m WHERE p.id = :playerId AND m.state = :state ORDER BY m.cdate DESC")
-              .setParameter("playerId", player.getId()).setParameter("state", MatchState.INIT).getResultList();
+      return JPA.em().createQuery("SELECT mr FROM " + MatchResult.class.getSimpleName()
+            + " mr join mr.player p join mr.match m WHERE p.id = :playerId AND m.state = :state ORDER BY m.cdate DESC")
+            .setParameter("playerId", player.getId()).setParameter("state", MatchState.INIT).getResultList();
    }
 
 }

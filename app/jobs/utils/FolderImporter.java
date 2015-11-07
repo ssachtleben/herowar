@@ -11,29 +11,29 @@ import java.nio.file.Path;
  */
 public abstract class FolderImporter<E extends Serializable> extends EntityImporter<E> {
 
-    /**
-     * Returns the path to the folder which files should be imported.
-     *
-     * @return The path object
-     */
-    public abstract Path getFolderPath();
+   /**
+    * Returns the path to the folder which files should be imported.
+    *
+    * @return The path object
+    */
+   public abstract Path getFolderPath();
 
-    /**
-     * Returns boolean if the folder should be imported recursive. Can be overridden, by default true.
-     *
-     * @return The recursive boolean
-     */
-    public boolean loadRecursive() {
-        return true;
-    }
+   /**
+    * Returns boolean if the folder should be imported recursive. Can be overridden, by default true.
+    *
+    * @return The recursive boolean
+    */
+   public boolean loadRecursive() {
+      return true;
+   }
 
-    @Override
-    protected void process() {
-        importFromPath(getFolderPath(), loadRecursive());
-    }
+   @Override
+   protected void process() {
+      importFromPath(getFolderPath(), loadRecursive());
+   }
 
-    protected void importFromPath(Path dir, boolean recursive) {
-        processFiles(dir, null, recursive);
-    }
+   protected void importFromPath(Path dir, boolean recursive) {
+      processFiles(dir, null, recursive);
+   }
 
 }
