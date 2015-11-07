@@ -3,7 +3,9 @@ package controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.EmailDAO;
 import dao.UserDAO;
+import json.excludes.MatchResultSimpleMixin;
 import models.entity.User;
+import models.entity.game.MatchResult;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -39,7 +41,7 @@ public class Me extends Controller {
       User user = Application.getLocalUser(session());
       if (user != null) {
          ObjectMapper mapper = new ObjectMapper();
-         //mapper.getSerializationConfig().addMixInAnnotations(MatchResult.class, MatchResultSimpleMixin.class);
+         mapper.addMixInAnnotations(MatchResult.class, MatchResultSimpleMixin.class);
          try {
             return ok(mapper.writeValueAsString(user));
          }
