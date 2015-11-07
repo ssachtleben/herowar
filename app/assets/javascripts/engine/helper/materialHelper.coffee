@@ -141,7 +141,6 @@ materialHelper =
 		params = {}
 		result.name = 'matID' + materialId
 		for key,value of material.attributes when value
-			value = value.split('\\n').join(' ') if value? and _.isString(value) and value.indexOf('\n')
 			switch key
 				when 'color'
 					nocolor = $(material.attributes).attr('nocolor')
@@ -166,6 +165,7 @@ materialHelper =
 				when 'attributes'
 					params.attributes = eval.call @, "(#{value})"
 				when 'uniforms'
+					value = value.split('\\n').join(' ') if value? and _.isString(value) and value.indexOf('\n')
 					params.uniforms = eval.call @, "(#{value})"
 					for key, u of params.uniforms when u.value and u.type is "t"
 						u.value = db.data().textures[u.value].clone()
