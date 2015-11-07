@@ -2,6 +2,6 @@ BaseView = require 'views/baseView'
 
 class Viewer extends BaseView
 
-	id: 'viewer'
-	
+  id: 'viewer'
+
 return Viewer

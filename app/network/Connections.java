@@ -1,4 +1,5 @@
 package network;
+
 import models.entity.game.Player;
 
 /**
@@ -15,16 +16,16 @@ public class Connections extends Cache<Long, Connection> {
    private static Connections instance = new Connections();
 
    /**
+    * Private constructor to prevent class others from creating {@link Connections} instance.
+    */
+   private Connections() {
+   }
+
+   /**
     * @return The {@link Connections} instance.
     */
    private static Connections instance() {
       return instance;
-   }
-
-   /**
-    * Private constructor to prevent class others from creating {@link Connections} instance.
-    */
-   private Connections() {
    }
 
    /**

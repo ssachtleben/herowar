@@ -10,24 +10,24 @@ Tools = require 'core/tools'
 log = require 'util/logger'
 
 class EditorTools extends Tools
-	
-	defaultTools: [ Constants.TOOL_SELECTION ]
 
-	bindEvents: ->
-		EditorEventbus.initIdChanged.add @setStartId
+  defaultTools: [Constants.TOOL_SELECTION]
 
-	createHelpers: ->
-		@objectHelper = new ObjectHelper()
-		@pathingHelper = new PathingHelper()
-		super()
+  bindEvents: ->
+    EditorEventbus.initIdChanged.add @setStartId
 
-	createTools: ->
-		@addEnvironment = new AddEnvironment  @intersectHelper
-		@addWaypoint = new AddWaypoint @intersectHelper
-		@selectorObject = new SelectorObject @objectHelper, @intersectHelper
-		@brushMaterial = new BrushMaterial @intersectHelper, @selectorObject	
+  createHelpers: ->
+    @objectHelper = new ObjectHelper()
+    @pathingHelper = new PathingHelper()
+    super()
 
-	setStartId: (module, startId) =>
-		@addWaypoint.nextId = startId if module is 'waypoint'
+  createTools: ->
+    @addEnvironment = new AddEnvironment @intersectHelper
+    @addWaypoint = new AddWaypoint @intersectHelper
+    @selectorObject = new SelectorObject @objectHelper, @intersectHelper
+    @brushMaterial = new BrushMaterial @intersectHelper, @selectorObject
+
+  setStartId: (module, startId) =>
+    @addWaypoint.nextId = startId if module is 'waypoint'
 
 return EditorTools

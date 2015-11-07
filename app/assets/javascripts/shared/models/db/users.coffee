@@ -4,9 +4,9 @@ app = require 'application'
 
 class Users extends BaseCollection
 
-	url: ->
-		"/api/user/#{@id}"
+  url: ->
+    "/api/user/#{@id}"
 
-	model: UserModel
+  model: UserModel
 
 return Users

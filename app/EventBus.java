@@ -5,7 +5,7 @@ import com.ssachtleben.play.plugin.event.EventService;
  * <p>
  * This is a custom eventbus implementation to create later a history to view in admin interface.
  * </p>
- * 
+ *
  * @author Sebastian Sachtleben
  * @see EventService
  */

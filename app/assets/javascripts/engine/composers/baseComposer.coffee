@@ -1,40 +1,40 @@
 class BaseComposer
-	
-	constructor: (@view, @renderTarget) ->
-		$domElement = $ @view.get 'domElement'
-		width = $domElement.width()
-		height = $domElement.height()
-		@composer = @_createComposer width, height
-		@initialize @composer, width, height
-		@composer.passes[@composer.passes.length-1].renderToScreen = true
 
-	initialize: (composer, width, height) ->
+  constructor: (@view, @renderTarget) ->
+    $domElement = $ @view.get 'domElement'
+    width = $domElement.width()
+    height = $domElement.height()
+    @composer = @_createComposer width, height
+    @initialize @composer, width, height
+    @composer.passes[@composer.passes.length - 1].renderToScreen = true
 
-	render: (delta) ->
-		@composer.render delta
-		return
-		
-	setSize: (width, height) ->
-		@composer.setSize width, height
-		return
+  initialize: (composer, width, height) ->
 
-	setCamera: (camera) ->
-		camera = @view.get 'cameraScene' unless camera
-		pass.camera = camera for pass in @composer.passes when pass instanceof THREE.RenderPass
-		return
+  render: (delta) ->
+    @composer.render delta
+    return
 
-	reset: ->
-		@composer.reset()
-		return
+  setSize: (width, height) ->
+    @composer.setSize width, height
+    return
 
-	_createComposer: (width, height) ->
-		@renderTarget = @_createRenderTarget width, height unless @renderTarget
-		return new THREE.EffectComposer @view.get('renderer'), @renderTarget
-	
-	_createRenderTarget: (width, height) ->
-		return new THREE.WebGLRenderTarget width, height, @_createRenderParams()
-	
-	_createRenderParams: ->
-		return minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false
+  setCamera: (camera) ->
+    camera = @view.get 'cameraScene' unless camera
+    pass.camera = camera for pass in @composer.passes when pass instanceof THREE.RenderPass
+    return
+
+  reset: ->
+    @composer.reset()
+    return
+
+  _createComposer: (width, height) ->
+    @renderTarget = @_createRenderTarget width, height unless @renderTarget
+    return new THREE.EffectComposer @view.get('renderer'), @renderTarget
+
+  _createRenderTarget: (width, height) ->
+    return new THREE.WebGLRenderTarget width, height, @_createRenderParams()
+
+  _createRenderParams: ->
+    return minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, format: THREE.RGBFormat, stencilBuffer: false
 
 return BaseComposer

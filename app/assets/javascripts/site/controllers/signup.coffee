@@ -7,8 +7,8 @@ BaseController = require 'controllers/baseController'
 ###
 class SignupController extends BaseController
 
-    views:
-        'views/header'	: ''
-        'views/signup' 	: ''
+  views:
+    'views/header': ''
+    'views/signup': ''
 
 return SignupController

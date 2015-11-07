@@ -3,18 +3,18 @@ templates = require 'templates'
 
 class IconbarView extends BaseView
 
-	id: 'iconbar'
-	
-	template: templates.get 'iconbar.tmpl'
+  id: 'iconbar'
 
-	events:
-		'click [data-modal="true"]' : 'showModal'
+  template: templates.get 'iconbar.tmpl'
 
-	showModal: (event) ->
-		unless event then return
-		event?.preventDefault()
-		$currentTarget = $ event.currentTarget
-		id = $currentTarget.attr 'id'
-		$("#modal#{id.charAt(0).toUpperCase()}#{id.slice(1)}").modal 'show'
+  events:
+    'click [data-modal="true"]': 'showModal'
+
+  showModal: (event) ->
+    unless event then return
+    event?.preventDefault()
+    $currentTarget = $ event.currentTarget
+    id = $currentTarget.attr 'id'
+    $("#modal#{id.charAt(0).toUpperCase()}#{id.slice(1)}").modal 'show'
 
 return IconbarView

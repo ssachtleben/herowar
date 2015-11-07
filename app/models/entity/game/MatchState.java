@@ -2,7 +2,7 @@ package models.entity.game;
 
 /**
  * The Match states are very important and tell us which state is currently in that match:
- * 
+ * <p>
  * <p>
  * INIT - The game is in match making mode.
  * </p>
@@ -15,10 +15,9 @@ package models.entity.game;
  * <p>
  * FINISH - The game is done.
  * </p>
- * 
+ *
  * @author Sebastian Sachtleben
- * 
  */
 public enum MatchState {
-	INIT, PRELOAD, GAME, FINISH
+   INIT, PRELOAD, GAME, FINISH
 }

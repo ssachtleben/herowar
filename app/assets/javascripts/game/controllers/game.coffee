@@ -7,24 +7,24 @@ log = require 'util/logger'
 
 class GameController extends ApplicationController
 
-	views:
-		'views/build'       : ''
-		'views/chat'        : ''
-		'views/stats'       : ''
-		'views/viewport'    : ''
-		'views/debug'       : ''
-		'views/menubar'     : ''
+  views:
+    'views/build': ''
+    'views/chat': ''
+    'views/stats': ''
+    'views/viewport': ''
+    'views/debug': ''
+    'views/menubar': ''
 
-	initialize: (options) ->
-		log.info 'Initialize game...'
-		super options
-		# Show path during develop - Should be removed later
-		#@pathingHelper = new PathingHelper()
-		#@pathingHelper.showPath()
-		engine.start()
+  initialize: (options) ->
+    log.info 'Initialize game...'
+    super options
+    # Show path during develop - Should be removed later
+    #@pathingHelper = new PathingHelper()
+    #@pathingHelper.showPath()
+    engine.start()
 
-	initCore: ->
-		@scene = new GameScene()
-		@tools = new GameTools()
-		
+  initCore: ->
+    @scene = new GameScene()
+    @tools = new GameTools()
+
 return GameController

@@ -8,10 +8,10 @@ templates = require 'templates'
 ###
 class UsersList extends AdminAuthView
 
-	entity: 'api/users'
+  entity: 'api/users'
 
-	id: 'users-list'
-	
-	template: templates.get 'users/list.tmpl'
+  id: 'users-list'
+
+  template: templates.get 'users/list.tmpl'
 
 return UsersList

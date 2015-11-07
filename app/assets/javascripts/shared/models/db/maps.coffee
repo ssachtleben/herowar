@@ -4,6 +4,6 @@ app = require 'application'
 
 class Maps extends BaseCollection
 
-	model: MapModel
+  model: MapModel
 
 return Maps

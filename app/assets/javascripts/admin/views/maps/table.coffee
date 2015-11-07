@@ -3,20 +3,20 @@ app = require 'application'
 
 class MapTable extends TableView
 
-	entity: 'api/maps'
-	
-	tableEntity: 'db/maps'
-	
-	fields:
-		'#'						: 'id'
-		'Name' 				: 'name'
-		'Description'	: 'description'
-		'Team Size'		: 'teamSize'
-		
-	entryView: 'views/maps/tableEntry'
+  entity: 'api/maps'
 
-	createEntry: (event) ->
-		event?.preventDefault()
-		app.navigate "admin/map/new", true 
+  tableEntity: 'db/maps'
+
+  fields:
+    '#': 'id'
+    'Name': 'name'
+    'Description': 'description'
+    'Team Size': 'teamSize'
+
+  entryView: 'views/maps/tableEntry'
+
+  createEntry: (event) ->
+    event?.preventDefault()
+    app.navigate "admin/map/new", true
 
 return MapTable

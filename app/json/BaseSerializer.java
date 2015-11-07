@@ -76,7 +76,7 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
                               writeStringAsStringArray(jgen, fieldName, value.toString());
                               if (dimension > 1) {
                                  log.warn(String.format("Field <%s> in Bean <%s>: MultiStringArray in StringArray not supported!", fieldName,
-                                         clazz.getSimpleName()));
+                                       clazz.getSimpleName()));
                               }
                               break;
                            case OBJECT:
@@ -86,8 +86,9 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
                               jgen.writeStringField(fieldName, value.toString());
                               break;
                            default:
-                              log.warn(String.format("Field <%s> in Bean <%s>: StringArray Type <%s> not supported!", fieldName, clazz.getSimpleName(),
-                                      anno.type()));
+                              log.warn(
+                                    String.format("Field <%s> in Bean <%s>: StringArray Type <%s> not supported!", fieldName, clazz.getSimpleName(),
+                                          anno.type()));
                               break;
                         }
 
@@ -140,7 +141,8 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
                }
 
             }
-         } catch (Exception e) {
+         }
+         catch (Exception e) {
             log.error("", e);
          }
       }

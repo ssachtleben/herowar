@@ -6,27 +6,27 @@ db = require 'database'
 
 class ChatView extends BaseView
 
-	id: 'chat'
-		
-	template: templates.get 'chat.tmpl'
+  id: 'chat'
 
-	entity: 'ui/chat'
-	
-	events:
-		'click .send' : 'sendMessage'
+  template: templates.get 'chat.tmpl'
 
-	initialize: (options) ->
-		super options
-		world = db.get 'world'
-		@$el.addClass 'hidden' if world.get('name') is 'Tutorial'
-		return
-		
-	sendMessage: (event) ->
-		$input = @$el.find 'input'
-		console.log 'Send', $input.val()
-		message = $input.val()
-		if message
-			events.trigger 'send:packet', new ChatMessagePacket message
-		return
+  entity: 'ui/chat'
+
+  events:
+    'click .send': 'sendMessage'
+
+  initialize: (options) ->
+    super options
+    world = db.get 'world'
+    @$el.addClass 'hidden' if world.get('name') is 'Tutorial'
+    return
+
+  sendMessage: (event) ->
+    $input = @$el.find 'input'
+    console.log 'Send', $input.val()
+    message = $input.val()
+    if message
+      events.trigger 'send:packet', new ChatMessagePacket message
+    return
 
 return ChatView

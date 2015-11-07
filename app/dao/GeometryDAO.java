@@ -7,7 +7,6 @@ import models.entity.game.Material;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-
 /**
  * @author Sebastian Sachtleben
  */
@@ -15,7 +14,6 @@ public class GeometryDAO extends BaseDAO<Long, Geometry> {
    public GeometryDAO() {
       super(Long.class, Geometry.class);
    }
-
 
    /**
     * For mapping geometry in Client

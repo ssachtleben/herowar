@@ -7,7 +7,6 @@ import models.entity.game.Player;
 
 import java.io.IOException;
 
-
 public class PlayerWithUsernameSerializer extends BaseSerializer<Player> {
 
    @Override

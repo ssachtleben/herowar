@@ -9,15 +9,15 @@ app = require 'application'
 ###
 class Header extends BaseView
 
-	className: 'navbar navbar-inverse navbar-fixed-top'
-	
-	template: templates.get 'header.tmpl'
-	
-	events:
-		'click .home-link': 'home'
-		
-	home: (event) ->
-		event?.preventDefault()
-		app.navigate 'admin', true 
-	
+  className: 'navbar navbar-inverse navbar-fixed-top'
+
+  template: templates.get 'header.tmpl'
+
+  events:
+    'click .home-link': 'home'
+
+  home: (event) ->
+    event?.preventDefault()
+    app.navigate 'admin', true
+
 return Header

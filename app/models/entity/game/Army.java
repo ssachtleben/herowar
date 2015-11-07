@@ -47,11 +47,12 @@ public class Army implements Serializable {
       this.units = units;
    }
 
-
    @Override
    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
       Army army = (Army) o;
 

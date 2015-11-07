@@ -12,29 +12,18 @@ import java.io.Serializable;
 @Entity
 public class Email extends BaseModel implements Serializable {
 
-   public interface All {
-   }
-
-   public interface NoUser {
-   }
-
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
-
-   @Required(groups = {All.class, NoUser.class})
+   @Required(groups = { All.class, NoUser.class })
    @play.data.validation.Constraints.Email
    @Column(unique = true)
    private String address;
-
-   @Required(groups = {All.class, NoUser.class})
+   @Required(groups = { All.class, NoUser.class })
    private Boolean main = false;
-
-   @Required(groups = {All.class, NoUser.class})
+   @Required(groups = { All.class, NoUser.class })
    private Boolean confirmed = false;
-
-
-   @Required(groups = {All.class})
+   @Required(groups = { All.class })
    @JsonIgnore
    @ManyToOne
    @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -83,6 +72,12 @@ public class Email extends BaseModel implements Serializable {
    @Override
    public String toString() {
       return "Email [id=" + id + ", address=" + address + ", main=" + main + ", confirmed=" + confirmed + "]";
+   }
+
+   public interface All {
+   }
+
+   public interface NoUser {
    }
 
 }

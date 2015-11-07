@@ -4,12 +4,12 @@ app = require 'application'
 
 class SettingsView extends BaseView
 
-	className: 'settings'
+  className: 'settings'
 
-	events:
-		'click' : 'invoke'
-		
-	invoke: (event) ->
-		Backbone.history.loadUrl 'game/settings'
+  events:
+    'click': 'invoke'
+
+  invoke: (event) ->
+    Backbone.history.loadUrl 'game/settings'
 
 return SettingsView

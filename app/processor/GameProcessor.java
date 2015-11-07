@@ -1,14 +1,7 @@
 package processor;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import play.Logger;
-
+import com.ssachtleben.play.plugin.event.EventBinding;
+import com.ssachtleben.play.plugin.event.Events;
 import models.TowerModel;
 import models.TowerRestriction;
 import models.UnitModel;
@@ -21,18 +14,14 @@ import network.server.PreloadDataPacket;
 import network.server.TowerBuildPacket;
 import network.server.TowerTargetPacket;
 import network.server.UnitInPacket;
+import play.Logger;
 import processor.meta.AbstractProcessor;
 import processor.meta.IPlugin;
 import processor.meta.IProcessor;
-import processor.plugin.FinishPlugin;
-import processor.plugin.GoldPlugin;
-import processor.plugin.PreloadPlugin;
-import processor.plugin.TowerPlugin;
-import processor.plugin.TutorialPlugin;
-import processor.plugin.UnitPlugin;
-import processor.plugin.WavePlugin;
-import com.ssachtleben.play.plugin.event.EventBinding;
-import com.ssachtleben.play.plugin.event.Events;
+import processor.plugin.*;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The GameProcessor handles every game specific actions like updating player gold, control waves, tower damage and much more.
@@ -356,20 +345,16 @@ public class GameProcessor extends AbstractProcessor implements IProcessor {
       return getTopicName() + "-" + topic.name().toLowerCase();
    }
 
-   public enum Topic {
-      STATE, PRELOAD, UNIT
-   }
-
    @Override
    public String toString() {
       return "GameProcessor-" + gameId;
    }
 
-   // GETTER && SETTER //
-
    public GameData data() {
       return data;
    }
+
+   // GETTER && SETTER //
 
    public long getGameId() {
       return gameId;
@@ -469,6 +454,10 @@ public class GameProcessor extends AbstractProcessor implements IProcessor {
 
    public void setTowerRestrictions(Set<TowerRestriction> towerRestrictions) {
       this.towerRestrictions = towerRestrictions;
+   }
+
+   public enum Topic {
+      STATE, PRELOAD, UNIT
    }
 
    public enum State {

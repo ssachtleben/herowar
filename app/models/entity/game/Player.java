@@ -32,7 +32,7 @@ public class Player implements Serializable {
    private Long kills = 0L;
    private Long assists = 0L;
 
-   @OneToMany(fetch = FetchType.LAZY, mappedBy = "player", cascade = {CascadeType.ALL})
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "player", cascade = { CascadeType.ALL })
    @JsonIgnore
    private Set<MatchResult> matchResults = new HashSet<MatchResult>();
 
@@ -136,17 +136,25 @@ public class Player implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
       Player player = (Player) o;
 
-      if (id != null ? !id.equals(player.id) : player.id != null) return false;
-      if (level != null ? !level.equals(player.level) : player.level != null) return false;
-      if (experience != null ? !experience.equals(player.experience) : player.experience != null) return false;
-      if (wins != null ? !wins.equals(player.wins) : player.wins != null) return false;
-      if (losses != null ? !losses.equals(player.losses) : player.losses != null) return false;
-      if (kills != null ? !kills.equals(player.kills) : player.kills != null) return false;
+      if (id != null ? !id.equals(player.id) : player.id != null)
+         return false;
+      if (level != null ? !level.equals(player.level) : player.level != null)
+         return false;
+      if (experience != null ? !experience.equals(player.experience) : player.experience != null)
+         return false;
+      if (wins != null ? !wins.equals(player.wins) : player.wins != null)
+         return false;
+      if (losses != null ? !losses.equals(player.losses) : player.losses != null)
+         return false;
+      if (kills != null ? !kills.equals(player.kills) : player.kills != null)
+         return false;
       return !(assists != null ? !assists.equals(player.assists) : player.assists != null);
 
    }

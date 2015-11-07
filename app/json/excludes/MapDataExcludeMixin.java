@@ -5,7 +5,6 @@ import models.entity.game.*;
 
 import java.util.Set;
 
-
 /**
  * Mix-In class entity to json but exclude the map data properties.
  *

@@ -1,7 +1,7 @@
 BaseView = require 'views/baseView'
 
 class Popup extends BaseView
-	
-	className: 'popup'
-		
+
+  className: 'popup'
+
 return Popup

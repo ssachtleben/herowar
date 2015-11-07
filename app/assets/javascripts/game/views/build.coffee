@@ -4,33 +4,33 @@ events = require 'events'
 
 class BuildView extends BaseView
 
-	id: 'build'
-		
-	template: templates.get 'build.tmpl'
+  id: 'build'
 
-	entity: 'db/towers'
+  template: templates.get 'build.tmpl'
 
-	events:
-		'mouseover .item' : 'showDescription'
-		'mouseout .item'  : 'hideDescription' 
-		'click .item'     : 'selectTower'
-	
-	showDescription: (event) ->
-		unless event then return
-		$currentTarget = $ event.currentTarget
-		$desc = $ "#description-#{$currentTarget.data('id')}"
-		$desc.removeClass 'hidden'
+  entity: 'db/towers'
 
-	hideDescription: (event) ->
-		unless event then return
-		$currentTarget = $ event.currentTarget
-		$desc = $ "#description-#{$currentTarget.data('id')}"
-		$desc.addClass 'hidden'
-	
-	selectTower: (event) ->
-		unless event then return
-		$currentTarget = $ event.currentTarget
-		towerId = $currentTarget.data 'id'
-		events.trigger 'select:tower', towerId
+  events:
+    'mouseover .item': 'showDescription'
+    'mouseout .item': 'hideDescription'
+    'click .item': 'selectTower'
+
+  showDescription: (event) ->
+    unless event then return
+    $currentTarget = $ event.currentTarget
+    $desc = $ "#description-#{$currentTarget.data('id')}"
+    $desc.removeClass 'hidden'
+
+  hideDescription: (event) ->
+    unless event then return
+    $currentTarget = $ event.currentTarget
+    $desc = $ "#description-#{$currentTarget.data('id')}"
+    $desc.addClass 'hidden'
+
+  selectTower: (event) ->
+    unless event then return
+    $currentTarget = $ event.currentTarget
+    towerId = $currentTarget.data 'id'
+    events.trigger 'select:tower', towerId
 
 return BuildView

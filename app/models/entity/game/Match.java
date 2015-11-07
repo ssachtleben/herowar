@@ -30,7 +30,7 @@ public class Match extends BaseModel {
    @Enumerated(EnumType.STRING)
    private MatchState state = MatchState.INIT;
 
-   @ManyToOne(cascade = {CascadeType.REFRESH}, optional = false)
+   @ManyToOne(cascade = { CascadeType.REFRESH }, optional = false)
    @JoinColumn(name = "map_id")
    private Map map;
 
@@ -113,16 +113,23 @@ public class Match extends BaseModel {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      if (!super.equals(o)) return false;
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
+      if (!super.equals(o))
+         return false;
 
       Match match = (Match) o;
 
-      if (id != null ? !id.equals(match.id) : match.id != null) return false;
-      if (preloadTime != null ? !preloadTime.equals(match.preloadTime) : match.preloadTime != null) return false;
-      if (gameTime != null ? !gameTime.equals(match.gameTime) : match.gameTime != null) return false;
-      if (lives != null ? !lives.equals(match.lives) : match.lives != null) return false;
+      if (id != null ? !id.equals(match.id) : match.id != null)
+         return false;
+      if (preloadTime != null ? !preloadTime.equals(match.preloadTime) : match.preloadTime != null)
+         return false;
+      if (gameTime != null ? !gameTime.equals(match.gameTime) : match.gameTime != null)
+         return false;
+      if (lives != null ? !lives.equals(match.lives) : match.lives != null)
+         return false;
       return !(victory != null ? !victory.equals(match.victory) : match.victory != null);
 
    }

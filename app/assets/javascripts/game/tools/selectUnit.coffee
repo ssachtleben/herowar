@@ -4,24 +4,24 @@ events = require 'events'
 
 class SelectUnit extends SelectObject
 
-	onMouseUp: (event) ->
-		super event unless @tool.has 'currentObject'
-		return
+  onMouseUp: (event) ->
+    super event unless @tool.has 'currentObject'
+    return
 
-	isResultValid: (object) ->
-		return object?.userData?.model instanceof UnitModel
+  isResultValid: (object) ->
+    return object?.userData?.model instanceof UnitModel
 
-	onNoResultFound: ->
-		@currentSelected.selected false if @currentSelected
-		events.trigger 'unit:deselect'
-		return
+  onNoResultFound: ->
+    @currentSelected.selected false if @currentSelected
+    events.trigger 'unit:deselect'
+    return
 
-	onResultFound: (object) ->
-		@currentSelected.selected false if @currentSelected
-		@currentSelected = object.userData.model
-		@currentSelected.selected true
-		events.trigger 'unit:select', @currentSelected
-		console.log 'Unit selection detected', @currentSelected
-		return
+  onResultFound: (object) ->
+    @currentSelected.selected false if @currentSelected
+    @currentSelected = object.userData.model
+    @currentSelected.selected true
+    events.trigger 'unit:select', @currentSelected
+    console.log 'Unit selection detected', @currentSelected
+    return
 
 return SelectUnit

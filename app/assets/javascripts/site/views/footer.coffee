@@ -8,8 +8,8 @@ templates = require 'templates'
 ###
 class Footer extends BaseView
 
-	className: 'footer'
-	
-	template: templates.get 'footer.tmpl'
-	
+  className: 'footer'
+
+  template: templates.get 'footer.tmpl'
+
 return Footer

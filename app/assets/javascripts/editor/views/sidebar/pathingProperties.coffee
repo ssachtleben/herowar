@@ -7,29 +7,29 @@ events = require 'events'
 db = require 'database'
 
 class PathingProperties extends BasePropertiesView
-	
-	id: 'sidebar-properties-object'
-	
-	className: 'sidebar-panel hidden'
-	
-	template: templates.get 'sidebar/pathingProperties.tmpl'
 
-	events:
-		'change input[name="name"]'				: 'onChangedString'
-		'click #sidebar-waypoint-create'	: 'createWaypoint'
+  id: 'sidebar-properties-object'
 
-	bindEvents: ->
-		EditorEventbus.selectPathUI.add @selectItem
-		return
+  className: 'sidebar-panel hidden'
 
-	selectItem: (value) =>
-		@model = db.get 'db/paths', value
-		@render()
-		return
+  template: templates.get 'sidebar/pathingProperties.tmpl'
 
-	createWaypoint: ->
-		log.debug 'Set Tool Waypoint'
-		events.trigger 'tools:switch', Constants.TOOL_WAYPOINT
-		return
+  events:
+    'change input[name="name"]': 'onChangedString'
+    'click #sidebar-waypoint-create': 'createWaypoint'
+
+  bindEvents: ->
+    EditorEventbus.selectPathUI.add @selectItem
+    return
+
+  selectItem: (value) =>
+    @model = db.get 'db/paths', value
+    @render()
+    return
+
+  createWaypoint: ->
+    log.debug 'Set Tool Waypoint'
+    events.trigger 'tools:switch', Constants.TOOL_WAYPOINT
+    return
 
 return PathingProperties

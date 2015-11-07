@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class EventsDAO {
 
-	public static Map<String, List<EventBinding>> subscribers() {
-		return ((EventBus) Events.instance()).getSubscribers();
-	}
+   public static Map<String, List<EventBinding>> subscribers() {
+      return ((EventBus) Events.instance()).getSubscribers();
+   }
 
 }

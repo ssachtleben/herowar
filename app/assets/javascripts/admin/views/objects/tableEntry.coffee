@@ -2,6 +2,6 @@ TableEntryView = require 'views/tableEntryView'
 
 class ObjectTableEntry extends TableEntryView
 
-	entityType: 'object'
+  entityType: 'object'
 
 return ObjectTableEntry

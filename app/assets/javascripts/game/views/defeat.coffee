@@ -3,14 +3,14 @@ templates = require 'templates'
 
 class DefeatView extends BaseView
 
-	id: 'defeat'
-		
-	template: templates.get 'defeat.tmpl'
+  id: 'defeat'
 
-	events:
-		'click .next' : 'next'
+  template: templates.get 'defeat.tmpl'
 
-	next: (event) ->
-		event.preventDefault()
+  events:
+    'click .next': 'next'
+
+  next: (event) ->
+    event.preventDefault()
 
 return DefeatView

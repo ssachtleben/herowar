@@ -3,13 +3,13 @@ templates = require 'templates'
 
 class VideoSettingsView extends BaseModelView
 
-	template: templates.get 'settings/video.tmpl'
-	
-	entity: 'db/settings'
+  template: templates.get 'settings/video.tmpl'
 
-	getTemplateData: ->
-		json = super()
-		console.log 'Render video settings:', json
-		return json;
+  entity: 'db/settings'
+
+  getTemplateData: ->
+    json = super()
+    console.log 'Render video settings:', json
+    return json;
 
 return VideoSettingsView

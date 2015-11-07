@@ -3,8 +3,8 @@ templates = require 'templates'
 
 class StatsLivesView extends BaseStatsView
 
-	statsName: 'lives'
+  statsName: 'lives'
 
-	template: templates.get 'stats/lives.tmpl'
+  template: templates.get 'stats/lives.tmpl'
 
 return StatsLivesView

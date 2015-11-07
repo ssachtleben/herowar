@@ -4,18 +4,18 @@ db = require 'database'
 
 class MapEdit extends AdminAuthView
 
-	entity: 'db/maps'
-	
-	template: templates.get 'maps/edit.tmpl'
+  entity: 'db/maps'
 
-	bindEvents: ->
-		unless @model
-			collection = db.get @entity
-			@listenTo collection, 'add remove change reset', @render if collection
-		super()
+  template: templates.get 'maps/edit.tmpl'
 
-	render: ->
-		@model = db.get @entity, @options.modelId unless @model
-		super() if @model
+  bindEvents: ->
+    unless @model
+      collection = db.get @entity
+      @listenTo collection, 'add remove change reset', @render if collection
+    super()
+
+  render: ->
+    @model = db.get @entity, @options.modelId unless @model
+    super() if @model
 
 return MapEdit

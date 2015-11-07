@@ -8,51 +8,41 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "mesh")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Mesh implements Serializable {
    private static final long serialVersionUID = 1L;
-
-   public Mesh() {
-
-   }
-
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-
    private String name;
-
    private Boolean visible;
-
    @Embedded
-   @AttributeOverrides({@AttributeOverride(name = "x", column = @Column(name = "position_x")),
-           @AttributeOverride(name = "y", column = @Column(name = "position_y")),
-           @AttributeOverride(name = "z", column = @Column(name = "position_z"))})
+   @AttributeOverrides({ @AttributeOverride(name = "x", column = @Column(name = "position_x")),
+         @AttributeOverride(name = "y", column = @Column(name = "position_y")),
+         @AttributeOverride(name = "z", column = @Column(name = "position_z")) })
    private Vector3 position;
-
    @Embedded
-   @AttributeOverrides({@AttributeOverride(name = "x", column = @Column(name = "rotation_x")),
-           @AttributeOverride(name = "y", column = @Column(name = "rotation_y")),
-           @AttributeOverride(name = "z", column = @Column(name = "rotation_z"))})
+   @AttributeOverrides({ @AttributeOverride(name = "x", column = @Column(name = "rotation_x")),
+         @AttributeOverride(name = "y", column = @Column(name = "rotation_y")),
+         @AttributeOverride(name = "z", column = @Column(name = "rotation_z")) })
    private Vector3 rotation;
-
    @Embedded
-   @AttributeOverrides({@AttributeOverride(name = "x", column = @Column(name = "scale_x")),
-           @AttributeOverride(name = "y", column = @Column(name = "scale_y")),
-           @AttributeOverride(name = "z", column = @Column(name = "scale_z"))})
+   @AttributeOverrides({ @AttributeOverride(name = "x", column = @Column(name = "scale_x")),
+         @AttributeOverride(name = "y", column = @Column(name = "scale_y")), @AttributeOverride(name = "z", column = @Column(name = "scale_z")) })
    private Vector3 scale;
-
    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
    @JoinColumn(name = "geo_id", referencedColumnName = "id")
    private Geometry geometry;
-
    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
    @JoinColumn(name = "map_id", referencedColumnName = "id")
    @JsonIgnore
    private Map map;
-
    @Transient
    private Long geoId;
+
+   public Mesh() {
+
+   }
 
    public Long getId() {
       return id;
@@ -128,17 +118,25 @@ public class Mesh implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
       Mesh mesh = (Mesh) o;
 
-      if (id != null ? !id.equals(mesh.id) : mesh.id != null) return false;
-      if (name != null ? !name.equals(mesh.name) : mesh.name != null) return false;
-      if (visible != null ? !visible.equals(mesh.visible) : mesh.visible != null) return false;
-      if (position != null ? !position.equals(mesh.position) : mesh.position != null) return false;
-      if (rotation != null ? !rotation.equals(mesh.rotation) : mesh.rotation != null) return false;
-      if (scale != null ? !scale.equals(mesh.scale) : mesh.scale != null) return false;
+      if (id != null ? !id.equals(mesh.id) : mesh.id != null)
+         return false;
+      if (name != null ? !name.equals(mesh.name) : mesh.name != null)
+         return false;
+      if (visible != null ? !visible.equals(mesh.visible) : mesh.visible != null)
+         return false;
+      if (position != null ? !position.equals(mesh.position) : mesh.position != null)
+         return false;
+      if (rotation != null ? !rotation.equals(mesh.rotation) : mesh.rotation != null)
+         return false;
+      if (scale != null ? !scale.equals(mesh.scale) : mesh.scale != null)
+         return false;
       return !(geoId != null ? !geoId.equals(mesh.geoId) : mesh.geoId != null);
 
    }

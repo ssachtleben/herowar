@@ -3,18 +3,17 @@ package processor.meta;
 import java.util.List;
 
 /**
- * @author Alexander Wilhelmer
- * 
  * @param <T>
+ * @author Alexander Wilhelmer
  */
 public interface IProcessorObjetcs<T> extends IProcessor {
 
-	public int getObjCount();
+   public int getObjCount();
 
-	public List<T> getObjetcs(int size);
+   public List<T> getObjetcs(int size);
 
-	public void add(T obj);
+   public void add(T obj);
 
-	public void addObjects(List<T> list);
+   public void addObjects(List<T> list);
 
 }

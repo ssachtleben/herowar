@@ -3,11 +3,11 @@ templates = require 'templates'
 
 class StatsLivesValueView extends BaseView
 
-	entity: 'ui/stats'
-	
-	template: templates.get 'stats/livesValue.tmpl'
+  entity: 'ui/stats'
 
-	bindEvents: ->
-		@listenTo @model, 'change:lives change:_active', @render
+  template: templates.get 'stats/livesValue.tmpl'
+
+  bindEvents: ->
+    @listenTo @model, 'change:lives change:_active', @render
 
 return StatsLivesValueView

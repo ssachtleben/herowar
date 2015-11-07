@@ -7,20 +7,20 @@ TableView = require 'views/tableView'
 ###
 class UsersTable extends TableView
 
-	entity: 'api/users'
-	
-	tableEntity: 'db/users'
-	
-	fields:
-		'#'								: 'id'
-		'Username' 				: 'username'
-		'Email'						: 'email'
-		'Active'					: 'active'
-		'Last Login Date'	: 'lastLogin'
-		'Creation Date'		: 'cdate'
-		
-	entryView: 'views/users/tableEntry'
+  entity: 'api/users'
 
-	allowCreate: false
+  tableEntity: 'db/users'
+
+  fields:
+    '#': 'id'
+    'Username': 'username'
+    'Email': 'email'
+    'Active': 'active'
+    'Last Login Date': 'lastLogin'
+    'Creation Date': 'cdate'
+
+  entryView: 'views/users/tableEntry'
+
+  allowCreate: false
 
 return UsersTable

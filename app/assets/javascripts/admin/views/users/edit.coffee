@@ -4,18 +4,18 @@ db = require 'database'
 
 class UsersEdit extends AdminAuthView
 
-	entity: 'db/users'
-	
-	template: templates.get 'users/edit.tmpl'	
+  entity: 'db/users'
 
-	bindEvents: ->
-		unless @model
-			collection = db.get @entity
-			@listenTo collection, 'add remove change reset', @render if collection
-		super()
+  template: templates.get 'users/edit.tmpl'
 
-	render: ->
-		@model = db.get @entity, @options.modelId unless @model
-		super() if @model
+  bindEvents: ->
+    unless @model
+      collection = db.get @entity
+      @listenTo collection, 'add remove change reset', @render if collection
+    super()
+
+  render: ->
+    @model = db.get @entity, @options.modelId unless @model
+    super() if @model
 
 return UsersEdit

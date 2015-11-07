@@ -40,12 +40,15 @@ public class LevelRange implements Serializable {
 
    @Override
    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o)
+         return true;
+      if (o == null || getClass() != o.getClass())
+         return false;
 
       LevelRange that = (LevelRange) o;
 
-      if (id != null ? !id.equals(that.id) : that.id != null) return false;
+      if (id != null ? !id.equals(that.id) : that.id != null)
+         return false;
       return !(exp != null ? !exp.equals(that.exp) : that.exp != null);
 
    }

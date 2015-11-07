@@ -2,7 +2,6 @@ package dao;
 
 import models.entity.SecurityRole;
 
-
 public class SecurityRoleDAO extends BaseDAO<Long, SecurityRole> {
 
    public SecurityRoleDAO() {
