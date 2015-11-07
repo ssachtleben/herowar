@@ -28,47 +28,47 @@ public class Geometry extends BaseModel implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String vertices = "[]";
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String faces = "[]";
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.OBJECT)
    private String morphTargets = "[]";
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String morphColors = "[]";
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String normals = "[]";
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String colors = "[]";
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE, dimensions = 2)
    private String uvs = "[[]]";
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.OBJECT)
    private String bones;
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String skinIndices;
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String skinWeights;
 
-   @Lob
+   @Column(columnDefinition = "text")
    private String animation;
 
    @Column(scale = 6)

@@ -141,6 +141,7 @@ materialHelper =
 		params = {}
 		result.name = 'matID' + materialId
 		for key,value of material.attributes when value
+			value = value.split('\\n').join(' ') if value? and _.isString(value) and value.indexOf('\n')
 			switch key
 				when 'color'
 					nocolor = $(material.attributes).attr('nocolor')

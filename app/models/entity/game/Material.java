@@ -93,18 +93,18 @@ public class Material implements Serializable {
    @Column(scale = 3)
    private Float mapBumpScale = 1.0F;
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.OBJECT)
    private String attributes = null;
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.OBJECT)
    private String uniforms = null;
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.SHADER)
    private String vertexShader = null;
 
-   @Lob
+   @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.SHADER)
    private String fragmentShader = null;
 

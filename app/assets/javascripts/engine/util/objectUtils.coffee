@@ -61,7 +61,7 @@ objectUtils =
 			@_disposeMaterial obj.material
 		else if obj instanceof THREE.Sprite
 			@_disposeMaterial obj.material
-		@dispose child for child in obj.children
+		@dispose child for child in obj.children if obj.children?
 
 	positionToScreen: (obj, viewportWidthHalf, viewportHeightHalf, camera) ->
 		boundaryBox = obj.meshBody.geometry.boundingBox

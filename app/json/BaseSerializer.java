@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.converters.DoubleConverter;
 import org.apache.commons.beanutils.converters.StringConverter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.hibernate.Hibernate;
 import play.Logger;
 
 import java.io.IOException;
@@ -48,7 +49,16 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
       Class<?> clazz = obj.getClass();
       Field[] fields = getAllFields(clazz);
 
+      try {
+         if (Hibernate.getClass(obj) != null) {
+            clazz = Hibernate.getClass(obj);
+         }
+      } catch(Exception e) {
+         // Ignore exception
+      }
+
       for (Field field : fields) {
+         log.debug(String.format("Serialize %s of %s", field.getName(), clazz.getSimpleName()));
          Class<?> type = field.getType();
          try {
             if (type != null && !type.isAnnotation() && !Modifier.isStatic(field.getModifiers())) {
@@ -143,7 +153,7 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
             }
          }
          catch (Exception e) {
-            log.error("", e);
+            log.error(String.format("Failed to serialize field %s of %s", field.getName(), clazz.getSimpleName()), e);
          }
       }
 

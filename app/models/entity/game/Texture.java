@@ -18,7 +18,7 @@ public class Texture implements Serializable {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
-   @Lob
+   @Column(columnDefinition = "text")
    private String map;
 
    @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.REFRESH)
