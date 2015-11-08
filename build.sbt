@@ -38,7 +38,7 @@ PlayKeys.externalizeResources := false
 JsTaskKeys.timeoutPerSource := new scala.concurrent.duration.DurationInt(2).hours
 
 // live pipeline with uglify ... pipelineStages in Assets := Seq(define,filter,concat,uglify,digest,gzip)
-pipelineStages in Assets := Seq(define,filter,concat,digest)
+pipelineStages in Assets := Seq(define,filter,concat)
 
 includeFilter in filter := "*.coffee" || "*.less" || ".tmpl"
 
