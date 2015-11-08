@@ -13,9 +13,9 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.1.0")
 
 // Custom plugins
 addSbtPlugin("com.ssachtleben" % "sbt-assets-filter" % "1.0.0")
-addSbtPlugin("com.ssachtleben" % "sbt-assets-handlebars" % "1.0.0")
-addSbtPlugin("com.ssachtleben" % "sbt-assets-define" % "1.0.3")
-addSbtPlugin("com.ssachtleben" % "sbt-assets-concat" % "1.0.0")
+addSbtPlugin("com.ssachtleben" % "sbt-assets-handlebars" % "1.0.1-SNAPSHOT")
+addSbtPlugin("com.ssachtleben" % "sbt-assets-define" % "1.0.4-SNAPSHOT")
+addSbtPlugin("com.ssachtleben" % "sbt-assets-concat" % "1.0.2-SNAPSHOT")
 
 // Play enhancer - this automatically generates getters/setters for public fields
 // and rewrites accessors of these fields to use the getters/setters. Remove this
