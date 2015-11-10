@@ -472,7 +472,7 @@ window.onload = function() {
 		var vector = new THREE.Vector3((mouse_info.x / 800) * 2 - 1, - (mouse_info.y / 640) * 2 + 1, 0.5);
 		projector.unprojectVector(vector, camera);
 		
-		var ray = new THREE.Ray( camera.position, vector.sub( camera.position ).normalize() );
+		var ray = new THREE.Raycaster ( camera.position, vector.sub( camera.position ).normalize() );
 		
 		var intersection = ray.intersectObject(ground);
 		if (intersection.length === 0) {
@@ -485,7 +485,7 @@ window.onload = function() {
 			return null;
 		} else {
 			mouse_info.point = intersection[0].point;
-			
+
 			mouse_info.plot_coordinates.x = Math.floor(mouse_info.point.x - map_left);
 			mouse_info.plot_coordinates.y = Math.floor(mouse_info.point.z - map_top);
 			
