@@ -103,8 +103,6 @@ objectUtils =
 		destObject.rotation.copy srcObject.rotation
 		destObject.scale.copy srcObject.scale
 		destObject.userData = _.clone srcObject.userData
-		if srcObject.useQuaternion
-			destObject.quaternion.copy srcObject.quaternion
-			destObject.useQuaternion = true		
+
 
 return objectUtils

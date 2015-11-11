@@ -125,7 +125,6 @@ class MeshModel extends BaseModel
 	_createThreeObject: (mesh) ->
 		obj = new THREE.Object3D()
 		obj.name = @name
-		obj.useQuaternion = true
 		if _.isArray mesh
 			for mesh in mesh
 				obj.add mesh
