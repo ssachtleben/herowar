@@ -25,16 +25,25 @@ public class UserImporter extends SimpleJob {
 
    @Override
    public void run() {
-      JPA.withTransaction(new play.libs.F.Callback0() {
-         @Override
-         public void invoke() throws Throwable {
-            initialSecurityRoles();
-            createAdminUser();
-            createDummyNews();
-            createLevelRanges();
-            JPA.em().flush();
-         }
-      });
+      log.info("Running DataImporter");
+      try {
+         JPA.withTransaction(new play.libs.F.Function0<Void>() {
+            public Void apply() throws Throwable {
+               importData();
+               return null;
+            }
+         });
+      } catch(Throwable e) {
+         log.error("Exception occured: ", e);
+      }
+   }
+
+   private void importData() {
+      initialSecurityRoles();
+      createAdminUser();
+      createDummyNews();
+      createLevelRanges();
+      JPA.em().flush();
    }
 
    private void initialSecurityRoles() {

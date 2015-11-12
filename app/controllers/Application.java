@@ -4,6 +4,7 @@ import com.ssachtleben.play.plugin.auth.Auth;
 import dao.UserDAO;
 import models.entity.User;
 import org.apache.commons.lang3.math.NumberUtils;
+import play.Play;
 import play.mvc.Http;
 import play.mvc.Result;
 import views.html.admin;
@@ -21,8 +22,9 @@ public class Application extends BaseController {
 
    public static User getLocalUser(final Http.Session session) {
       final String userId = Auth.getLoggedIn(session());
-      UserDAO userDAO = new UserDAO();
+      UserDAO userDAO = Play.application().injector().instanceOf(UserDAO.class);
       final User user = NumberUtils.isNumber(userId) ? userDAO.getById(Long.parseLong(userId)) : null;
+      Play.application().injector().instanceOf(Application.class).log().info(String.format("User: %s", user));
       return user;
    }
 
