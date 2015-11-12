@@ -14,9 +14,9 @@ libraryDependencies ++= Seq(
   "commons-beanutils" % "commons-beanutils" % "1.9.2",
   "commons-io" % "commons-io" % "2.4",
   "org.apache.httpcomponents" % "httpclient" % "4.5.1",
-  "com.ssachtleben" %% "play-auth-plugin" % "4.0",
+  "com.ssachtleben" %% "play-auth-plugin" % "4.1",
   "com.ssachtleben" %% "play-compress-plugin" % "4.0",
-  "com.ssachtleben" %% "play-cron-plugin" % "4.0",
+  "com.ssachtleben" %% "play-cron-plugin" % "4.1",
   "com.ssachtleben" %% "play-event-plugin" % "4.0",
   "com.ssachtleben" %% "play-json-plugin" % "4.0",
   "com.ardor3d" % "ardor3d-core" % "0.9"
