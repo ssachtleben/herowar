@@ -45,6 +45,8 @@ class Preloader extends RendererCanvasController
 		@data = {}
 		@states = {}
 		@jsonLoader = new JSONLoader()
+		@imageLoader = new THREE.TextureLoader()
+		@cubeImageLoader = new THREE.CubeTextureLoader();
 		@types = [ 'textures', 'texturesCube', 'geometries', 'images' ]
 		for type in @types
 			@data[type] = {}
@@ -95,16 +97,16 @@ class Preloader extends RendererCanvasController
 				img.src = url
 				@data[type][name] = img
 			when 'textures'
-				@data[type][name] = THREE.ImageUtils.loadTexture url, undefined, =>
-					@updateState type, name, true
+				@data[type][name] = @imageLoader.load url,( =>
+					@updateState type, name, true ), undefined, undefined
 			when 'texturesCube'
 				urls = [
 					url.replace("%1", "px"), url.replace("%1", "nx"),
 					url.replace("%1", "py"), url.replace("%1", "ny"),
 					url.replace("%1", "pz"), url.replace("%1", "nz")
 				]
-				@data[type][name] = THREE.ImageUtils.loadTextureCube urls, new THREE.CubeRefractionMapping(), =>
-					@updateState type, name, true
+				@data[type][name] = @cubeImageLoader.load urls,( =>
+					@updateState type, name, true ), undefined, undefined
 			when 'geometries'
 				@jsonLoader.load url, 
 					(geometry, materials, json) =>
@@ -114,7 +116,8 @@ class Preloader extends RendererCanvasController
 						geometry.computeMorphNormals()
 						geometry.computeFaceNormals()
 						geometry.computeVertexNormals()
-						THREE.GeometryUtils.center geometry
+						geometry.center()
+						#
 						db.geometry name, 'main', geometry
 						db.geometry name, 'glow', GeometryUtils.clone geometry
 						@data[type][name] = [geometry, materials, json]

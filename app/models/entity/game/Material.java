@@ -66,7 +66,9 @@ public class Material implements Serializable {
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String colorAmbient = "[1.0, 1.0, 1.0]";
 
+
    @Column(scale = 3)
+   @Deprecated
    private Float transparency = 1.0F;
    private Integer specularCoef = 30;
 
@@ -259,11 +261,11 @@ public class Material implements Serializable {
    public void setColorAmbient(String colorAmbient) {
       this.colorAmbient = colorAmbient;
    }
-
+   @Deprecated
    public Float getTransparency() {
       return transparency;
    }
-
+   @Deprecated
    public void setTransparency(Float transparency) {
       this.transparency = transparency;
    }
