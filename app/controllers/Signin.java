@@ -4,6 +4,7 @@ import com.ssachtleben.play.plugin.auth.Auth;
 import com.ssachtleben.play.plugin.auth.Providers;
 import com.ssachtleben.play.plugin.auth.exceptions.AuthenticationException;
 import com.ssachtleben.play.plugin.auth.providers.BaseOAuthProvider;
+import play.Play;
 import play.db.jpa.Transactional;
 import play.mvc.Result;
 
@@ -37,7 +38,7 @@ public class Signin extends BaseController {
    }
 
    public Result success(final String provider) {
-      return redirect(routes.Application.site());
+      return Play.application().injector().instanceOf(Application.class).site();
    }
 
    public Result error(final String provider) {

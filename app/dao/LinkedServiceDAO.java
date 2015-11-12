@@ -1,8 +1,10 @@
 package dao;
 
+import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
 import models.entity.LinkedService;
 import models.entity.ServiceType;
 import models.entity.User;
+import play.Play;
 import play.db.jpa.JPA;
 
 import javax.persistence.NoResultException;
@@ -15,6 +17,10 @@ public class LinkedServiceDAO extends BaseDAO<Long, LinkedService> {
 
    public LinkedServiceDAO() {
       super(Long.class, LinkedService.class);
+   }
+
+   public static LinkedServiceDAO instance() {
+      return Play.application().injector().instanceOf(LinkedServiceDAO.class);
    }
 
    public LinkedService create(final String type, final String identifier, final User account) {
@@ -57,4 +63,13 @@ public class LinkedServiceDAO extends BaseDAO<Long, LinkedService> {
       return null;
    }
 
+   public LinkedService findByEmail(String email) {
+      List<LinkedService> accounts = JPA.em()
+              .createQuery(String.format("SELECT la FROM %s la JOIN la.user.emails e WHERE la.type = :key AND e.address = :email", LinkedService.class.getSimpleName()))
+              .setParameter("key", ServiceType.valueOf(PasswordEmail.KEY.toUpperCase())).setParameter("email", email).getResultList();
+      if (accounts != null && accounts.size() > 0) {
+         return accounts.get(0);
+      }
+      return null;
+   }
 }

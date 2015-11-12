@@ -13,19 +13,19 @@ class Login extends FormView
 	
 	template: templates.get 'header/login.tmpl'
 
-	url: '/login/username/auth'
+	url: '/login/email/auth'
 	
 	validateForm: ($Form) ->
 		isValid = true
-		inputUsername = $Form.find 'input[name="username"]'
-		if inputUsername.val().length <= 4
-			@setInputState inputUsername, 'error'
+		inputEmail = $Form.find 'input[name="email"]'
+		if inputEmail.val().length <= 4
+			@setInputState inputEmail, 'error'
 			$.gritter.add
 				title: 'Login failed',
-				text: 'The username doesn\'t exists.'
+				text: 'The email doesn\'t exists.'
 			isValid = false
 		else
-			@setInputState inputUsername, ''
+			@setInputState inputEmail, ''
 		passwordUsername = $Form.find 'input[name="password"]'
 		if passwordUsername.val().length <= 4
 			@setInputState passwordUsername, 'error'
@@ -45,6 +45,7 @@ class Login extends FormView
 		app.navigate 'play', true
 			
 	onError: (jqXHR, textStatus, errorThrown) ->
+		return window.location.reload() if jqXHR.status is 200
 		console.log 'Error'
 		console.log jqXHR.responseText
 		console.log $.parseJSON(jqXHR.responseText)

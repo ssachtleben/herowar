@@ -1,10 +1,9 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.ssachtleben.play.plugin.auth.annotations.Authenticates;
-import com.ssachtleben.play.plugin.auth.models.FacebookAuthUser;
-import com.ssachtleben.play.plugin.auth.models.Identity;
-import com.ssachtleben.play.plugin.auth.models.OAuthAuthUser;
+import com.ssachtleben.play.plugin.auth.models.*;
 import com.ssachtleben.play.plugin.auth.providers.BaseProvider.AuthEvents;
 import com.ssachtleben.play.plugin.auth.providers.Facebook;
+import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
 import com.ssachtleben.play.plugin.event.annotations.Observer;
 import controllers.Application;
 import dao.LinkedServiceDAO;
@@ -24,6 +23,21 @@ import play.mvc.Http.Context;
  */
 public class AuthService extends Controller {
    private static final Logger.ALogger log = Logger.of(AuthService.class);
+
+   @Authenticates(provider = PasswordEmail.KEY)
+   public static Object handleUsernameLogin(final Context ctx, final PasswordEmailAuthUser identity) {
+      log.info(String.format("~~~ handleUsernameLogin() [ctx=%s, identity=%s] ~~~", ctx, identity));
+      log.info("Email: " + identity.email());
+      log.info("Password: " + identity.clearPassword());
+      log.info("HashedPW: " + identity.id());
+      LinkedService account = LinkedServiceDAO.instance().findByEmail(identity.email());
+      log.info("Account: " + account);
+      if (account == null) {
+         return null;
+      }
+      log.info("Check PW: " + PasswordUsernameAuthUser.checkPassword(account.getIdentifier(), identity.clearPassword()));
+      return PasswordUsernameAuthUser.checkPassword(account.getIdentifier(), identity.clearPassword()) ? account.getUser().getId() : null;
+   }
 
    @Authenticates(provider = Facebook.KEY)
    public static Object handleFacebookLogin(final Context ctx, final FacebookAuthUser identity) {

@@ -29,7 +29,7 @@ class Settings extends BaseView
 	toggleTooltip: (event) ->
 		$Tooltip = $ '.login-tooltip'
 		$Tooltip.toggleClass 'visible'
-		$UsernameInput = $ '.login-form input[name="username"]'
-		$UsernameInput.focus() if $UsernameInput?.length > 0
+		$Input = $ '.login-form input[name="email"]'
+		$Input.focus() if $Input?.length > 0
 
 return Settings
