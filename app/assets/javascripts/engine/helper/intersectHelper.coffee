@@ -22,10 +22,11 @@ class IntersectHelper extends THREE.Raycaster
 			-((@input.get('mouse_position_y') - Variables.SCREEN_TOP) / Variables.SCREEN_HEIGHT) * 2 + 1
 			0.5)
 		if camera instanceof THREE.OrthographicCamera
-			ray = @projector.pickingRay vector, camera
+			ray = @projector.pickingRay
+
 			intersectList = ray.intersectObjects objects, true
 		else
-			@projector.unprojectVector vector, camera
+			vector.unprojectVector camera
 			@set camera.position, vector.sub(camera.position).normalize()
 			intersectList = @intersectObjects objects, true		
 		intersectList = @handleFaceRadius intersectList, faceRadius
