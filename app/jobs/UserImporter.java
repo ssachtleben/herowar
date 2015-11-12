@@ -57,7 +57,7 @@ public class UserImporter extends SimpleJob {
          return;
       }
       log.info("Creating admin user");
-      userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "", "FirstName", "LastName");
+      userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "admin", "FirstName", "LastName");
    }
 
    private void createDummyNews() {
