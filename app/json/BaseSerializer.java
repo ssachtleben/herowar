@@ -146,8 +146,6 @@ public abstract class BaseSerializer<T> extends JsonSerializer<T> {
                   } else {
                      log.warn(String.format("Field <%s> ignored in Bean <%s>", field.getName(), clazz.getSimpleName()));
                   }
-               } else {
-                  jgen.writeNullField(fieldName);
                }
 
             }
