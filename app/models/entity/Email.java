@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @author Sebastian Sachtleben
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(name = "idx_mail", columnNames = { "address" }))
 public class Email extends BaseModel implements Serializable {
 
    @Id
