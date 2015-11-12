@@ -16,19 +16,11 @@ class IntersectHelper extends THREE.Raycaster
 
 	mouseIntersects: (objects, faceRadius) ->
 		camera = @viewports.at(0).get('cameraScene')	# TODO: find out from which viewport this click comes
-		vector = new THREE.Vector3(
+		vector = new THREE.Vector2(
 			((@input.get('mouse_position_x') - Variables.SCREEN_LEFT) / Variables.SCREEN_WIDTH) * 2 - 1
-			-((@input.get('mouse_position_y') - Variables.SCREEN_TOP) / Variables.SCREEN_HEIGHT) * 2 + 1
-			0.5)
-		if camera instanceof THREE.OrthographicCamera
-			#ray = @projector.pickingRay vector, camera #TODO removed...
-			vector2 = new THREE.Vector2 vector.x, vector.y
-			@setFromCamera vector2, camera
-			intersectList = @intersectObjects objects, true
-		else
-			vector.unprojectVector camera
-			@set camera.position, vector.sub(camera.position).normalize()
-			intersectList = @intersectObjects objects, true		
+			-((@input.get('mouse_position_y') - Variables.SCREEN_TOP) / Variables.SCREEN_HEIGHT) * 2 + 1)
+		@setFromCamera vector, camera
+		intersectList = @intersectObjects objects, true
 		intersectList = @handleFaceRadius intersectList, faceRadius
 		intersectList
 
