@@ -7,7 +7,6 @@ class IntersectHelper extends THREE.Raycaster
 		@input = db.get 'input'
 		super()
 		@viewports = db.get 'ui/viewports'
-		@projector = new THREE.Projector()
 		@sphere = new THREE.Sphere()
 		@localRay = new THREE.Ray()
 		@facePlane = new THREE.Plane()
@@ -22,9 +21,10 @@ class IntersectHelper extends THREE.Raycaster
 			-((@input.get('mouse_position_y') - Variables.SCREEN_TOP) / Variables.SCREEN_HEIGHT) * 2 + 1
 			0.5)
 		if camera instanceof THREE.OrthographicCamera
-			ray = @projector.pickingRay
-
-			intersectList = ray.intersectObjects objects, true
+			#ray = @projector.pickingRay vector, camera #TODO removed...
+			vector2 = new THREE.Vector2 vector.x, vector.y
+			@setFromCamera vector2, camera
+			intersectList = @intersectObjects objects, true
 		else
 			vector.unprojectVector camera
 			@set camera.position, vector.sub(camera.position).normalize()
