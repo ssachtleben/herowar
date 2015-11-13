@@ -23,19 +23,11 @@ public class UserImporter extends SimpleJob {
 
    private static final Logger.ALogger log = Logger.of(UserImporter.class);
 
+   public static boolean isReady = false;
+
    @Override
    public void run() {
-      log.info("Running DataImporter");
-      try {
-         JPA.withTransaction(new play.libs.F.Function0<Void>() {
-            public Void apply() throws Throwable {
-               importData();
-               return null;
-            }
-         });
-      } catch(Throwable e) {
-         log.error("Exception occured: ", e);
-      }
+      JPA.withTransaction(() -> importData());
    }
 
    private void importData() {
@@ -44,6 +36,7 @@ public class UserImporter extends SimpleJob {
       createDummyNews();
       createLevelRanges();
       JPA.em().flush();
+      isReady = true;
    }
 
    private void initialSecurityRoles() {

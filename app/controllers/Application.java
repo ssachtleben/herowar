@@ -24,7 +24,7 @@ public class Application extends BaseController {
       final String userId = Auth.getLoggedIn(session());
       UserDAO userDAO = Play.application().injector().instanceOf(UserDAO.class);
       final User user = NumberUtils.isNumber(userId) ? userDAO.getById(Long.parseLong(userId)) : null;
-      Play.application().injector().instanceOf(Application.class).log().info(String.format("User: %s", user));
+      Play.application().injector().instanceOf(Application.class).log().debug(String.format("User: %s", user));
       return user;
    }
 
