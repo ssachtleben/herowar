@@ -93,7 +93,7 @@ public class Me extends BaseController {
                       params.get("password").toString(), new ObjectMapper().createObjectNode()),
               params.get("username").toString(), null, null);
       log().info(String.format("Created %s", user));
-      MailService.instance().sendEmailConfirmation(user.getEmails().iterator().next());
+      MailService.instance().sendEmailConfirmation(getHost(), user.getEmails().iterator().next());
       return Auth.login(ctx(), PasswordEmail.KEY);
    }
 

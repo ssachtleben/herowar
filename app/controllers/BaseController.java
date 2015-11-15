@@ -36,4 +36,8 @@ public class BaseController extends Controller {
       return null;
    }
 
+   protected String getHost() {
+      return "http://" + request().host();
+   }
+
 }
