@@ -1,7 +1,11 @@
 package controllers;
 
 import play.Logger;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.mvc.Controller;
+
+import java.util.Map;
 
 /**
  * The BaseController provides several base features for the controllers for
@@ -21,6 +25,15 @@ public class BaseController extends Controller {
     */
    public Logger.ALogger log() {
       return logger;
+   }
+
+   @SuppressWarnings("unchecked")
+   protected Map<String, Object> getDataFromRequest() {
+      DynamicForm.Dynamic form = Form.form().bindFromRequest().get();
+      if (form != null && form.getData() != null) {
+         return form.getData();
+      }
+      return null;
    }
 
 }

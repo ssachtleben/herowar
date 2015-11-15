@@ -3,12 +3,10 @@ package controllers;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import play.Logger;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.libs.Json;
-import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.persistence.EntityManager;
@@ -30,7 +28,7 @@ import static play.libs.Json.toJson;
  * @author Alexander Wilhelmer
  * @author Sebastian Sachtleben
  */
-public abstract class BaseAPI<K extends Serializable, T extends Object> extends Controller {
+public abstract class BaseAPI<K extends Serializable, T extends Object> extends BaseController {
    private static final Logger.ALogger log = Logger.of(BaseAPI.class);
 
    @SuppressWarnings("unused")
@@ -185,12 +183,4 @@ public abstract class BaseAPI<K extends Serializable, T extends Object> extends 
       return obj;
    }
 
-   @SuppressWarnings("unchecked")
-   private Map<String, Object> getDataFromRequest() {
-      DynamicForm.Dynamic form = Form.form().bindFromRequest().get();
-      if (form != null && form.getData() != null) {
-         return form.getData();
-      }
-      return null;
-   }
 }
