@@ -7,6 +7,7 @@ import controllers.Application;
 import models.entity.Email;
 import models.entity.User;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import play.Play;
 import play.db.jpa.JPA;
@@ -56,7 +57,11 @@ public class UserDAO extends BaseDAO<Long, User> {
    }
 
    public User create(final String username, final String email, final String avatar) {
-      return create(new PasswordEmailAuthUser(email, null, new ObjectMapper().createObjectNode()), username, null, null);
+      final User user = create(new PasswordEmailAuthUser(email, null, new ObjectMapper().createObjectNode()), username, null, null);
+      if (StringUtils.isNotBlank(avatar)) {
+         user.setAvatar(avatar);
+      }
+      return user;
    }
 
    public User create(final PasswordEmailAuthUser identity, final String username, final String firstName, final String lastName) {
