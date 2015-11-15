@@ -7,11 +7,12 @@ import com.ssachtleben.play.plugin.auth.providers.Google;
 import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
 import com.ssachtleben.play.plugin.event.annotations.Observer;
 import controllers.Application;
+import dao.EmailDAO;
 import dao.LinkedServiceDAO;
 import dao.UserDAO;
+import models.entity.Email;
 import models.entity.LinkedService;
 import models.entity.User;
-import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import play.Play;
 import play.mvc.Controller;
@@ -81,19 +82,20 @@ public class AuthService extends Controller {
       log.debug("Email: " + email);
       log.debug("Username: " + username);
       log.debug("Avatar: " + avatar);
-      if (StringUtils.isBlank(email)) {
-         return null;
-      }
+      // Try login process with the given informations
       final Object userId = handleLogin(providerKey, providerId, email, username, avatar);
       if (userId != null) {
-         final LinkedServiceDAO linkedServiceDAO = Play.application().injector().instanceOf(LinkedServiceDAO.class);
-         final LinkedService linkedService = linkedServiceDAO.find(providerKey, providerId);
+         // Update full name and profile link
+         final LinkedService linkedService = LinkedServiceDAO.instance().find(providerKey, providerId);
          if (profile != null) {
             linkedService.setLink(profile);
          }
          if (fullname != null) {
             linkedService.setName(fullname);
          }
+         // Set email confirmed since it comes from trusted oauth provider
+         final Email address = EmailDAO.instance().findByAddress(email);
+         address.setConfirmed(true);
       }
       return userId;
    }
