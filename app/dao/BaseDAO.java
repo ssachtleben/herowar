@@ -13,6 +13,7 @@ import java.util.List;
  * @author Alexander Wilhelmer
  */
 public abstract class BaseDAO<K extends Serializable, T extends Object> {
+
    protected Class<K> idClass;
    protected Class<T> entityClass;
 

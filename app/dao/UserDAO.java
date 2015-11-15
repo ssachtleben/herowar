@@ -80,11 +80,14 @@ public class UserDAO extends BaseDAO<Long, User> {
       final Email email = new Email();
       email.setAddress(identity.email());
       email.setMain(true);
-      email.setConfirmed(true);
+      email.setConfirmed(false);
       email.setUser(user);
 
       user.getEmails().add(email);
 
+      // TODO: send email validation
+
+      // TODO: remove this field ... (saved already in email)
       user.setEmailValidated(false);
       user.setUsername(username);
       JPA.em().persist(user);

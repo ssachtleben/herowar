@@ -17,15 +17,20 @@ public class TokenAction implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+
    @Column(unique = true)
    private String token;
+
    @ManyToOne(cascade = CascadeType.PERSIST)
    private User targetUser;
+
    @Enumerated(EnumType.STRING)
    private Type type;
+
    @Temporal(TemporalType.TIMESTAMP)
    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
    private Date created;
+
    @Temporal(TemporalType.TIMESTAMP)
    @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
    private Date expires;

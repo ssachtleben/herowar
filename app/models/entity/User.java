@@ -2,6 +2,7 @@ package models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.entity.game.Player;
+import play.data.format.Formats;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,11 +12,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * The User is an unique account for this application.
+ *
  * @author Alexander Wilhelmer
+ * @author Sebastian Sachtleben
  */
 @Entity
 @Table(name = "users")
-public class User extends BaseModel implements Serializable {
+public class User extends BaseModel {
 
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
@@ -60,8 +64,8 @@ public class User extends BaseModel implements Serializable {
 
    @ManyToMany(cascade = CascadeType.ALL)
    @JsonIgnore
-
    private Set<SecurityRole> roles;
+
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    @PrimaryKeyJoinColumn
    private Player player;

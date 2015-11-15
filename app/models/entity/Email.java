@@ -1,16 +1,18 @@
 package models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Sebastian Sachtleben
  */
 @Entity
-public class Email extends BaseModel implements Serializable {
+public class Email extends BaseModel {
 
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
