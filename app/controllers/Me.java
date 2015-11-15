@@ -102,7 +102,7 @@ public class Me extends BaseController {
       final Email email = EmailDAO.instance().findByConfirmCode(code);
       if (email != null) {
          email.setConfirmed(true);
-         log().info(String.format("Email confirmed: %s", email));
+         log().info(String.format("%s confirmed via code %s", email, code));
       }
       return redirect(routes.Application.site());
    }
