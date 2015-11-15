@@ -6,6 +6,7 @@ import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
 import controllers.Application;
 import models.entity.Email;
 import models.entity.User;
+import org.apache.commons.lang3.RandomStringUtils;
 import play.Logger;
 import play.Play;
 import play.db.jpa.JPA;
@@ -81,6 +82,7 @@ public class UserDAO extends BaseDAO<Long, User> {
       email.setAddress(identity.email());
       email.setMain(true);
       email.setConfirmed(false);
+      email.setConfirmCode(RandomStringUtils.randomAlphanumeric(50));
       email.setUser(user);
 
       user.getEmails().add(email);

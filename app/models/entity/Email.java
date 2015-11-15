@@ -29,6 +29,9 @@ public class Email extends BaseModel {
    @Required(groups = { All.class, NoUser.class })
    private Boolean confirmed = false;
 
+   @Column(unique = true)
+   private String confirmCode;
+
    @Required(groups = { All.class })
    @JsonIgnore
    @ManyToOne
@@ -64,6 +67,9 @@ public class Email extends BaseModel {
    }
 
    public void setConfirmed(Boolean confirmed) {
+      if (confirmed) {
+         setConfirmCode(null);
+      }
       this.confirmed = confirmed;
    }
 
@@ -73,6 +79,14 @@ public class Email extends BaseModel {
 
    public void setUser(User user) {
       this.user = user;
+   }
+
+   public String getConfirmCode() {
+      return confirmCode;
+   }
+
+   public void setConfirmCode(String confirmCode) {
+      this.confirmCode = confirmCode;
    }
 
    @Override

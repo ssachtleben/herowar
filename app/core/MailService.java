@@ -7,6 +7,9 @@ import play.Play;
 import play.libs.mailer.Email;
 import play.libs.mailer.MailerClient;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * Allow to send emails.
  *
@@ -31,8 +34,17 @@ public class MailService {
             .setSubject("Email confirmation")
             .setFrom(configuration.getString("email.address"))
             .addTo(email.getAddress())
-            .setBodyHtml(views.html.emails.emailconfirmation.render().body());
+            .setBodyHtml(views.html.emails.emailconfirmation.render(getHost(), email).body());
         mailerClient.send(emailObject);
+    }
+
+    private String getHost() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }
