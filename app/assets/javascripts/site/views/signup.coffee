@@ -31,9 +31,10 @@ class Signup extends FormView
 		@model.set data
 		@model.validateResponse(data)
 		app.navigate 'play', true
-			
+
 	onError: (jqXHR, textStatus, errorThrown) ->
 		console.log 'Error'
+		return window.location = '/play' if jqXHR.status is 200
 		console.log $.parseJSON(jqXHR.responseText)
 	
 	validateUsername: (event) ->

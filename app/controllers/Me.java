@@ -1,7 +1,10 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssachtleben.play.plugin.auth.Auth;
+import com.ssachtleben.play.plugin.auth.exceptions.AuthenticationException;
 import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
+import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
 import dao.EmailDAO;
 import dao.UserDAO;
 import json.excludes.MatchResultSimpleMixin;
@@ -9,7 +12,6 @@ import models.entity.User;
 import models.entity.game.MatchResult;
 import play.Logger;
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.Result;
 
 import javax.inject.Inject;
@@ -76,14 +78,20 @@ public class Me extends BaseController {
       return ok(toJson(emailDAO.findByAddress(email) != null));
    }
 
+   /**
+    * Creates a new user with the given parameters from the request.
+    *
+    * @return Result of login process.
+    * @throws AuthenticationException
+    */
    @Transactional
-   public Result signup() {
+   public Result signup() throws AuthenticationException {
       final Map<String, Object> params = getDataFromRequest();
       final User user = UserDAO.instance().create(new PasswordEmailAuthUser(params.get("email").toString(),
                       params.get("password").toString(), new ObjectMapper().createObjectNode()),
               params.get("username").toString(), null, null);
       log().info(String.format("Created %s", user));
-      return ok(Json.toJson(user));
+      return Auth.login(ctx(), PasswordEmail.KEY);
    }
 
 }
