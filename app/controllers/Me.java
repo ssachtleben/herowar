@@ -90,10 +90,17 @@ public class Me extends BaseController {
    public Result signup() throws AuthenticationException {
       final Map<String, Object> params = getDataFromRequest();
       final User user = UserDAO.instance().create(new PasswordEmailAuthUser(params.get("email").toString(),
-                      params.get("password").toString(), new ObjectMapper().createObjectNode()),
+              params.get("password").toString(), new ObjectMapper().createObjectNode()),
               params.get("username").toString(), null, null);
-      log().info(String.format("Created %s", user));
-      MailService.instance().sendEmailConfirmation(getHost(), user.getEmails().iterator().next());
+      if (user != null) {
+         final boolean newsletter = Boolean.parseBoolean(params.get("newsletter").toString());
+         if (newsletter == true) {
+            log().info(String.format("%s join the newsletter", user));
+            user.setNewsletter(newsletter);
+         }
+         log().info(String.format("Created %s", user));
+         MailService.instance().sendEmailConfirmation(getHost(), user.getEmails().iterator().next());
+      }
       return Auth.login(ctx(), PasswordEmail.KEY);
    }
 
