@@ -17,6 +17,8 @@ import play.Play;
 import play.mvc.Controller;
 import play.mvc.Http.Context;
 
+import java.util.Date;
+
 /**
  * Handles authentication for different providers.
  *
@@ -153,11 +155,10 @@ public class AuthService extends Controller {
    @Observer(topic = AuthEvents.AUTHENTICATION_SUCCESS)
    public static void authenticationSuccessful(final Context ctx, final Long userId, final String provider) {
       final User user = Application.getLocalUser(ctx.session());
+      log.info(String.format("Authentication success: %s", user));
       if (user != null) {
-         log.debug(String.format("Authentication success: " + user.toString()));
-         //            user.lastLogin = new Date();
-         //            user.lastIp = ctx.request().remoteAddress();
-         //            user.update();
+         user.setLastLogin(new Date());
+         user.setLastIp(ctx.request().remoteAddress());
       }
    }
 }
