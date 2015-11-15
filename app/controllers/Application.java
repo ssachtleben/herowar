@@ -6,9 +6,6 @@ import models.entity.User;
 import org.apache.commons.lang3.math.NumberUtils;
 import play.mvc.Http;
 import play.mvc.Result;
-import views.html.admin;
-import views.html.editor;
-import views.html.game;
 import views.html.site;
 
 /**
@@ -41,18 +38,6 @@ public class Application extends BaseController {
     */
    public static User getLocalUser() {
       return getLocalUser(session());
-   }
-
-   public Result admin() {
-      return ok(admin.render());
-   }
-
-   public Result editor() {
-      return ok(editor.render());
-   }
-
-   public Result game() {
-      return ok(game.render());
    }
 
    public Result site() {

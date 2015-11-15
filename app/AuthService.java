@@ -25,6 +25,7 @@ import java.util.Date;
  * @author Sebastian Sachtleben
  */
 public class AuthService extends Controller {
+
    private static final Logger.ALogger log = Logger.of(AuthService.class);
 
    @Authenticates(provider = PasswordEmail.KEY)
