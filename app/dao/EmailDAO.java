@@ -7,6 +7,7 @@ import play.db.jpa.JPA;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -38,12 +39,12 @@ public class EmailDAO extends BaseDAO<Long, Email> {
       final Calendar cal = Calendar.getInstance();
       cal.add(Calendar.HOUR, createdBeforeHours * -1);
       final CriteriaBuilder builder = getCriteriaBuilder();
-      final CriteriaQuery<Email> q = getCriteriaWithRoot();
-      final List<Predicate> predicates = new ArrayList<Predicate>();
-      predicates.add(builder.equal(getRoot(q).get("confirmed"), false));
-      predicates.add(builder.lessThan(getRoot(q).get("cdate"), cal.getTime()));
+      final CriteriaQuery<Email> q = getCriteria();
+      final Root<Email> root = q.from(Email.class);
+      final List<Predicate> predicates = new ArrayList<>();
+      predicates.add(builder.equal(root.get("confirmed"), false));
+      predicates.add(builder.lessThan(root.get("cdate"), cal.getTime()));
       q.where(builder.and(predicates.toArray(new Predicate[0])));
-      q.select(q.from(Email.class));
       return JPA.em().createQuery(q).getResultList();
    }
 

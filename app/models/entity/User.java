@@ -55,14 +55,18 @@ public class User extends BaseModel {
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private Set<Email> emails;
 
-   @OneToMany(mappedBy = "user")
+   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private Set<LinkedService> linkedServices;
+
+   @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+   @JsonIgnore
+   private Set<News> news;
 
    @ManyToMany(cascade = CascadeType.ALL)
    @JsonIgnore
    private Set<UserPermission> permissions;
 
-   @ManyToMany(cascade = CascadeType.ALL)
+   @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
    @JsonIgnore
    private Set<SecurityRole> roles;
 
@@ -178,6 +182,14 @@ public class User extends BaseModel {
 
    public void setLinkedServices(Set<LinkedService> linkedServices) {
       this.linkedServices = linkedServices;
+   }
+
+   public Set<News> getNews() {
+      return news;
+   }
+
+   public void setNews(Set<News> news) {
+      this.news = news;
    }
 
    public Set<SecurityRole> getRoles() {
