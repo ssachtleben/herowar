@@ -15,14 +15,18 @@ public class Email extends BaseModel implements Serializable {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
+
    @Required(groups = { All.class, NoUser.class })
    @play.data.validation.Constraints.Email
    @Column(unique = true)
    private String address;
+
    @Required(groups = { All.class, NoUser.class })
    private Boolean main = false;
+
    @Required(groups = { All.class, NoUser.class })
    private Boolean confirmed = false;
+
    @Required(groups = { All.class })
    @JsonIgnore
    @ManyToOne
