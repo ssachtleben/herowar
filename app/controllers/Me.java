@@ -5,6 +5,7 @@ import com.ssachtleben.play.plugin.auth.Auth;
 import com.ssachtleben.play.plugin.auth.exceptions.AuthenticationException;
 import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
 import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
+import core.MailService;
 import dao.EmailDAO;
 import dao.UserDAO;
 import json.excludes.MatchResultSimpleMixin;
@@ -91,6 +92,7 @@ public class Me extends BaseController {
                       params.get("password").toString(), new ObjectMapper().createObjectNode()),
               params.get("username").toString(), null, null);
       log().info(String.format("Created %s", user));
+      MailService.instance().sendEmailConfirmation(user.getEmails().iterator().next());
       return Auth.login(ctx(), PasswordEmail.KEY);
    }
 
