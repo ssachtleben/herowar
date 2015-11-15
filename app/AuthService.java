@@ -3,6 +3,7 @@ import com.ssachtleben.play.plugin.auth.annotations.Authenticates;
 import com.ssachtleben.play.plugin.auth.models.*;
 import com.ssachtleben.play.plugin.auth.providers.BaseProvider.AuthEvents;
 import com.ssachtleben.play.plugin.auth.providers.Facebook;
+import com.ssachtleben.play.plugin.auth.providers.Google;
 import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
 import com.ssachtleben.play.plugin.event.annotations.Observer;
 import controllers.Application;
@@ -37,6 +38,34 @@ public class AuthService extends Controller {
       }
       log.info("Check PW: " + PasswordUsernameAuthUser.checkPassword(account.getIdentifier(), identity.clearPassword()));
       return PasswordUsernameAuthUser.checkPassword(account.getIdentifier(), identity.clearPassword()) ? account.getUser().getId() : null;
+   }
+
+   @Authenticates(provider = Google.KEY)
+   public static Object handleGoogleLogin(final Context ctx, final GoogleAuthUser identity) {
+      log.info(String.format("~~~ handleGoogleLogin() [ctx=%s, identity=%s] ~~~", ctx, identity));
+      final JsonNode data = identity.data();
+      log.debug(String.format("Data: %s", data));
+      final String email = data.get("email").asText();
+      final String username = data.get("given_name").asText();
+      final String avatar = data.has("picture") ? data.get("picture").asText() : null;
+      log.debug("Email: " + email);
+      log.debug("Username: " + username);
+      log.debug("Avatar: " + avatar);
+      if (StringUtils.isBlank(email)) {
+         return null;
+      }
+      final Object userId = handleLogin(identity, email, username, avatar);
+      if (userId != null) {
+         final LinkedServiceDAO linkedServiceDAO = Play.application().injector().instanceOf(LinkedServiceDAO.class);
+         final LinkedService linkedService = linkedServiceDAO.find(identity.provider(), identity.id());
+         if (data.has("profile")) {
+            linkedService.setLink(data.get("profile").asText());
+         }
+         if (data.has("name")) {
+            linkedService.setName(data.get("name").asText());
+         }
+      }
+      return userId;
    }
 
    @Authenticates(provider = Facebook.KEY)

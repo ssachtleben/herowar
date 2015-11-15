@@ -21,7 +21,8 @@ class SmallLogin extends BaseView
 	connectGoogle: (event) ->
 		event?.preventDefault()
 		console.log 'Connect with google'
-		window.open '/login/google', 'Connect', 'width=655,height=380,left=100,top=200,toolbar=no,scrollbars=no,menubar=no'
+		window.location = '/login/google'
+		#window.open '/login/google', 'Connect', 'width=655,height=380,left=100,top=200,toolbar=no,scrollbars=no,menubar=no'
 		return
 		
 	connectFacebook: (event) ->
