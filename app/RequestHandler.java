@@ -1,3 +1,4 @@
+import jobs.UserImporter;
 import play.Logger;
 import play.http.DefaultHttpRequestHandler;
 import play.http.HttpRequestHandler;
@@ -20,6 +21,10 @@ public class RequestHandler extends DefaultHttpRequestHandler implements HttpReq
       return new Action.Simple() {
          @Override
          public F.Promise<Result> call(Http.Context ctx) throws Throwable {
+            while(!UserImporter.isReady) {
+               log.debug("Sleep wait for importer");
+               Thread.sleep(50);
+            }
             log.info(request.toString());
             return delegate.call(ctx);
          }

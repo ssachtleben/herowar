@@ -26,7 +26,6 @@ public class Starter {
    }
 
    public static void startActivator() throws IOException {
-      System.out.println(String.format("OS is: %s", OS));
       String cmd = CMDSTRING;
       if (isWindows()) {
          cmd += ".bat";

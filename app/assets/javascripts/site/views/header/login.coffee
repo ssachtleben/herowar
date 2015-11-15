@@ -13,40 +13,36 @@ class Login extends FormView
 	
 	template: templates.get 'header/login.tmpl'
 
-	url: '/login/username/auth'
+	url: '/login/email/auth'
 	
 	validateForm: ($Form) ->
 		isValid = true
-		inputUsername = $Form.find 'input[name="username"]'
-		if inputUsername.val().length <= 4
-			@setInputState inputUsername, 'error'
-			$.gritter.add
-				title: 'Login failed',
-				text: 'The username doesn\'t exists.'
+		inputEmail = $Form.find 'input[name="email"]'
+		if inputEmail.val().length <= 4
+			@setInputState inputEmail, 'error'
+			$.gritter.add title: 'Login failed', text: 'The email doesn\'t exists.'
 			isValid = false
 		else
-			@setInputState inputUsername, ''
+			@setInputState inputEmail, ''
 		passwordUsername = $Form.find 'input[name="password"]'
 		if passwordUsername.val().length <= 4
 			@setInputState passwordUsername, 'error'
 			if isValid
-				$.gritter.add
-					title: 'Login failed',
-					text: 'The password doesn\'t match.'
+				$.gritter.add title: 'Login failed', text: 'The password doesn\'t match.'
 			isValid = false
 		else
 			@setInputState passwordUsername, ''
 		isValid
 	
 	onSuccess: (data, textStatus, jqXHR) ->
-		console.log 'Success'
+		# TODO: this method is never called ?!?
 		@model.set data
 		@model.validateResponse(data)
 		app.navigate 'play', true
 			
 	onError: (jqXHR, textStatus, errorThrown) ->
-		console.log 'Error'
-		console.log jqXHR.responseText
-		console.log $.parseJSON(jqXHR.responseText)
+		# TODO: why is successful login goes to error?!?!
+		return window.location.reload() if jqXHR.status is 200
+		$.gritter.add title: 'Login failed', text: 'Email or password is incorrect'
 	
 return Login

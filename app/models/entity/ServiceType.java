@@ -5,6 +5,6 @@ package models.entity;
 */
 public enum ServiceType {
 
-   FACEBOOK, SOUNDCLOUD, EMAIL;
+   FACEBOOK, GOOGLE, EMAIL
 
 }

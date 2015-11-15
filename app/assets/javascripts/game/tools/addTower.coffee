@@ -52,6 +52,10 @@ class AddTowerTool extends AddObject
 		obj.showGlow 250
 		return
 
+	onMouseUp: (event) ->
+		return @_removeObject() if event.which is 3
+		super event
+
 	onLeaveTool: ->
 		@_removeObject()
 		return

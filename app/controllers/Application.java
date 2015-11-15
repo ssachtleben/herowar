@@ -11,21 +11,34 @@ import views.html.editor;
 import views.html.game;
 import views.html.site;
 
+/**
+ * Main controller to handle all major site requests. Also allow to retrieve the current logged in user.
+ *
+ * @author Sebastian Sachtleben
+ */
 public class Application extends BaseController {
 
    public static final String USER_ROLE = "user";
    public static final String ADMIN_ROLE = "admin";
-   public static final String ADMIN_ROLE2 = "admin22";
 
    public static String[] roles = { USER_ROLE, ADMIN_ROLE };
 
+   /**
+    * Retrieves the logged in user from the given session.
+    *
+    * @param session The http session
+    * @return The current logged in user.
+    */
    public static User getLocalUser(final Http.Session session) {
-      final String userId = Auth.getLoggedIn(session());
-      UserDAO userDAO = new UserDAO();
-      final User user = NumberUtils.isNumber(userId) ? userDAO.getById(Long.parseLong(userId)) : null;
-      return user;
+      final String userId = Auth.getLoggedIn(session);
+      return NumberUtils.isNumber(userId) ? UserDAO.instance().getById(Long.parseLong(userId)) : null;
    }
 
+   /**
+    * Retrieves the logged in user. Works only from controller scope.
+    *
+    * @return The current logged in user.
+    */
    public static User getLocalUser() {
       return getLocalUser(session());
    }

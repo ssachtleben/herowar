@@ -23,18 +23,20 @@ public class UserImporter extends SimpleJob {
 
    private static final Logger.ALogger log = Logger.of(UserImporter.class);
 
+   public static boolean isReady = false;
+
    @Override
    public void run() {
-      JPA.withTransaction(new play.libs.F.Callback0() {
-         @Override
-         public void invoke() throws Throwable {
-            initialSecurityRoles();
-            createAdminUser();
-            createDummyNews();
-            createLevelRanges();
-            JPA.em().flush();
-         }
-      });
+      JPA.withTransaction(() -> importData());
+   }
+
+   private void importData() {
+      initialSecurityRoles();
+      createAdminUser();
+      createDummyNews();
+      createLevelRanges();
+      JPA.em().flush();
+      isReady = true;
    }
 
    private void initialSecurityRoles() {
@@ -57,7 +59,7 @@ public class UserImporter extends SimpleJob {
          return;
       }
       log.info("Creating admin user");
-      userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "", "FirstName", "LastName");
+      userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "admin", "FirstName", "LastName");
    }
 
    private void createDummyNews() {

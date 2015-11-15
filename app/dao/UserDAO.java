@@ -7,6 +7,7 @@ import controllers.Application;
 import models.entity.Email;
 import models.entity.User;
 import play.Logger;
+import play.Play;
 import play.db.jpa.JPA;
 
 import java.util.Collections;
@@ -28,6 +29,10 @@ public class UserDAO extends BaseDAO<Long, User> {
 
    public UserDAO() {
       super(Long.class, User.class);
+   }
+
+   public static UserDAO instance() {
+      return Play.application().injector().instanceOf(UserDAO.class);
    }
 
    public User findByEmail(String email) {
