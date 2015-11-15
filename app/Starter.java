@@ -34,14 +34,12 @@ public class Starter {
       }
       Process p = Runtime.getRuntime().exec(new String[] { cmd, "run" });
       BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
       String line;
       while ((line = input.readLine()) != null) {
          System.out.println(line);
          if (!FIRST_CALL && line.contains("(Server started, use Ctrl+D to stop and go back to the console...)")) {
             new Thread(() -> loadLocalhost()).start();
          }
-
       }
    }
 
@@ -49,18 +47,22 @@ public class Starter {
       if (!FIRST_CALL) {
          FIRST_CALL = true;
          System.out.println(String.format("Call %s", HOST));
+         InputStream is = null;
          try {
             HttpURLConnection conn = (HttpURLConnection) new URL(HOST).openConnection();
-            InputStream is = conn.getInputStream();
+            is = conn.getInputStream();
             is.read();
-
          }
          catch (IOException e) {
             e.printStackTrace();
+         } finally {
+            try {
+               is.close();
+            } catch (IOException e) {
+               e.printStackTrace();
+            }
          }
-
       }
-
    }
 
    public static boolean isWindows() {
