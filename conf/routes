@@ -8,6 +8,7 @@ GET           /                                   controllers.Application.site()
 GET           /_=_                                controllers.Application.site()
 GET           /signup                             controllers.Application.site()
 GET           /play                               controllers.Application.site()
+GET           /email/confirm/:code                controllers.Me.emailConfirm(code: String)
 
 GET           /login                              controllers.Signin.login()
 GET           /login/:provider                    controllers.Signin.url(provider: String)

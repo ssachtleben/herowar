@@ -9,6 +9,7 @@ import core.MailService;
 import dao.EmailDAO;
 import dao.UserDAO;
 import json.excludes.MatchResultSimpleMixin;
+import models.entity.Email;
 import models.entity.User;
 import models.entity.game.MatchResult;
 import play.Logger;
@@ -95,5 +96,16 @@ public class Me extends BaseController {
       MailService.instance().sendEmailConfirmation(user.getEmails().iterator().next());
       return Auth.login(ctx(), PasswordEmail.KEY);
    }
+
+   @Transactional
+   public Result emailConfirm(final String code) {
+      final Email email = EmailDAO.instance().findByConfirmCode(code);
+      if (email != null) {
+         email.setConfirmed(true);
+         log().info(String.format("Email confirmed: %s", email));
+      }
+      return redirect(routes.Application.site());
+   }
+
 
 }

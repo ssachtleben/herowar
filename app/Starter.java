@@ -12,7 +12,9 @@ import java.net.URL;
  * @author Sebastian Sachtleben
  */
 public class Starter {
+
    private final static String CMDSTRING = "./activator";
+   private final static String HOST = "http://localhost:9000";
    private static String OS = System.getProperty("os.name").toLowerCase();
    private static boolean FIRST_CALL = false;
 
@@ -46,9 +48,9 @@ public class Starter {
    public static void loadLocalhost() {
       if (!FIRST_CALL) {
          FIRST_CALL = true;
-         System.out.println(String.format("%s", "Try to make first call"));
+         System.out.println(String.format("Call %s", HOST));
          try {
-            HttpURLConnection conn = (HttpURLConnection) new URL("http://localhost:9000").openConnection();
+            HttpURLConnection conn = (HttpURLConnection) new URL(HOST).openConnection();
             InputStream is = conn.getInputStream();
             is.read();
 

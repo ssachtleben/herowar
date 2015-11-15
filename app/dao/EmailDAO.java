@@ -30,6 +30,10 @@ public class EmailDAO extends BaseDAO<Long, Email> {
       return getSingleByPropertyValue("address", address);
    }
 
+   public Email findByConfirmCode(String confirmCode) {
+      return getSingleByPropertyValue("confirmCode", confirmCode);
+   }
+
    public List<Email> getNotConfirmed(final int createdBeforeHours) {
       final Calendar cal = Calendar.getInstance();
       cal.add(Calendar.HOUR, createdBeforeHours * -1);
