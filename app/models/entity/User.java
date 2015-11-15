@@ -39,8 +39,6 @@ public class User extends BaseModel {
 
    private boolean active = true;
 
-   private boolean emailValidated = false;
-
    private String avatar;
 
    @JsonIgnore
@@ -124,14 +122,6 @@ public class User extends BaseModel {
 
    public void setActive(boolean active) {
       this.active = active;
-   }
-
-   public boolean isEmailValidated() {
-      return emailValidated;
-   }
-
-   public void setEmailValidated(boolean emailValidated) {
-      this.emailValidated = emailValidated;
    }
 
    public String getAvatar() {

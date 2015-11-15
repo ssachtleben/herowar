@@ -70,6 +70,7 @@ public class UserDAO extends BaseDAO<Long, User> {
       user.setRoles(Collections.singleton(securityRoleDAO.findByRoleName(userRole)));
       user.setActive(true);
       user.setLastLogin(new Date());
+      user.setUsername(username);
       user.setFirstName(firstName);
       user.setLastName(lastName);
       user.setPassword(identity.hashedPassword());
@@ -84,14 +85,8 @@ public class UserDAO extends BaseDAO<Long, User> {
       email.setConfirmed(false);
       email.setConfirmCode(RandomStringUtils.randomAlphanumeric(50));
       email.setUser(user);
-
       user.getEmails().add(email);
 
-      // TODO: send email validation
-
-      // TODO: remove this field ... (saved already in email)
-      user.setEmailValidated(false);
-      user.setUsername(username);
       JPA.em().persist(user);
       user.setLinkedServices(Collections.singleton(linkedAccountDAO.create(identity.provider(), identity.id(), user)));
       Logger.info("Saved new user " + user.getUsername());
