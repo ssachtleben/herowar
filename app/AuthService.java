@@ -42,7 +42,7 @@ public class AuthService extends Controller {
 
    @Authenticates(provider = Google.KEY)
    public static Object handleGoogleLogin(final Context ctx, final GoogleAuthUser identity) {
-      log.info(String.format("~~~ handleGoogleLogin() [ctx=%s, identity=%s] ~~~", ctx, identity));
+      log.debug(String.format("~~~ handleGoogleLogin() [ctx=%s, identity=%s] ~~~", ctx, identity));
       final JsonNode data = identity.data();
       log.debug(String.format("Data: %s", data));
       final String email = data.get("email").asText();
