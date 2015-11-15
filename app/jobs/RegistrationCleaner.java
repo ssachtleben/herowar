@@ -11,7 +11,9 @@ import play.db.jpa.JPA;
 import java.util.List;
 
 /**
- * This cronjob cleans not by email confirmed accounts which are older than 24h.
+ * <p>This cronjob cleans not by email confirmed accounts which are older than 24h.</p>
+ *
+ * <p>TODO: Pattern for later: 0 0 12 * * ? - Fire at 12pm (noon) every day</p>
  *
  * @author Sebastian Sachtleben
  */

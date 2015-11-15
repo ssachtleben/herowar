@@ -22,7 +22,7 @@ import java.util.Set;
 public class User extends BaseModel {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
    @NotNull

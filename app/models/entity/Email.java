@@ -15,7 +15,7 @@ import java.util.Date;
 public class Email extends BaseModel {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
    @Required(groups = { All.class, NoUser.class })

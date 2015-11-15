@@ -10,7 +10,6 @@ import controllers.Application;
 import dao.EmailDAO;
 import dao.LinkedServiceDAO;
 import dao.UserDAO;
-import models.entity.Email;
 import models.entity.LinkedService;
 import models.entity.User;
 import play.Logger;
@@ -94,8 +93,7 @@ public class AuthService extends Controller {
             linkedService.setName(fullname);
          }
          // Set email confirmed since it comes from trusted oauth provider
-         final Email address = EmailDAO.instance().findByAddress(email);
-         address.setConfirmed(true);
+         EmailDAO.instance().findByAddress(email).setConfirmed(true);
       }
       return userId;
    }
