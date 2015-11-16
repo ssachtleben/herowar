@@ -13,6 +13,7 @@ class Settings extends BaseView
 	events:
 		'click .logout-link'	    : 'logout'
 		'click .login-link'		    : 'toggleTooltip'
+		'click .settings-icon'    : 'toggleSettings'
 		
 	logout: (event) ->
 		if event
@@ -31,5 +32,9 @@ class Settings extends BaseView
 		$Tooltip.toggleClass 'visible'
 		$Input = $ '.login-form input[name="email"]'
 		$Input.focus() if $Input?.length > 0
+
+	toggleSettings: (event) ->
+		$Tooltip = $ '.settings-dropdown'
+		$Tooltip.toggleClass 'open'
 
 return Settings
