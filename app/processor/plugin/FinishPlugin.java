@@ -4,6 +4,7 @@ import dao.MatchDAO;
 import models.entity.game.Match;
 import models.entity.game.MatchResult;
 import models.entity.game.MatchState;
+import models.entity.game.Player;
 import network.Connection;
 import network.server.GameDefeatPacket;
 import network.server.GameVictoryPacket;
@@ -72,11 +73,19 @@ public class FinishPlugin extends AbstractPlugin implements IPlugin {
             match.setGameTime(new Date().getTime() - (match.getCdate().getTime() + match.getPreloadTime()));
             Iterator<MatchResult> results = match.getPlayerResults().iterator();
             while (results.hasNext()) {
-               MatchResult result = results.next();
-               ConcurrentHashMap<String, Object> cache = getPlayerCache(result.getPlayer().getId());
+               final MatchResult result = results.next();
+               final Player player = result.getPlayer();
+               ConcurrentHashMap<String, Object> cache = getPlayerCache(player.getId());
                result.setScore(Math.round(Double.parseDouble(cache.get(CacheConstants.SCORE).toString())));
                result.setKills(Long.parseLong(cache.get(CacheConstants.KILLS).toString()));
                result.getToken().setInvalid(true);
+               player.setKills(player.getKills() + result.getKills());
+               if (match.getVictory()) {
+                  player.setWins(player.getWins() + 1);
+               } else {
+                  player.setLosses(player.getLosses() + 1);
+               }
+               player.setExperience(player.getExperience() + (match.getVictory() ? 1000 : 100));
             }
          }
       });
