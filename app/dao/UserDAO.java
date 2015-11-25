@@ -6,6 +6,8 @@ import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
 import controllers.Application;
 import models.entity.Email;
 import models.entity.User;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import play.Play;
 import play.db.jpa.JPA;
@@ -55,7 +57,11 @@ public class UserDAO extends BaseDAO<Long, User> {
    }
 
    public User create(final String username, final String email, final String avatar) {
-      return create(new PasswordEmailAuthUser(email, null, new ObjectMapper().createObjectNode()), username, null, null);
+      final User user = create(new PasswordEmailAuthUser(email, null, new ObjectMapper().createObjectNode()), username, null, null);
+      if (StringUtils.isNotBlank(avatar)) {
+         user.setAvatar(avatar);
+      }
+      return user;
    }
 
    public User create(final PasswordEmailAuthUser identity, final String username, final String firstName, final String lastName) {
@@ -69,6 +75,7 @@ public class UserDAO extends BaseDAO<Long, User> {
       user.setRoles(Collections.singleton(securityRoleDAO.findByRoleName(userRole)));
       user.setActive(true);
       user.setLastLogin(new Date());
+      user.setUsername(username);
       user.setFirstName(firstName);
       user.setLastName(lastName);
       user.setPassword(identity.hashedPassword());
@@ -80,13 +87,11 @@ public class UserDAO extends BaseDAO<Long, User> {
       final Email email = new Email();
       email.setAddress(identity.email());
       email.setMain(true);
-      email.setConfirmed(true);
+      email.setConfirmed(false);
+      email.setConfirmCode(RandomStringUtils.randomAlphanumeric(50));
       email.setUser(user);
-
       user.getEmails().add(email);
 
-      user.setEmailValidated(false);
-      user.setUsername(username);
       JPA.em().persist(user);
       user.setLinkedServices(Collections.singleton(linkedAccountDAO.create(identity.provider(), identity.id(), user)));
       Logger.info("Saved new user " + user.getUsername());

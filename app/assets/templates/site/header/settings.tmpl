@@ -6,7 +6,15 @@
 			<div class="login-small" data-view="views/login/small"></div>
 		{{/if}}
 		{{#if isUser}}
-			<a class="btn logout-link">Logout</a>
+			<div class="dropdown">
+				<a href="#" data-hover="dropdown">
+					<img src="{{#if avatar}}{{avatar}}{{else}}/assets/images/no-avatar.gif{{/if}}" class="settings-icon img-circle" style="height: 30px">
+				</a>
+				<ul class="dropdown-menu pull-right">
+					<li><a href="/play">Play</a></li>
+					<li><a href="/logout">Logout</a></li>
+				</ul>
+			</div>
 		{{/if}}
 	{{/if}}
 </div>

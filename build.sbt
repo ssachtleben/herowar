@@ -14,6 +14,7 @@ libraryDependencies ++= Seq(
   "commons-beanutils" % "commons-beanutils" % "1.9.2",
   "commons-io" % "commons-io" % "2.4",
   "org.apache.httpcomponents" % "httpclient" % "4.5.1",
+  "com.typesafe.play" %% "play-mailer" % "4.0.0-M1",
   "com.ssachtleben" %% "play-auth-plugin" % "4.1",
   "com.ssachtleben" %% "play-compress-plugin" % "4.0",
   "com.ssachtleben" %% "play-cron-plugin" % "4.1",

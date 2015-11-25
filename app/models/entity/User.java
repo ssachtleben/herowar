@@ -2,6 +2,7 @@ package models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.entity.game.Player;
+import play.data.format.Formats;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,14 +12,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * The User is an unique account for this application.
+ *
  * @author Alexander Wilhelmer
+ * @author Sebastian Sachtleben
  */
 @Entity
 @Table(name = "users")
-public class User extends BaseModel implements Serializable {
+public class User extends BaseModel {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
    @NotNull
@@ -35,8 +39,6 @@ public class User extends BaseModel implements Serializable {
 
    private boolean active = true;
 
-   private boolean emailValidated = false;
-
    private String avatar;
 
    @JsonIgnore
@@ -51,17 +53,21 @@ public class User extends BaseModel implements Serializable {
    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private Set<Email> emails;
 
-   @OneToMany(mappedBy = "user")
+   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
    private Set<LinkedService> linkedServices;
+
+   @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+   @JsonIgnore
+   private Set<News> news;
 
    @ManyToMany(cascade = CascadeType.ALL)
    @JsonIgnore
    private Set<UserPermission> permissions;
 
-   @ManyToMany(cascade = CascadeType.ALL)
+   @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
    @JsonIgnore
-
    private Set<SecurityRole> roles;
+
    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
    @PrimaryKeyJoinColumn
    private Player player;
@@ -118,14 +124,6 @@ public class User extends BaseModel implements Serializable {
       this.active = active;
    }
 
-   public boolean isEmailValidated() {
-      return emailValidated;
-   }
-
-   public void setEmailValidated(boolean emailValidated) {
-      this.emailValidated = emailValidated;
-   }
-
    public String getAvatar() {
       return avatar;
    }
@@ -174,6 +172,14 @@ public class User extends BaseModel implements Serializable {
 
    public void setLinkedServices(Set<LinkedService> linkedServices) {
       this.linkedServices = linkedServices;
+   }
+
+   public Set<News> getNews() {
+      return news;
+   }
+
+   public void setNews(Set<News> news) {
+      this.news = news;
    }
 
    public Set<SecurityRole> getRoles() {

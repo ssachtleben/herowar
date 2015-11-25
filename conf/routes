@@ -8,6 +8,7 @@ GET           /                                   controllers.Application.site()
 GET           /_=_                                controllers.Application.site()
 GET           /signup                             controllers.Application.site()
 GET           /play                               controllers.Application.site()
+GET           /email/confirm/:code                controllers.Me.emailConfirm(code: String)
 
 GET           /login                              controllers.Signin.login()
 GET           /login/:provider                    controllers.Signin.url(provider: String)
@@ -56,6 +57,7 @@ GET           /admin/news/:id                     controllers.Admin.newsShow(id:
 GET           /api/me                             controllers.Me.show()
 POST          /api/checkUsername/:name            controllers.Me.checkUsername(name: String)
 POST          /api/checkEmail/:email              controllers.Me.checkEmail(email: String)
+POST			  /api/signup								  controllers.Me.signup()
 
 GET           /api/news/all                       controllers.News.list()
 GET           /api/news/:id                       controllers.News.show(id: Long)

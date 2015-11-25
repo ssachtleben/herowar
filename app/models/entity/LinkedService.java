@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class LinkedService extends BaseModel implements Serializable {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
 
    @Enumerated(value = EnumType.STRING)

@@ -1,18 +1,24 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssachtleben.play.plugin.auth.Auth;
+import com.ssachtleben.play.plugin.auth.exceptions.AuthenticationException;
+import com.ssachtleben.play.plugin.auth.models.PasswordEmailAuthUser;
+import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
+import core.MailService;
 import dao.EmailDAO;
 import dao.UserDAO;
 import json.excludes.MatchResultSimpleMixin;
+import models.entity.Email;
 import models.entity.User;
 import models.entity.game.MatchResult;
 import play.Logger;
 import play.db.jpa.Transactional;
-import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.Map;
 
 import static play.libs.Json.toJson;
 
@@ -21,7 +27,7 @@ import static play.libs.Json.toJson;
  *
  * @author Sebastian Sachtleben
  */
-public class Me extends Controller {
+public class Me extends BaseController {
 
    private static final Logger.ALogger log = Logger.of(Me.class);
 
@@ -73,5 +79,40 @@ public class Me extends Controller {
    public Result checkEmail(String email) {
       return ok(toJson(emailDAO.findByAddress(email) != null));
    }
+
+   /**
+    * Creates a new user with the given parameters from the request.
+    *
+    * @return Result of login process.
+    * @throws AuthenticationException
+    */
+   @Transactional
+   public Result signup() throws AuthenticationException {
+      final Map<String, Object> params = getDataFromRequest();
+      final User user = UserDAO.instance().create(new PasswordEmailAuthUser(params.get("email").toString(),
+              params.get("password").toString(), new ObjectMapper().createObjectNode()),
+              params.get("username").toString(), null, null);
+      if (user != null) {
+         final boolean newsletter = Boolean.parseBoolean(params.get("newsletter").toString());
+         if (newsletter == true) {
+            log().info(String.format("%s join the newsletter", user));
+            user.setNewsletter(newsletter);
+         }
+         log().info(String.format("Created %s", user));
+         MailService.instance().sendEmailConfirmation(getHost(), user.getEmails().iterator().next());
+      }
+      return Auth.login(ctx(), PasswordEmail.KEY);
+   }
+
+   @Transactional
+   public Result emailConfirm(final String code) {
+      final Email email = EmailDAO.instance().findByConfirmCode(code);
+      if (email != null) {
+         email.setConfirmed(true);
+         log().info(String.format("%s confirmed via code %s", email, code));
+      }
+      return redirect(routes.Application.site());
+   }
+
 
 }

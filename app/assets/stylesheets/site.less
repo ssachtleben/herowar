@@ -108,16 +108,31 @@ body {
     }
 }
 
+.dropdown > a {
+  display: block;
+}
+
 .login {
     margin-top: 5px;
-    
+
     .btn {
+		margin-right: 5px;
         margin-top: 0;
+
+	  &:last-child {
+		margin-right: 0;
+	  }
     }
-    
-    a {
-        margin-right: 5px;
-    }
+
+  	.login-small {
+	  a {
+		margin-right: 5px;
+
+		&:last-child {
+		  margin-right: 0;
+		}
+	  }
+	}
 }
 
 .footer {

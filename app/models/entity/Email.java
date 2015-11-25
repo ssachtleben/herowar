@@ -1,10 +1,12 @@
 package models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Sebastian Sachtleben
@@ -14,16 +16,23 @@ import java.io.Serializable;
 public class Email extends BaseModel implements Serializable {
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
+
    @Required(groups = { All.class, NoUser.class })
    @play.data.validation.Constraints.Email
    @Column(unique = true)
    private String address;
+
    @Required(groups = { All.class, NoUser.class })
    private Boolean main = false;
+
    @Required(groups = { All.class, NoUser.class })
    private Boolean confirmed = false;
+
+   @Column(unique = true)
+   private String confirmCode;
+
    @Required(groups = { All.class })
    @JsonIgnore
    @ManyToOne
@@ -59,6 +68,9 @@ public class Email extends BaseModel implements Serializable {
    }
 
    public void setConfirmed(Boolean confirmed) {
+      if (confirmed) {
+         setConfirmCode(null);
+      }
       this.confirmed = confirmed;
    }
 
@@ -68,6 +80,14 @@ public class Email extends BaseModel implements Serializable {
 
    public void setUser(User user) {
       this.user = user;
+   }
+
+   public String getConfirmCode() {
+      return confirmCode;
+   }
+
+   public void setConfirmCode(String confirmCode) {
+      this.confirmCode = confirmCode;
    }
 
    @Override

@@ -1,9 +1,6 @@
 package models.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -16,6 +13,9 @@ public class SecurityRole implements Serializable {
    private Long id;
 
    private String roleName;
+
+   @ManyToOne(cascade = CascadeType.REFRESH)
+   private User user;
 
    public String getName() {
       return roleName;
@@ -37,5 +37,13 @@ public class SecurityRole implements Serializable {
 
    public void setRoleName(String roleName) {
       this.roleName = roleName;
+   }
+
+   public User getUser() {
+      return user;
+   }
+
+   public void setUser(User user) {
+      this.user = user;
    }
 }

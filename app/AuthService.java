@@ -7,15 +7,17 @@ import com.ssachtleben.play.plugin.auth.providers.Google;
 import com.ssachtleben.play.plugin.auth.providers.PasswordEmail;
 import com.ssachtleben.play.plugin.event.annotations.Observer;
 import controllers.Application;
+import dao.EmailDAO;
 import dao.LinkedServiceDAO;
 import dao.UserDAO;
 import models.entity.LinkedService;
 import models.entity.User;
-import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Http.Context;
+
+import java.util.Date;
 
 /**
  * Handles authentication for different providers.
@@ -23,6 +25,7 @@ import play.mvc.Http.Context;
  * @author Sebastian Sachtleben
  */
 public class AuthService extends Controller {
+
    private static final Logger.ALogger log = Logger.of(AuthService.class);
 
    @Authenticates(provider = PasswordEmail.KEY)
@@ -48,22 +51,11 @@ public class AuthService extends Controller {
       final String email = data.get("email").asText();
       final String username = data.get("given_name").asText();
       final String avatar = data.has("picture") ? data.get("picture").asText() : null;
-      log.debug("Email: " + email);
-      log.debug("Username: " + username);
-      log.debug("Avatar: " + avatar);
-      if (StringUtils.isBlank(email)) {
-         return null;
-      }
-      final Object userId = handleLogin(identity, email, username, avatar);
-      if (userId != null) {
-         final LinkedServiceDAO linkedServiceDAO = Play.application().injector().instanceOf(LinkedServiceDAO.class);
-         final LinkedService linkedService = linkedServiceDAO.find(identity.provider(), identity.id());
-         if (data.has("profile")) {
-            linkedService.setLink(data.get("profile").asText());
-         }
-         if (data.has("name")) {
-            linkedService.setName(data.get("name").asText());
-         }
+      final String fullname = data.has("name") ? data.get("name").asText() : null;
+      final String profile = data.has("profile") ? data.get("profile").asText() : null;
+      final Object userId = handleOAuthLogin(identity.provider(), identity.id(), email, username, fullname, profile, avatar);
+      if (identity instanceof OAuthAuthUser) {
+         //updateAccessToken((OAuthAuthUser) identity, linkedService.getId());
       }
       return userId;
    }
@@ -76,41 +68,52 @@ public class AuthService extends Controller {
       final String email = data.get("email").asText();
       final String username = data.get("first_name").asText();
       final String avatar = data.has("picture") ? data.get("picture").get("data").get("url").asText() : null;
-      log.debug("Email: " + email);
-      log.debug("Username: " + username);
-      log.debug("Avatar: " + avatar);
-      if (StringUtils.isBlank(email)) {
-         return null;
-      }
-      final Object userId = handleLogin(identity, email, username, avatar);
-      if (userId != null) {
-         final LinkedServiceDAO linkedServiceDAO = Play.application().injector().instanceOf(LinkedServiceDAO.class);
-         final LinkedService linkedService = linkedServiceDAO.find(identity.provider(), identity.id());
-         if (data.has("link")) {
-            linkedService.setLink(data.get("link").asText());
-         }
-         if (data.has("first_name") && data.has("last_name")) {
-            linkedService.setName(data.get("first_name").asText() + " " + data.get("last_name").asText());
-         }
+      final String fullname = data.has("first_name") && data.has("last_name") ? data.get("first_name").asText() + " " + data.get("last_name").asText() : null;
+      final String profile = data.has("link") ? data.get("link").asText() : null;
+      final Object userId = handleOAuthLogin(identity.provider(), identity.id(), email, username, fullname, profile, avatar);
+      if (identity instanceof OAuthAuthUser) {
+         //updateAccessToken((OAuthAuthUser) identity, linkedService.getId());
       }
       return userId;
    }
 
-   public static Object handleLogin(final Identity identity, final String emailAddress, final String username, final String avatar) {
-      log.info(String.format("handleLogin [identity=%s, email=%s, username=%s, avatar=%s]", identity, emailAddress, username, avatar));
+   private static Object handleOAuthLogin(final String providerKey, final String providerId, final String email, final String username, final String fullname,
+                                          final String profile, final String avatar) {
+      log.debug("Email: " + email);
+      log.debug("Username: " + username);
+      log.debug("Avatar: " + avatar);
+      // Try login process with the given informations
+      final Object userId = handleLogin(providerKey, providerId, email, username, avatar);
+      if (userId != null) {
+         // Update full name and profile link
+         final LinkedService linkedService = LinkedServiceDAO.instance().find(providerKey, providerId);
+         if (profile != null) {
+            linkedService.setLink(profile);
+         }
+         if (fullname != null) {
+            linkedService.setName(fullname);
+         }
+         // Set email confirmed since it comes from trusted oauth provider
+         EmailDAO.instance().findByAddress(email).setConfirmed(true);
+      }
+      return userId;
+   }
+
+   public static Object handleLogin(final String providerKey, final String providerId, final String emailAddress, final String username, final String avatar) {
+      log.info(String.format("handleLogin [providerKey=%s, providerId=%s, email=%s, username=%s, avatar=%s]", providerKey, providerId, emailAddress, username, avatar));
       User user = Application.getLocalUser();
       final LinkedServiceDAO linkedServiceDAO = Play.application().injector().instanceOf(LinkedServiceDAO.class);
-      LinkedService linkedService = linkedServiceDAO.find(identity.provider(), identity.id());
+      LinkedService linkedService = linkedServiceDAO.find(providerKey, providerId);
       log.debug(String.format("Found LinkedService: %s", linkedService));
       if (linkedService == null) {
-         log.debug(String.format("No linked account found for %s", identity));
+         log.debug(String.format("No linked account found for %s-%s", providerKey, providerId));
          if (username != null) {
             if (user == null) {
                final UserDAO userDAO = Play.application().injector().instanceOf(UserDAO.class);
                user = userDAO.create(username, emailAddress, avatar);
                log.debug(String.format("Created new user: %s", user));
             }
-            linkedService = linkedServiceDAO.create(identity.provider(), identity.id(), user);
+            linkedServiceDAO.create(providerKey, providerId, user);
          }
       } else {
          if (user != null) {
@@ -121,9 +124,6 @@ public class AuthService extends Controller {
       }
       log.debug(String.format("Found user: %s", user));
       // updateUserData(avatar);
-      if (identity instanceof OAuthAuthUser) {
-         updateAccessToken((OAuthAuthUser) identity, linkedService.getId());
-      }
       return user != null ? user.getId() : null;
    }
 
@@ -153,11 +153,10 @@ public class AuthService extends Controller {
    @Observer(topic = AuthEvents.AUTHENTICATION_SUCCESS)
    public static void authenticationSuccessful(final Context ctx, final Long userId, final String provider) {
       final User user = Application.getLocalUser(ctx.session());
+      log.info(String.format("Authentication success: %s", user));
       if (user != null) {
-         log.debug(String.format("Authentication success: " + user.toString()));
-         //            user.lastLogin = new Date();
-         //            user.lastIp = ctx.request().remoteAddress();
-         //            user.update();
+         user.setLastLogin(new Date());
+         user.setLastIp(ctx.request().remoteAddress());
       }
    }
 }

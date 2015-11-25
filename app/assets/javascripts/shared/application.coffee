@@ -1,3 +1,5 @@
+require 'handlebars'
+
 Router = require 'router'
 db = require 'database'
 

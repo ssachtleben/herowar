@@ -8,7 +8,9 @@ import controllers.Application;
 import dao.NewsDAO;
 import dao.SecurityRoleDAO;
 import dao.UserDAO;
+import models.entity.Email;
 import models.entity.SecurityRole;
+import models.entity.User;
 import models.entity.game.LevelRange;
 import play.Logger;
 import play.Play;
@@ -54,12 +56,14 @@ public class UserImporter extends SimpleJob {
    }
 
    private void createAdminUser() {
-      UserDAO userDAO = Play.application().injector().instanceOf(UserDAO.class);
+      UserDAO userDAO = UserDAO.instance();
       if (userDAO.findByUsername("admin") != null) {
          return;
       }
-      log.info("Creating admin user");
-      userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "admin", "FirstName", "LastName");
+      User user = userDAO.create(new PasswordEmailAuthUser("admin@herowar.com", "admin", new ObjectMapper().createObjectNode()), "admin", "FirstName", "LastName");
+      final Email email = user.getEmails().iterator().next();
+      email.setConfirmed(true);
+      log.info(String.format("Creating admin user: %s", user));
    }
 
    private void createDummyNews() {
