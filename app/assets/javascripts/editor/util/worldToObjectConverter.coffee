@@ -98,7 +98,7 @@ worldToObjectConverter =
 			vertices: geometry.vertices
 			faces: geometry.faces
 			morphTargets: geometry.morphTargets
-			morphColors: geometry.morphColors
+			#morphColors: geometry.morphColors removed!
 			normals:	geometry.normals
 			colors: geometry.colors
 			uvs:	geometry.uvs

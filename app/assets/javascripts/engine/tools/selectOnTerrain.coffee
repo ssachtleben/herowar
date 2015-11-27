@@ -31,9 +31,13 @@ class SelectOnTerrain extends BaseTool
 			radius += 0.33
 		intersectList = @intersectHelper.mouseIntersects [ scenegraph.getMap().getMainObject() ], radius
 		if intersectList.length > 0
+			normalMatrix = new THREE.Matrix3()
 			@lastIntersect = @intersectHelper.getIntersectObject intersectList
-			#TODO Check if this work
-			@lastPosition = new THREE.Vector3().addVectors @lastIntersect.point, @lastIntersect.face.normal.clone().applyMatrix4 @lastIntersect.object.matrixWorld
+			if @lastIntersect.face?
+				normalMatrix.getInverse @lastIntersect.object.matrixWorld
+				normal = @lastIntersect.face.normal.clone()
+				normal.applyMatrix3(normalMatrix).normalize()
+				@lastPosition = new THREE.Vector3().addVectors @lastIntersect.point, normal
 			@onIntersect()
 			@update @lastPosition, @lastIntersect
 		else

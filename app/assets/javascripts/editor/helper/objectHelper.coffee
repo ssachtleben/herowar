@@ -4,7 +4,6 @@ class ObjectHelper
 	
 	constructor: ->
 		EditorEventbus.resetWireframe.add @refreshWireframe
-		@wireFrameMaterials = new THREE.MeshFaceMaterial([new THREE.MeshBasicMaterial(color: 0xFFFF00, wireframe: true)])
 
 	hasWireframe: (obj) ->
 		found = false
@@ -15,14 +14,10 @@ class ObjectHelper
 	addWireframe: (obj, color) ->
 		#TODO hard coded children access ...
 		if obj
-			@wireFrameMaterials.materials[0].color.set color
-			@wireFrameMaterials.materials[0].needsUpdate = true
-			mesh = new THREE.Mesh obj.children[0].geometry.clone(), @wireFrameMaterials
-			for face in mesh.geometry.faces
-				face.materialIndex = 0
-			mesh.rotation.copy obj.children[0].rotation.clone()
-			mesh.name = 'wireframe'
-			obj.add mesh
+			wireframe = new THREE.WireframeHelper obj.children[0], color
+			wireframe.userData.parentId = obj.children[0].id
+			wireframe.name = "wireframe"
+			obj.add wireframe
 
 	removeWireframe: (obj) ->
 		mesh = @getWireframe(obj)
@@ -33,9 +28,9 @@ class ObjectHelper
 	changeWireframeColor: (obj, color) ->
 		if obj
 			for mesh in obj.children
-				if mesh.name is 'wireframe'	and mesh.material.materials
-					mesh.material.materials[0].color.set color if mesh.material.materials[0].wireframe
-					mesh.material.materials[0].needsUpdate = true
+				if mesh.name is 'wireframe'
+					mesh.material.color.set color
+					mesh.material.needsUpdate = true
 
 	getBaseObject: (obj) ->	
 		unless obj then return
@@ -73,9 +68,7 @@ class ObjectHelper
 	refreshWireframe: (obj) =>
 		mesh = @getWireframe(obj)
 		if mesh
-			for child in obj.children
-				if child isnt mesh
-					mesh.geometry.vertices = child.geometry.vertices
-					mesh.geometry.verticesNeedUpdate = true
-					
+			source = obj.getObjectById mesh.userData.parentId
+			mesh.geometry.fromGeometry source.geometry
+
 return ObjectHelper

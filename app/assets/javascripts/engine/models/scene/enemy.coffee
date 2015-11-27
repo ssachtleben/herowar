@@ -27,7 +27,7 @@ class Enemy extends AnimatedModel
 		@damageIncoming = 0
 		@lastDistance = null
 		@dead = false
-		@meshBody.rotation.set THREE.Math.degToRad(opts.rotation.x), THREE.Math.degToRad(opts.rotation.y), THREE.Math.degToRad(opts.rotation.z) if opts.rotation
+		@meshBody.rotation.set THREE.Math.degToRad(opts.rotation.x), THREE.Math.degToRad(opts.rotation.y), THREE.Math.degToRad(opts.rotation.z), THREE.Math.degToRad, THREE.Euler.DefaultOrder if opts.rotation
 		@waypoints = []
 		@moveSpeed = opts.moveSpeed
 		return

@@ -76,6 +76,7 @@ class AddEnvironment extends AddObject
 				x				: mesh.rotation.x
 				y				: mesh.rotation.y
 				z				: mesh.rotation.z
+				order   : THREE.Euler.DefaultOrder
 			scale			:
 				x				: mesh.scale.x
 				y				: mesh.scale.y

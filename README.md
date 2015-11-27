@@ -7,7 +7,10 @@ find . "" -exec grep -I -H --color='auto' -P -n "[\x80-\xFF]" {} \;
 
 
 ## TODOS:
-
+- According to https://github.com/mrdoob/three.js/wiki/Migration r58->59  - Object3D.rotation is now of type THREE.Euler
+  It's not clear what to refactor: https://github.com/mrdoob/three.js/issues/4009
+- r59 → r60 Face4 removed. Wireframe working, but playing selector is still buggy
+- r67 → r68 Object3D's position, rotation, quaternion and scale properties are now immutable. This can be a problem
 ### New
 
 -

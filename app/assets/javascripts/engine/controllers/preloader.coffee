@@ -161,13 +161,13 @@ class Preloader extends RendererCanvasController
 		data.terrain.geometry.materials = []
 		world.set @parseWorldData data
 		newGeo = world.attributes.terrain.geometry
-		newGeo.userData = {}
-		newGeo.userData.matIdMapper = oldGeo.matIdMapper
-		newGeo.userData.id = oldGeo.id
-		newGeo.userData.type = oldGeo.type
-		newGeo.userData.metadata = oldGeo.metadata
-		newGeo.userData.version = oldGeo.version
-		newGeo.userData.cdate = oldGeo.cdate
+		newGeo.userData =
+			matIdMapper: oldGeo.matIdMapper
+			id: oldGeo.id
+			type: oldGeo.type
+			metadata: oldGeo.metadata
+			version: oldGeo.version
+			cdate: oldGeo.cdate
 		world.loadMaterials data.materials
 		console.log world
 		@state = 3

@@ -42,10 +42,6 @@ public class Geometry extends BaseModel implements Serializable {
 
    @Column(columnDefinition = "text")
    @StringArray(type = StringArray.ArrayType.DOUBLE)
-   private String morphColors = "[]";
-
-   @Column(columnDefinition = "text")
-   @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String normals = "[]";
 
    @Column(columnDefinition = "text")
@@ -130,14 +126,6 @@ public class Geometry extends BaseModel implements Serializable {
 
    public void setMorphTargets(String morphTargets) {
       this.morphTargets = morphTargets;
-   }
-
-   public String getMorphColors() {
-      return morphColors;
-   }
-
-   public void setMorphColors(String morphColors) {
-      this.morphColors = morphColors;
    }
 
    public String getNormals() {
@@ -296,7 +284,7 @@ public class Geometry extends BaseModel implements Serializable {
 
    @Override
    public String toString() {
-      return "Geometry [id=" + id + ", vertices=" + vertices + ", faces=" + faces + ", morphTargets=" + morphTargets + ", morphColors=" + morphColors
+      return "Geometry [id=" + id + ", vertices=" + vertices + ", faces=" + faces + ", morphTargets=" + morphTargets
             + ", normals=" + normals + ", colors=" + colors + ", uvs=" + uvs + ", scale=" + scale + ", type=" + type + ", metadata=" + metadata
             + ", terrain=" + terrain + ", meshes=" + meshes + ", geoMaterials=" + geoMaterials + ", matIdMapper=" + matIdMapper + ", materials="
             + materials + "]";

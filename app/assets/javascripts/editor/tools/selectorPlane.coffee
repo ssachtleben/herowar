@@ -12,12 +12,13 @@ class SelectorPlane extends SelectOnTerrain
 		super()
 
 	update: (position, intersect) ->
-		pos = @calculatePossiblePosition position
-		if pos.x isnt @selector.position.x or pos.y isnt @selector.position.y or pos.z isnt @selector.position.z
-			@selector.position.x = pos.x
-			@selector.position.y = pos.y
-			@selector.position.z = pos.z
-		engine.render()
+		if position?
+			pos = @calculatePossiblePosition position
+			if pos.x isnt @selector.position.x or pos.y isnt @selector.position.y or pos.z isnt @selector.position.z
+				@selector.position.x = pos.x
+				@selector.position.y = pos.y
+				@selector.position.z = pos.z
+			engine.render()
 	
 	calculatePossiblePosition: (position) ->
 		x: Math.floor(position.x / 10) * 10 + 5
@@ -35,7 +36,8 @@ class SelectorPlane extends SelectOnTerrain
 
 	createSel: ->
 		@selector = new THREE.Mesh new THREE.PlaneGeometry(10, 10), new THREE.MeshBasicMaterial (color: @color, transparent: true, opacity:1)
-		@selector.rotation.x = THREE.Math.degToRad -90
+
+		@selector.quaternion.x = THREE.Math.degToRad -90
 		@selector.material.opacity = 0.3
 
 	addSel: ->

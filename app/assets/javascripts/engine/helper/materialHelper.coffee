@@ -7,7 +7,7 @@ materialHelper =
 			materials = []
 			if object.material
 				materials.push object.material
-			object.material = new THREE.MeshFaceMaterial materials 	
+			object.material = new THREE.MultiMaterial materials
 		index = @getMaterialIndex object, idMapper 
 		if index == -1
 			material = db.get 'materials', idMapper.id 
@@ -58,7 +58,7 @@ materialHelper =
 				if index > -1
 					mat = @transformMaterial globalMat.models[index], idMapper.materialId
 					materials.push mat
-		mesh.material = new THREE.MeshFaceMaterial materials
+		mesh.material = new THREE.MultiMaterial materials
 
 	#For Geometries without global materials binding 
 	loadGeometryMaterial: (geo) ->
@@ -93,7 +93,7 @@ materialHelper =
 				newMat.transparent = true
 				newMats.push newMat
 		mesh = @updateMeshProperties new THREE.MorphAnimMesh(geometry), newMats, name, json
-		mesh.parseAnimations()
+		#mesh.parseAnimations() done now ...
 		return mesh
 
 	createSkinnedMesh: (geometry, materials, name, json) ->
@@ -118,7 +118,7 @@ materialHelper =
 	updateMeshProperties: (mesh, materials, name, json) ->
 		mesh.name = name
 		mesh.userData.dbId = json.id
-		mesh.material = new THREE.MeshFaceMaterial materials
+		mesh.material = new THREE.MultiMaterial materials
 		if json.matIdMapper
 			for matId in json.matIdMapper
 				for threeMat in mesh.material.materials
@@ -134,7 +134,7 @@ materialHelper =
 	transformMaterial:(material, materialId) ->
 		if @isShader material.attributes
 			result = new THREE.ShaderMaterial()
-			result.side = THREE.DoubleSide
+			result.side = THREE.Frontside #TODO dont know THREE.DoubleSide or THREE.Frontside...
 			#result.map = true
 		else
 			result = new THREE.MeshBasicMaterial()

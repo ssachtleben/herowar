@@ -22,7 +22,7 @@ objectUtils =
 				geometry = srcObject.geometry.clone()
 			if srcObject instanceof THREE.MorphAnimMesh 
 				destObject	= new THREE.MorphAnimMesh geometry, material
-				destObject.parseAnimations()
+				#destObject.parseAnimations()
 				@_copyObjectData destObject, srcObject
 			else
 				destObject	= new THREE.Mesh geometry, material
@@ -44,14 +44,14 @@ objectUtils =
 		if obj instanceof THREE.Mesh
 			isAnimated = obj instanceof THREE.MorphAnimMesh
 			glowMaterial = if obj.userData.glowing or force then @_getGlowOnMaterial isAnimated, color else @_getGlowOffMaterial isAnimated
-			if obj.material instanceof THREE.MeshFaceMaterial
+			if obj.material instanceof THREE.MultiMaterial
 				materials = []
 				for mat in obj.material.materials
 					if materials.length is 0 
 						materials.push glowMaterial
 					else
 						materials.push glowMaterial.clone()
-				return new THREE.MeshFaceMaterial materials
+				return new THREE.MultiMaterial materials
 			else return glowMaterial
 		return null
 	

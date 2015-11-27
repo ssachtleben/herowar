@@ -38,14 +38,12 @@ class BrushMaterial extends SelectorPlane
 				intersect.object.geometry.vertices[intersect.face.a].z += 1
 				intersect.object.geometry.vertices[intersect.face.b].z += 1
 				intersect.object.geometry.vertices[intersect.face.c].z += 1
-				intersect.object.geometry.vertices[intersect.face.d].z += 1
 				intersect.object.geometry.verticesNeedUpdate = true
 				@world.saveGeometry intersect.object.geometry
 			else if @brushTool is Constants.BRUSH_TERRAIN_DEGRADE 
 				intersect.object.geometry.vertices[intersect.face.a].z -= 1
 				intersect.object.geometry.vertices[intersect.face.b].z -= 1
 				intersect.object.geometry.vertices[intersect.face.c].z -= 1
-				intersect.object.geometry.vertices[intersect.face.d].z -= 1
 				intersect.object.geometry.verticesNeedUpdate = true
 				@world.saveGeometry intersect.object.geometry
 		super position, intersect
@@ -58,7 +56,6 @@ class BrushMaterial extends SelectorPlane
 	handleBrush: (intersect) ->
 		scenegraph = require 'scenegraph'
 		object = intersect.object
-		faceIndex = intersect.faceIndex
 		baseObject = @selectorObject.objectHelper.getBaseObject object
 		if baseObject is scenegraph.getMap().getMainObject() and @selectedMatId
 			newIndex = materialHelper.getThreeMaterialId object, @selectedMatId
@@ -67,11 +64,10 @@ class BrushMaterial extends SelectorPlane
 				if oldIndex isnt newIndex 
 					face.materialIndex = newIndex
 					unless update
-						scene = scenegraph.scene()
 						baseObject.remove object
 						engine.render()
-						object.geometry.geometryGroups = undefined
-						object.geometry.geometryGroupsList = undefined
+						object.geometry.groupsNeedUpdate = true
+						object.geometry.colorsNeedUpdate = true
 						object.__webglInit = false #hack
 						object.__webglActive = false #hack
 						baseObject.add object

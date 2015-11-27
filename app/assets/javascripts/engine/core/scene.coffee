@@ -88,7 +88,7 @@ class Scene
 			#add position to mesh ... 
 			if mesh
 				mesh.position = new THREE.Vector3 instance.position.x,instance.position.y,instance.position.z
-				mesh.rotation = new THREE.Vector3 instance.rotation.x,instance.rotation.y,instance.rotation.z
+				mesh.rotation = new THREE.Euler instance.rotation.x,instance.rotation.y,instance.rotation.z
 				mesh.scale = new THREE.Vector3 instance.scale.x,instance.scale.y,instance.scale.z
 				mesh.userData.meshId = instance.id
 				scenegraph.addStaticObject mesh, mesh.userData.dbId

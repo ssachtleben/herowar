@@ -41,9 +41,6 @@ class Viewport extends Backbone.Model
 					antialias: false
 			when Variables.RENDERER_TYPE_WEBGL
 				renderer = new EngineRenderer()
-				#renderer.gammaInput = true
-				#renderer.gammaOutput = true
-				#renderer.physicallyBasedShading = true
 		$domElement = $ @get 'domId'
 		renderer.setSize $domElement.width(), $domElement.height()
 		@set

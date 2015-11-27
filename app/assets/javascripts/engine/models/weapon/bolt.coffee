@@ -38,7 +38,8 @@ class Bolt extends THREE.Mesh
 			@buildNode()
 			@branchPoint.updateMatrix()
 			@numCurrentPos++
-		@geometry.computeCentroids()
+		console.warn "Removed computeCentroids, check functionality!"
+		#@geometry.computeCentroids() TODO  is removed ...
 		@geometry.computeFaceNormals()
 		@geometry.computeVertexNormals()
 		return
@@ -69,7 +70,8 @@ class Bolt extends THREE.Mesh
 				p4 = @geometry.vertices.length - @branchSegments + i
 				p2 = @geometry.vertices.length - @branchSegments * 2
 				p3 = @geometry.vertices.length - @branchSegments * 2 + i
-			@geometry.faces.push new THREE.Face4 p1, p2, p3, p4
+			@geometry.faces.push new THREE.Face4 p1, p2, p3, p4 #TODO Face4 is removed now! http://stackoverflow.com/questions/16498296/three-js-face4-generates-triangle-instead-of-square
+
 			startX = 1 / @branchSegments * (i + 1)
 			endX = startX - 1 / @branchSegments
 			startY = @numCurrentPos / @totalLinks

@@ -56,7 +56,7 @@ class World extends Backbone.Model
 	createTerrainMesh: (geometry) ->
 		obj = new THREE.Object3D()
 		obj.name = (@get 'name') + '_group'
-		mesh = new THREE.Mesh geometry, new THREE.MeshFaceMaterial([])
+		mesh = new THREE.Mesh geometry, new THREE.MultiMaterial([])
 		mesh.name = (@get 'name') + '_mesh'
 		mesh.geometry.dynamic = true
 		mesh.rotation.x = THREE.Math.degToRad -90

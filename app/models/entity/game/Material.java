@@ -34,6 +34,7 @@ public class Material implements Serializable {
    @Column(length = 100)
    private String name;
 
+   @JsonIgnore
    @NotNull
    private Integer sortIndex;
 
@@ -63,8 +64,7 @@ public class Material implements Serializable {
    private String colorDiffuse = "[1.0, 1.0, 1.0]";
    @StringArray(type = StringArray.ArrayType.DOUBLE)
    private String colorSpecular = "[0.0, 0.0, 0.0]";
-   @StringArray(type = StringArray.ArrayType.DOUBLE)
-   private String colorAmbient = "[1.0, 1.0, 1.0]";
+
 
 
    @Column(scale = 3)
@@ -254,13 +254,7 @@ public class Material implements Serializable {
       this.colorSpecular = colorSpecular;
    }
 
-   public String getColorAmbient() {
-      return colorAmbient;
-   }
 
-   public void setColorAmbient(String colorAmbient) {
-      this.colorAmbient = colorAmbient;
-   }
    @Deprecated
    public Float getTransparency() {
       return transparency;
