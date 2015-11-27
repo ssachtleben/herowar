@@ -20,7 +20,7 @@ find . "" -exec grep -I -H --color='auto' -P -n "[\x80-\xFF]" {} \;
 #### Section: building and transforming resources
 
 #### Section: Editor
-
+N
 1. Implement textures, geometries and image loading cases in preloader
 
 #### Section: Site
