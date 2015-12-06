@@ -5,6 +5,7 @@ import models.entity.game.*;
 import models.entity.game.Map;
 import play.Logger;
 import play.db.jpa.JPA;
+import utils.MaterialComparator;
 
 import java.util.*;
 
@@ -64,13 +65,7 @@ public class MapDAO extends BaseDAO<Long, Map> {
             map.getMaterials().add(mat);
          }
 
-         Collections.sort(map.getMaterials(), new Comparator<Material>() {
-            @Override
-            public int compare(Material o1, Material o2) {
-               return o1.getSortIndex().compareTo(o2.getSortIndex());
-            }
-
-         });
+         Collections.sort(map.getMaterials(), new MaterialComparator());
          geometryDAO.mapMaterials(geo);
       }
    }
